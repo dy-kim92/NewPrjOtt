@@ -6,7 +6,6 @@ import FreeBoard from '../views/FreeBoard.vue'
 import FreeBoard2 from '../views/FreeBoard2.vue'
 import SearchRank from '../views/SearchRank.vue'
 import E404 from '../views/e404.vue'
-import DbUser from '../views/DbUser.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,11 +33,6 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/dbuser',
-    name: 'dbuser',
-    component: DbUser
   },
   {
     path: '*',

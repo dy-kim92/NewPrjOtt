@@ -15,8 +15,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/', (req, res, next) => {
     console.log(req.body)
-    const { name, joinEmail, joinPassword } = req.body
-    const u = new User({ name, joinEmail, joinPassword})
+    const { name, email, password } = req.body
+    const u = new User({ name, email, password})
     // db 저장 
     u.save()
         .then(r => {

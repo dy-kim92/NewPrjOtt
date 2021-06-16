@@ -38,14 +38,23 @@
                             </validation-provider>
                             </v-col>
                             <v-col cols="12" sm="6">
-                            <validation-provider>
+                            <validation-provider
+                                v-slot="{errors}"
+                                name="비밀번호"
+                                :rules="{
+                                    required:true,
+                                    min:8,
+                                    }"
+                            >
                             <v-text-field
                                 v-model="password"
                                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                                 :type="show1 ? 'text' : 'password'"
                                 name="input-10-1"
                                 label="Password"
+                                :counter=8
                                 @click:append="show1 = !show1"
+                                :error-messages="errors"
                             ></v-text-field>
                             </validation-provider>
                             </v-col>
@@ -56,8 +65,8 @@
                     </v-card-text>
                     <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="d2">회원가입</v-btn>
-                    <v-btn color="primary">로그인</v-btn>
+                    <v-btn color="primary" @click="mdUp2">회원가입</v-btn>
+                    <v-btn color="primary" @click="postLoginData">로그인</v-btn>
                     <v-btn color="primary" @click.native="dialog = false">닫기</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -83,7 +92,7 @@
                         name="닉네임"
                         :rules="{
                             required:true,
-                            max:10,
+                            max:8,
                             }"
                     >
                     <v-text-field v-model="name" :counter="8" label="NickName" :error-messages="errors"></v-text-field>
@@ -197,17 +206,18 @@ export default {
         mdUp () {
             this.dialog = true
         },
-        d2 () {
+        mdUp2 () {
             this.dialog2 = true
         },
         postData() {
-            this.dialog2 = false // dialog 창 닫기
+            this.dialog2 = false // dialog 창닫기
+            // 모든 검증을 통과한 경우 result = true 
             this.$refs.observer.validate().then(result => {
                 if (result) {
                     axios.post('http://localhost:3000/api/register',{
                         name: this.name,
-                        joinEmail: this.joinEmail,
-                        joinPassword: this.joinPassword
+                        email: this.joinEmail,
+                        password: this.joinPassword
                     })
                     .then((r) => {
                         console.log(r)
@@ -216,6 +226,19 @@ export default {
                         console.log(e)
                     })
                 }
+            })
+        },
+        postLoginData() {
+            this.dialog = false // dialog 창닫기
+            axios.post('http://localhost:3000/api/login',{
+                email: this.email,
+                password: this.password,
+            })
+            .then((r) => {
+                console.log(r)
+            })
+            .catch((e) => {
+                console.log(e)
             })
         }
   }
