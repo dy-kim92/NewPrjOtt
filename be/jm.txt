@@ -1,0 +1,28 @@
+# error page 추가 + 라우팅
+
+# app.use(express.static(path.join(__dirname, 'fe', 'dist')));
+ 
+# npm i connect-history-api-fallback
+잘못된 url fe/dist 로 보내주기위해 히스토리모드 설치
+
+# history (app.js) 추가
+
+# api url 잘못들어온거 처리 (http-errors)
+
+# router.use('/register', require('./register/register.js'))
+api.js에서 register 파일 라우팅 하기 
+
+# npm i axios
+axios 설치
+
+# yarn add cors
+cors 설치후 세팅까지 
+
+# dbuser 확인 페이지 생성후 라우팅
+
+# postData 설정
+
+# vee-validation 기능 사용
+https://www.youtube.com/watch?v=_FOQNOrB4Ak
+
+# plugins 폴더에 모듈화 시켜서 전역으로 실행하도록 세팅
