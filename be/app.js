@@ -7,6 +7,7 @@ const history = require('connect-history-api-fallback')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const cors = require('cors') // 외부요청 허용
+const jwt = require('jsonwebtoken'); // JWT
 var app = express();
 
 const mongoose = require('mongoose')

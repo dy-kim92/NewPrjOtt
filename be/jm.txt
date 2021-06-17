@@ -18,11 +18,17 @@ axios 설치
 # yarn add cors
 cors 설치후 세팅까지 
 
-# dbuser 확인 페이지 생성후 라우팅
-
 # postData 설정
 
 # vee-validation 기능 사용
 https://www.youtube.com/watch?v=_FOQNOrB4Ak
 
 # plugins 폴더에 모듈화 시켜서 전역으로 실행하도록 세팅
+
+# login 구현 
+============================================================
+TODO
+snackbar 세팅, 
+중복확인 or 이메일 인증코드 
+
+# yarn add jsonwebtoken 

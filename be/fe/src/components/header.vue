@@ -5,7 +5,7 @@
         <a href="/board">게시판&emsp;</a>
         <a href="/board2">함께봐요&emsp;</a>
         <a href="/rank">실시간 검색순위&emsp;</a>
-        <a href="/dbuser">디비유저확인&emsp;</a>
+        <button v-if="$store.state.token" @click="logOut">로그아웃&emsp;</button>
 
 
         <!-- 로그인 다이얼로그 -->
@@ -235,11 +235,22 @@ export default {
                 password: this.password,
             })
             .then((r) => {
-                console.log(r)
+                // console.log(r.data)
+                // alert(`안녕하세요${r.data}`)
+                // console.log(r)
+                if (!r.data.success) return console.error(r.data.msg)
+                localStorage.setItem('token', r.data.token)
+                this.$store.commit('getToken')
+                this.$router.push('/') 
             })
             .catch((e) => {
                 console.log(e)
             })
+        },
+        logOut () {
+            // localStorage.removeItem('token')
+            this.$store.commit('delToken')
+            this.$router.push('/')
         }
   }
 }
