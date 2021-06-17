@@ -5,6 +5,7 @@
         <a href="/board">게시판&emsp;</a>
         <a href="/board2">함께봐요&emsp;</a>
         <a href="/rank">실시간 검색순위&emsp;</a>
+        <a href="/token">토큰체크페이지&emsp;</a>
         <button v-if="$store.state.token" @click="logOut">로그아웃&emsp;</button>
 
 
@@ -60,6 +61,10 @@
                             </v-col>
                         </v-row>
                         </v-container>
+                        <v-checkbox
+                            v-model="remember"
+                            label="로그인 유지"
+                        ></v-checkbox>
                     </v-form>
                     </validation-observer>
                     </v-card-text>
@@ -200,6 +205,7 @@ export default {
                 joinEmail: '',
                 joinPassword: '',
                 checkPassword: '',
+                remember: false,
         }
     },
     methods: {    
@@ -233,11 +239,12 @@ export default {
             axios.post('http://localhost:3000/api/login',{
                 email: this.email,
                 password: this.password,
+                remember: this.remember
             })
             .then((r) => {
                 // console.log(r.data)
                 // alert(`안녕하세요${r.data}`)
-                // console.log(r)
+                console.log(r)
                 if (!r.data.success) return console.error(r.data.msg)
                 localStorage.setItem('token', r.data.token)
                 this.$store.commit('getToken')
