@@ -13,10 +13,10 @@ const verifyToken = (t) => {
     })
   })
 }
-// api/  register,login 연결시키기  
+// api/  register,login,findpwd 연결시키기  
 router.use('/register', require('./register/register.js'))
 router.use('/login', require('./login/localLogin.js'))
-
+router.use('/findpwd', require('./findpwd/sendmail.js'))
 
 // 토큰 검사 
 router.all('*', function(req, res, next) {
@@ -27,7 +27,7 @@ router.all('*', function(req, res, next) {
       console.log(v)
       console.log(new Date(v.exp * 1000))
       req.user = v
-      next()
+        
     })
     .catch(e => res.send({ success: false, msg: e.message }))  
 });
