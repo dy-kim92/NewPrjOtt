@@ -25,7 +25,7 @@ axios.interceptors.response.use(function (response) {
   console.log(token)
   // token 시간지나면 바로 store (vuex)에서 삭제시키기
   if (token) localStorage.setItem('token', token)
-  else localStorage.removeItem('token')
+  // else localStorage.removeItem('token')
   return response
 }, function (error) {
   // Do something with response error

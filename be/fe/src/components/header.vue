@@ -7,8 +7,7 @@
         <a href="/rank">실시간 검색순위&emsp;</a>
         <a href="/token">토큰체크페이지&emsp;</a>
         <button v-if="$store.state.token" @click="logOut">로그아웃&emsp;</button>
-
-
+        <!-- <button @click="checkSession">세션체크버튼</button> -->
         <!-- 로그인 다이얼로그 -->
         <v-btn color="warning" fab dark @click="mdUp">
             <v-icon>mdi-account-circle</v-icon>
@@ -68,8 +67,13 @@
                         ></v-checkbox>
                     </v-form>
                     </validation-observer>
+                    <v-col>
+                        <a href="/auth/kakao" alt="kakao login">
+                            <img src="../assets/kakao_login_medium_wide.png" alt="kakao">
+                        </a>
+                    </v-col>
                     </v-card-text>
-                    <v-card-actions>
+                    <v-card-actions>    
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="mdUp2">회원가입</v-btn>
                     <v-btn color="primary" @click="postLoginData">로그인</v-btn>
@@ -333,6 +337,10 @@ export default {
         }
     },
     methods: {    
+        checkSession() {
+            if (req.session.user.email)
+            alert('세션존재')
+        },
         mdUp () {
             this.dialog = true
         },

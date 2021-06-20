@@ -17,17 +17,18 @@ const verifyToken = (t) => {
 router.use('/register', require('./register/register.js'))
 router.use('/login', require('./login/localLogin.js'))
 router.use('/findpwd', require('./findpwd/sendmail.js'))
+// router.use('/token', require('./tokencheck')) 
 
 // 토큰 검사 
 router.all('*', function(req, res, next) {
   const token = req.headers.authorization
-  console.log(token)
+  // console.log(token)
   verifyToken(token)
     .then(v => {
-      console.log(v)
+      // console.log(v)
       console.log(new Date(v.exp * 1000))
       req.user = v
-        
+      next()
     })
     .catch(e => res.send({ success: false, msg: e.message }))  
 });
