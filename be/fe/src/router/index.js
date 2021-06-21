@@ -22,7 +22,7 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
   // Do something with response data
   const token = response.data.token
-  console.log(token)
+  // console.log(token)
   // token 시간지나면 바로 store (vuex)에서 삭제시키기
   if (token) localStorage.setItem('token', token)
   // else localStorage.removeItem('token')
@@ -39,7 +39,7 @@ const routes = [
     component:  Review
   },
   {
-    path: '/board',
+    path: '/api/board/freeboard',
     name: 'FreeBoard',
     component:  FreeBoard
   },

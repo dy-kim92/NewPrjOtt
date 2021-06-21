@@ -3,7 +3,7 @@ var createError = require('http-errors');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-    res.send('응답보내기')
+    res.send('토큰체크 성공')
   });
   
   router.all('*', function(req, res, next) {

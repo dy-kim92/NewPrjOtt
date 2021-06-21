@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const cfg = require('../../../config')
 const User = require('../../../models/users')
 
-const signToken = (email, name, rmb) => {
+const signToken = (_id, email, name, rmb) => {
     return new Promise((resolve, reject) => {
       const o = {
         subject: cfg.jwt.subject,
@@ -13,7 +13,7 @@ const signToken = (email, name, rmb) => {
         algorithm: cfg.jwt.algorithm
       }
       if (rmb) o.expiresIn = cfg.jwt.expiresInRemember // 체크박스 체크시 6일
-      jwt.sign({ email, name, rmb }, cfg.jwt.secretKey, o, (err, token) => {
+      jwt.sign({_id, email, name, rmb }, cfg.jwt.secretKey, o, (err, token) => {
         if (err) reject(err)
         resolve(token)
       })
@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
       .then((r) => {
         if (!r) throw new Error('존재하지 않는 아이디입니다.')
         if (r.password !== password) throw new Error('비밀번호가 틀립니다.')
-        return signToken(r.email, r.name, remember)
+        return signToken(r._id, r.email, r.name, remember)
       })
       .then((r) => {
         res.send({ success: true, token: r })

@@ -1,16 +1,18 @@
 <template>
-  <div>토큰체크페이지입니다</div>
+  <div>{{data}}</div>
 </template>
 <script>
 import axios from 'axios'
 export default {
   data () {
     return {
+      data:[],
     }
   },
   mounted () {
     axios.get('http://localhost:3000/api/token')
       .then((r) => {
+        this.data=r.data
         console.log(r)
       })
       .catch((e) => {

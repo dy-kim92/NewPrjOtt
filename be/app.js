@@ -10,7 +10,6 @@ const cors = require('cors') // 외부요청 허용
 const jwt = require('jsonwebtoken'); // JWT
 const passport = require('passport'); // 소셜로그인
 const passportConfig = require('./passport');
-
 var app = express();
 passportConfig();
 const mongoose = require('mongoose')
@@ -56,4 +55,22 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+// User.findOne()
+//   .then(r => console.log(r.id, r._id)) // 60ca123d5253fc334ca9581b
+//
+// //
+// Board.findOne()
+//   .then(r => console.log(r.name, r._id)) // 60cff1ed057bd394e5195cf7
+
+// Article.create({ title: 'ccc', content: 'ccc', _user: '60ca123d5253fc334ca9581b', _board: '60cff1ed057bd394e5195cf7' })
+//   .then(r => console.log(r))
+
+const User = require('./models/users')
+const Board = require('./models/boards')
+const Article = require('./models/articles')
+Article.find({ _board: '60cff1ed057bd394e5195cf7'})
+  .populate('_user', 'name')
+  .populate('_board')
+  .then(r => console.log(r))
 module.exports = app;

@@ -2,7 +2,7 @@
     <div>
         <a href="/">로고&emsp;</a>
         <a href="/review">리뷰&emsp;</a>
-        <a href="/board">게시판&emsp;</a>
+        <a href="/api/board/freeboard">게시판&emsp;</a>
         <a href="/board2">함께봐요&emsp;</a>
         <a href="/rank">실시간 검색순위&emsp;</a>
         <a href="/token">토큰체크페이지&emsp;</a>
