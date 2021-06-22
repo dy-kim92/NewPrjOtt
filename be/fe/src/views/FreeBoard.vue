@@ -29,13 +29,26 @@
           :headers="headers"
           :items="articles"
           :loading="loading">
-          <template slot="items" slot-scope="props">
-            <td :class="headers[0].class">{{ id2date(props.item._id)}}</td>
-            <td :class="headers[1].class"><a @click="read(props.item)"> {{ props.item.title }}</a></td>
+          <template v-slot:item._id="props">
+            {{ id2date(props.item.title) }}
+          </template>
+          <template v-slot:item.title="props">
+            <a @click="read(props.item)">{{ props.item.title }}</a>
+          </template>
+          <template v-slot:item._user.name="props">
+            {{ props.item._user.name }}
+          </template>
+          <template v-slot:item.cnt.view="props">
+            {{ props.item.cnt.view }}
+          </template>
+          <template v-slot:item.cnt.like="props">
+            {{ props.item.cnt.like }}
+          </template>
+            <!-- <td :class="headers[1].class"><a @click="read(props.item)"> {{ props.item.title }}</a></td>
             <td :class="headers[2].class">{{ props.item._user.name }}</td>
             <td :class="headers[3].class">{{ props.item.cnt.view }}</td>
             <td :class="headers[4].class">{{ props.item.cnt.like }}</td>
-          </template>
+          </template> -->
         </v-data-table>
       <a @click="ck">this is a tag</a>
       </v-flex>
@@ -120,8 +133,8 @@ export default {
   data () {
     return {
       board: {
-        name: '로딩중...',
-        rmk: '무엇?'
+        name: 'Loading...',
+        rmk: ''
       },
       articles: [],
       dialog: false,

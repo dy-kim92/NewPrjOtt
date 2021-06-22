@@ -5,21 +5,21 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const KakaoStrategy = require('passport-kakao').Strategy;
 const jwt = require('jsonwebtoken')
 const User = require('../models/users')
-
 const cfg = require('../config')
-const signToken = (email, name) => {
-    return new Promise((resolve, reject) => {
-      const o = {
-        subject: cfg.jwt.subject,
-        expiresIn: cfg.jwt.expiresIn, // 3분
-        algorithm: cfg.jwt.algorithm
-      }
-      jwt.sign({ email, name }, cfg.jwt.secretKey, o, (err, token) => {
-        if (err) reject(err)
-        resolve(token)
-      })
+
+const signToken = (_id, email, name) => {
+  return new Promise((resolve, reject) => {
+    const o = {
+      subject: cfg.jwt.subject,
+      expiresIn: cfg.jwt.expiresIn, // 3분
+      algorithm: cfg.jwt.algorithm
+    }
+    jwt.sign({_id, email, name}, cfg.jwt.secretKey, o, (err, token) => {
+      if (err) reject(err)
+      resolve(token)
     })
-  }
+  })
+}
 router.get('/logout', isLoggedIn, (req, res) => {
     console.log('로그아웃!')
     req.logout();
@@ -32,9 +32,8 @@ router.get('/kakao', passport.authenticate('kakao'));
 router.get('/kakao/callback', passport.authenticate('kakao', {
     failureRedirect: '/'
 }), (req, res) => {
-    // console.log(req)
-    // console.log('###kakao callback###')
-    // const email = req.user.email
+
+    let email = req.user.email
     // console.log(req.user)
     // console.log(req)
     // console.log(req.user.email)
@@ -43,15 +42,19 @@ router.get('/kakao/callback', passport.authenticate('kakao', {
     // localStorage.setItem('token', req.authInfo)
                 // this.$store.commit('getToken')
                 // this.$router.push('/') 
-    // User.findOne({ email })
-    //   .then((r) => {
-    //     console.log(r)
-    //     res.send({success:true, token:req.authInfo})
-    //   })
-    //   .catch((e) => {
-    //     console.log('실패',e)
-    //     res.send({ success: false, msg: e.message })
-    //   })
+    User.findOne({ email })
+      .then((r) => {
+        console.log('성공',r)
+        return signToken(r._id, r.email, r.name)
+      })
+      .then((r) => {
+        let token = r
+        res.cookie('user', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
+        res.json(token)  
+      })
+      .catch((e) => {
+        res.send({ success: false, msg: e.message })
+      })
     // console.log(req.user.name)
     res.redirect('/')
     // const { code } = req.query;

@@ -14,14 +14,14 @@ const verifyToken = (t) => {
     })
   })
 }
-const signToken = (_id, email, name, rmb) => {
+const signToken = (_id, email, name, exp) => {
   return new Promise((resolve, reject) => {
     const o = {
       subject: cfg.jwt.subject,
-      expiresIn: cfg.jwt.expiresIn, // 3분
-      algorithm: cfg.jwt.algorithm
+      algorithm: cfg.jwt.algorithm,
+      expiresIn: exp
     }
-    jwt.sign({_id, email, name, rmb }, cfg.jwt.secretKey, o, (err, token) => {
+    jwt.sign({_id, email, name }, cfg.jwt.secretKey, o, (err, token) => {
       if (err) reject(err)
       resolve(token)
     })
@@ -31,7 +31,7 @@ const getToken = async(t) => {
   let vt = await verifyToken(t)
   const diff = moment(vt.exp * 1000).diff(moment(), 'seconds')
   // return vt
-  // console.log(diff)
+  console.log(diff)
   const expSec = (vt.exp - vt.iat)
   if (diff > expSec / cfg.jwt.expiresInDiv) return { user: vt, token: null }
   const nt = await signToken(vt._id, vt.email, vt.name, expSec)

@@ -4,19 +4,19 @@ const User = require('../models/users');
 const jwt = require('jsonwebtoken')
 
 const cfg = require('../config')
-const signToken = (email, name) => {
-    return new Promise((resolve, reject) => {
-      const o = {
-        subject: cfg.jwt.subject,
-        expiresIn: cfg.jwt.expiresIn, // 3분
-        algorithm: cfg.jwt.algorithm
-      }
-      jwt.sign({ email, name }, cfg.jwt.secretKey, o, (err, token) => {
-        if (err) reject(err)
-        resolve(token)
-      })
-    })
-  }
+// const signToken = (email, name) => {
+//     return new Promise((resolve, reject) => {
+//       const o = {
+//         subject: cfg.jwt.subject,
+//         expiresIn: cfg.jwt.expiresIn, // 3분
+//         algorithm: cfg.jwt.algorithm
+//       }
+//       jwt.sign({ email, name }, cfg.jwt.secretKey, o, (err, token) => {
+//         if (err) reject(err)
+//         resolve(token)
+//       })
+//     })
+//   }
 module.exports = () => {
     passport.use(new KakaoStrategy({
         clientID: '5479403ac3d4fdfacf12f97f8cfbafe6',

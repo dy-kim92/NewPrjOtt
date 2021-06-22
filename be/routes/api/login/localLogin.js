@@ -13,7 +13,7 @@ const signToken = (_id, email, name, rmb) => {
         algorithm: cfg.jwt.algorithm
       }
       if (rmb) o.expiresIn = cfg.jwt.expiresInRemember // 체크박스 체크시 6일
-      jwt.sign({_id, email, name, rmb }, cfg.jwt.secretKey, o, (err, token) => {
+      jwt.sign({_id, email, name }, cfg.jwt.secretKey, o, (err, token) => {
         if (err) reject(err)
         resolve(token)
       })
