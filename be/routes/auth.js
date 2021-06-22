@@ -32,24 +32,28 @@ router.get('/kakao', passport.authenticate('kakao'));
 router.get('/kakao/callback', passport.authenticate('kakao', {
     failureRedirect: '/'
 }), (req, res) => {
-    const email = req.user.email
-    User.findOne({ email })
-      .then((r) => {
-        if (!r) throw new Error('존재하지 않는 아이디입니다.')
-        return signToken(r.email, r.name)
-      })
-      .then((r) => {
-        console.log('성공',r)
-        req.send({ success: true, token: r })
-      })
-      .catch((e) => {
-        console.log('실패',r)
-
-        res.send({ success: false, msg: e.message })
-
-      })
+    // console.log(req)
+    // console.log('###kakao callback###')
+    // const email = req.user.email
+    // console.log(req.user)
+    // console.log(req)
+    // console.log(req.user.email)
+    // console.log(req.authInfo)
+    // req.send({token: req.authInfo})
+    // localStorage.setItem('token', req.authInfo)
+                // this.$store.commit('getToken')
+                // this.$router.push('/') 
+    // User.findOne({ email })
+    //   .then((r) => {
+    //     console.log(r)
+    //     res.send({success:true, token:req.authInfo})
+    //   })
+    //   .catch((e) => {
+    //     console.log('실패',e)
+    //     res.send({ success: false, msg: e.message })
+    //   })
     // console.log(req.user.name)
-    res.redirect('/api')
+    res.redirect('/')
     // const { code } = req.query;
 });
 

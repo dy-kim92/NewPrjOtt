@@ -27,6 +27,7 @@ router.post('/', (req, res) => {
     if (remember === undefined) return res.send({ success: false, msg: '기억하기가 없습니다.'})
     User.findOne({ email })
       .then((r) => {
+        // console.log(r)
         if (!r) throw new Error('존재하지 않는 아이디입니다.')
         if (r.password !== password) throw new Error('비밀번호가 틀립니다.')
         return signToken(r._id, r.email, r.name, remember)

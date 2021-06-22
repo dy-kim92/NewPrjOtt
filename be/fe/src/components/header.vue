@@ -336,11 +336,7 @@ export default {
                 
         }
     },
-    methods: {    
-        checkSession() {
-            if (req.session.user.email)
-            alert('세션존재')
-        },
+    methods: {   
         mdUp () {
             this.dialog = true
         },
@@ -382,7 +378,7 @@ export default {
             .catch((e) => {
                 console.log(e)
             })
-},
+        },
         postData() {
             this.dialog2 = false // dialog 창닫기
             // 모든 검증을 통과한 경우 result = true 

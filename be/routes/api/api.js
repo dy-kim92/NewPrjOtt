@@ -31,7 +31,7 @@ const getToken = async(t) => {
   let vt = await verifyToken(t)
   const diff = moment(vt.exp * 1000).diff(moment(), 'seconds')
   // return vt
-  console.log(diff)
+  // console.log(diff)
   const expSec = (vt.exp - vt.iat)
   if (diff > expSec / cfg.jwt.expiresInDiv) return { user: vt, token: null }
   const nt = await signToken(vt._id, vt.email, vt.name, expSec)
@@ -42,8 +42,7 @@ const getToken = async(t) => {
 router.use('/register', require('./register/register.js'))
 router.use('/login', require('./login/localLogin.js'))
 router.use('/findpwd', require('./findpwd/sendmail.js'))
-router.use('/board', require('./board')) 
-router.use('/article', require('./article'))
+
 // router.use('/token', require('./tokencheck')) 
 
 // 토큰 검사 
@@ -51,7 +50,7 @@ router.all('*', function(req, res, next) {
   // console.log(token)
   getToken(req.headers.authorization)
     .then((v) => {
-      console.log(v)
+      // console.log(v)
       req.user = v.user
       req.token = v.token
       next()
@@ -59,7 +58,8 @@ router.all('*', function(req, res, next) {
     .catch(e => res.send({ success: false, msg: '로그아웃, 재로그인후 이용해주세요.'})) 
 });
 router.use('/token', require('./tokencheck')) 
-
+router.use('/board', require('./board')) 
+router.use('/article', require('./article'))
 // 잘못들어온 url 처리 해주기 
 router.all('*', function(req, res, next) {
   next(createError(404, '그런 api 없어'));

@@ -33,8 +33,8 @@ app.use(cors()) // 외부요청 허용
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/api', require('./routes/api/api.js'))
 app.use('/', indexRouter);
+app.use('/api', require('./routes/api/api.js'))
 app.use(history())
 // be bulid 수정
 app.use(express.static(path.join(__dirname, 'fe', 'dist')));
@@ -66,11 +66,13 @@ app.use(function(err, req, res, next) {
 // Article.create({ title: 'ccc', content: 'ccc', _user: '60ca123d5253fc334ca9581b', _board: '60cff1ed057bd394e5195cf7' })
 //   .then(r => console.log(r))
 
-const User = require('./models/users')
-const Board = require('./models/boards')
-const Article = require('./models/articles')
-Article.find({ _board: '60cff1ed057bd394e5195cf7'})
-  .populate('_user', 'name')
-  .populate('_board')
-  .then(r => console.log(r))
+// const User = require('./models/users')
+// const Board = require('./models/boards')
+// const Article = require('./models/articles')
+// Article.find({ _board: '60cff1ed057bd394e5195cf7'})
+//   .populate('_user', 'name')
+//   .populate('_board')
+//   .then(r => console.log(r))
+// let c = new Date(parseInt('60ca123d'.substring(0, 8), 16) * 1000).toLocaleString()
+// console.log(c)
 module.exports = app;
