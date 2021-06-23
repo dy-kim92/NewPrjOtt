@@ -17,14 +17,20 @@ router.post('/', (req, res, next) => {
     console.log(req.body)
     const { name, email, password } = req.body
     const u = new User({ name, email, password})
-    // db 저장 
-    u.save()
+    console.log('this is u.email', u.email)
+    let existEmail = User.find({email:u.email})
+    if (existEmail){
+        console.log('이메일이 이미 존재합니다.')
+    } else {
+        // db 저장 
+        u.save()
         .then(r => {
             res.send({ success: true, msg: r })
         })
         .catch(e => {
             res.send({ success: false, msg: e.message })
         })
+    }   
 })
 
 router.all('*', function(req, res, next) {

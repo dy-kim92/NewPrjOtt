@@ -33,6 +33,8 @@ router.post('/', (req, res) => {
         return signToken(r._id, r.email, r.name, remember)
       })
       .then((r) => {
+        console.log(r)
+        res.cookie("userCookie", r, { httpOnly: true, signed:true });
         res.send({ success: true, token: r })
       })
       .catch((e) => {

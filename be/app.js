@@ -26,13 +26,14 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// 쿠키 시크릿키
+app.use(cookieParser('cascacsfa'));
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors()) // 외부요청 허용
 // 소셜로그인
 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/api', require('./routes/api/api.js'))
 app.use(history())

@@ -2,12 +2,11 @@
     <div>
         <a href="/">로고&emsp;</a>
         <a href="/review">리뷰&emsp;</a>
-        <a href="/api/board/freeboard">게시판&emsp;</a>
+        <a href="/freeboard">게시판&emsp;</a>
         <a href="/board2">함께봐요&emsp;</a>
         <a href="/rank">실시간 검색순위&emsp;</a>
         <a href="/token">토큰체크페이지&emsp;</a>
-        <button v-if="$store.state.token" @click="logOut">로그아웃&emsp;</button>
-        <!-- <button @click="checkSession">세션체크버튼</button> -->
+        <a v-if="authEmail" href="http://localhost:3000/auth/logout">로그아웃&emsp;</a>
         <!-- 로그인 다이얼로그 -->
         <v-btn color="warning" fab dark @click="mdUp">
             <v-icon>mdi-account-circle</v-icon>
@@ -71,12 +70,15 @@
                         <a href="/auth/kakao" alt="kakao login">
                             <img src="../assets/kakao_login_medium_wide.png" alt="kakao">
                         </a>
+                        <a href="/auth/naver" alt="naver login">
+                            <img src="../assets/naver_login.png" alt="naver">
+                        </a>
                     </v-col>
                     </v-card-text>
                     <v-card-actions>    
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="mdUp2">회원가입</v-btn>
-                    <v-btn color="primary" @click="postLoginData">로그인</v-btn>
+                    <v-btn color="primary" @click="postLoginData" router-link to="/">로그인</v-btn>
                     <v-btn color="primary" @click.native="dialog = false">닫기</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -311,8 +313,22 @@ import axios from 'axios'
 
 export default {
   name: 'main-header',
+    created(){
+    var vm = this;
+    axios.get('http://localhost:3000/auth/info')
+        .then(res => {
+        // console.log("front :: " , res);
+        vm = res.data;
+        this.authName = vm.name;
+        this.authEmail = vm.email;
+        })
+        .catch(err => {
+        console.log(err);
+        })
+    },
     data () {
         return {
+
                 dialog: false,
                 dialog2: false,
                 dialog3: false,
@@ -321,6 +337,8 @@ export default {
                 show2: false,
                 show3: false,
                 show4: false,
+                authName:'',
+                authEmail:'',
                 email: '',
                 password: '',
                 name: '',
@@ -409,20 +427,19 @@ export default {
                 // console.log(r.data)
                 // alert(`안녕하세요${r.data}`)
                 console.log(r)
-                if (!r.data.success) return console.error(r.data.msg)
-                localStorage.setItem('token', r.data.token)
-                this.$store.commit('getToken')
-                this.$router.push('/') 
+                
+                // if (!r.data.success) return console.error(r.data.msg)
+                // localStorage.setItem('token', r.data.token)
+                // this.$store.commit('getToken')
+                // this.$router.push('/') 
             })
             .catch((e) => {
                 console.log(e)
             })
         },
-        logOut () {
-            // localStorage.removeItem('token')
-            this.$store.commit('delToken')
-            this.$router.push('/')
-        }
+        // logOut () {
+        //     // this.$router.push('/auth/logout')
+        // }
   }
 }
 </script>

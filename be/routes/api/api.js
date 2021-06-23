@@ -48,9 +48,11 @@ router.use('/findpwd', require('./findpwd/sendmail.js'))
 // 토큰 검사 
 router.all('*', function(req, res, next) {
   // console.log(token)
-  getToken(req.headers.authorization)
+  // getToken(req.headers.authorization)
+  // 쿠키 검사
+  getToken(req.signedCookies.userCookie)
     .then((v) => {
-      // console.log(v)
+      console.log(v)
       req.user = v.user
       req.token = v.token
       next()
