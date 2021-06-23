@@ -3,6 +3,7 @@ var createError = require('http-errors');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
+<<<<<<< HEAD
     const us = [
       {
         name: '김김김',
@@ -14,6 +15,9 @@ router.get('/', function(req, res, next) {
       }
     ]
     res.send({ users: us , token: req.token })
+=======
+    res.send('토큰체크 성공')
+>>>>>>> 68615bc637592a0a90ad09eefd4c9288ac3264b4
   });
   
   router.all('*', function(req, res, next) {

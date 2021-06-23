@@ -1,4 +1,8 @@
 exports.isLoggedIn = (req, res, next) => {
+<<<<<<< HEAD
+=======
+    console.log('istLoggenIn')
+>>>>>>> 68615bc637592a0a90ad09eefd4c9288ac3264b4
     if (req.isAuthenticated()) {
         next();
     } else {
@@ -7,6 +11,10 @@ exports.isLoggedIn = (req, res, next) => {
 };
 
 exports.isNotLoggedIn = (req, res, next) => {
+<<<<<<< HEAD
+=======
+    console.log('isNotLoggenIn')
+>>>>>>> 68615bc637592a0a90ad09eefd4c9288ac3264b4
     if (!req.isAuthenticated()) {
         next();
     } else {

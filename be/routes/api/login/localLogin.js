@@ -6,11 +6,16 @@ const cfg = require('../../../config')
 const User = require('../../../models/users')
 
 const signToken = (_id, email, name, rmb) => {
+<<<<<<< HEAD
+=======
+    return new Promise((resolve, reject) => {
+>>>>>>> 68615bc637592a0a90ad09eefd4c9288ac3264b4
       const o = {
         subject: cfg.jwt.subject,
         expiresIn: cfg.jwt.expiresIn, // 3분
         algorithm: cfg.jwt.algorithm
       }
+<<<<<<< HEAD
       var expiryDate = new Date( Date.now() + cfg.jwt.expiresIn); // 단위 ms
       
       if (rmb) {
@@ -34,6 +39,14 @@ const signToken = (_id, email, name, rmb) => {
       res.cookie("userCookie", token, { expires: expiryDate, httpOnly: true, signed:true });
       
       // })
+=======
+      if (rmb) o.expiresIn = cfg.jwt.expiresInRemember // 체크박스 체크시 6일
+      jwt.sign({_id, email, name }, cfg.jwt.secretKey, o, (err, token) => {
+        if (err) reject(err)
+        resolve(token)
+      })
+    })
+>>>>>>> 68615bc637592a0a90ad09eefd4c9288ac3264b4
   }
 // login ============================================================
 router.post('/', (req, res) => {
@@ -43,6 +56,7 @@ router.post('/', (req, res) => {
     if (remember === undefined) return res.send({ success: false, msg: '기억하기가 없습니다.'})
     User.findOne({ email })
       .then((r) => {
+<<<<<<< HEAD
         if (!r) throw new Error('존재하지 않는 아이디입니다.')
         if (r.password !== password) throw new Error('비밀번호가 틀립니다.')
 
@@ -80,6 +94,17 @@ router.post('/', (req, res) => {
       // })
       .catch((e) => {
         console.log('22222222222222')
+=======
+        // console.log(r)
+        if (!r) throw new Error('존재하지 않는 아이디입니다.')
+        if (r.password !== password) throw new Error('비밀번호가 틀립니다.')
+        return signToken(r._id, r.email, r.name, remember)
+      })
+      .then((r) => {
+        res.send({ success: true, token: r })
+      })
+      .catch((e) => {
+>>>>>>> 68615bc637592a0a90ad09eefd4c9288ac3264b4
         res.send({ success: false, msg: e.message })
       })
   })

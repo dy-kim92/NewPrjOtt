@@ -2,7 +2,7 @@
     <div>
         <a href="/">로고&emsp;</a>
         <a href="/review">리뷰&emsp;</a>
-        <a href="/board">게시판&emsp;</a>
+        <a href="/api/board/freeboard">게시판&emsp;</a>
         <a href="/board2">함께봐요&emsp;</a>
         <a href="/rank">실시간 검색순위&emsp;</a>
         <a href="/token">토큰체크페이지&emsp;</a>
@@ -79,7 +79,7 @@
                         </a>
                     </v-col>
                     </v-card-text>
-                    <v-card-actions>
+                    <v-card-actions>    
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="mdUp2">회원가입</v-btn>
                     <v-btn color="primary" @click="postLoginData">로그인</v-btn>
@@ -87,7 +87,6 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-
             <!-- 회원가입 다이얼로그 -->
             <v-dialog v-model="dialog2" width="500">
             <v-card>
@@ -162,22 +161,6 @@
                             :error-messages="errors"
                     ></v-text-field>
                     </validation-provider>
-                    <!-- 약관동의 -->
-                    <!-- <validation-provider
-                    :rules="{
-                            required:true,}"
-                    >
-                    <v-checkbox
-                    v-model="checkbox"
-                    label="사이트 이용 약관 동의"
-                    ></v-checkbox>
-                    </validation-provider> -->
-
-                    <!-- <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">Validate</v-btn>
-
-                    <v-btn color="error" class="mr-4" @click="reset">Reset Form</v-btn>
-
-                    <v-btn color="warning" @click="resetValidation">Reset Validation</v-btn> -->
 
                 <v-divider></v-divider>
 
@@ -191,6 +174,136 @@
                 </v-card-text>
             </v-card>
             </v-dialog>
+            <!-- 비밀번호찾기 다이얼로그 -->
+            <v-dialog
+            v-model="dialog3"
+            max-width="600px"
+            >
+            <v-card>
+                <!-- 다이얼로그 타이틀 -->
+                <v-card-title>
+                <span class="text-h5">비밀번호찾기</span>
+                </v-card-title>
+                <validation-observer
+                    ref="observer"
+                    v-slot="{ invalid }"
+                >
+                <v-form @submit.prevent="postUpdateData">
+                    <v-card-text>
+                    <v-container>
+                        <v-row>
+                        <v-col cols="8">
+                            <validation-provider
+                                v-slot="{errors}"
+                                name="이메일"
+                                :rules="{
+                                    required:true,
+                                    email:true,
+                                    }"
+                            >
+                            <v-text-field
+                            label="이메일을 입력해주세요"
+
+                            :error-messages="errors"
+                            v-model="findemail"
+                            ></v-text-field>
+                            </validation-provider>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-btn
+                            elevation="2"
+                            plain
+                            @click="postFindPwdData"
+                            >인증코드전송</v-btn>
+                        </v-col>
+                        <v-col cols="12">
+                            <validation-provider
+                                v-slot="{errors}"
+                                name="인증코드"
+                                :rules="{
+                                    required:true,
+                                    confirmed:'인증코드확인체크'
+                                    }"
+                            >
+                            <v-text-field
+                            label="인증코드를 입력해주세요"
+                            v-model="inputcfcode"
+                            :error-messages="errors"
+                            ></v-text-field>
+                            </validation-provider>
+                        </v-col>
+                        <validation-provider
+                        name="인증코드확인체크">
+                        <v-text-field 
+                        v-model="cfcode" :type="password"
+                         class="hiddenfield">
+                        </v-text-field>
+                        </validation-provider>
+                        <v-col cols="12">
+                        <validation-provider
+                            v-slot="{errors}"
+                            name="새로운비밀번호"
+                            :rules="{
+                                required:true,
+                                min:8,
+                                }"
+                        >
+                        <v-text-field v-model="newpassword"
+                                :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show3 ? 'text' : 'password'"
+                                name="input-10-1"
+                                label="새로운 비밀번호를 입력해주세요"
+                                counter
+                                @click:append="show3 = !show3"
+                                :error-messages="errors"
+                            ></v-text-field>
+                        </validation-provider>
+                        </v-col>
+                    <!--비밀번호 일치 Validation -->
+                    <v-col cols="12">
+                        <validation-provider
+                            v-slot="{errors}"
+                            name="새로운비밀번호확인"
+                            :rules="{
+                                required:true,
+                                confirmed:'새로운비밀번호'
+                                }"
+                        >
+                        <v-text-field v-model="newpasswordck"
+                                :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                                :type="show4 ? 'text' : 'password'"
+                                name="input-10-1"
+                                label="비밀번호 확인"
+                                counter
+                                @click:append="show4 = !show4"
+                                :error-messages="errors"
+                        ></v-text-field>
+                        </validation-provider>
+                        </v-col>
+                    </v-row>
+                    </v-container>
+                    </v-card-text>
+                <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="dialog3 = false"
+                >
+                    취소
+                </v-btn>
+                <v-btn
+                    color="blue darken-1"
+                    type="submit"
+                    :disabled='invalid'
+                >
+                    전송
+                </v-btn>
+                </v-card-actions>
+                </v-form>
+                </validation-observer>
+            </v-card>
+            </v-dialog>
         </v-btn>
     </div>
 
@@ -200,15 +313,19 @@
  
 <script>
 import axios from 'axios'
+
 export default {
   name: 'main-header',
-
     data () {
         return {
                 dialog: false,
                 dialog2: false,
+                dialog3: false,
+                dialog4: false,
                 show1: false,
                 show2: false,
+                show3: false,
+                show4: false,
                 email: '',
                 password: '',
                 name: '',
@@ -234,12 +351,48 @@ export default {
         console.log(err);
         })
     },
-    methods: {    
+    methods: {   
         mdUp () {
             this.dialog = true
         },
         mdUp2 () {
             this.dialog2 = true
+        },
+        mdUp3 () {
+            this.dialog3 = true
+        },
+        postUpdateData () {
+            this.dialog3 = false,
+            this.dialog4 = true,
+            this.$refs.observer.validate().then(result => {
+                if (result) {
+                    axios.post('http://localhost:3000/api/findpwd/updatepwd',{
+                        email:this.findemail,
+                        password:this.newpassword
+                    })
+                    .then((r) => {
+                        console.log(r)
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    })
+                }
+            })
+               
+        },
+        postFindPwdData () {
+            console.log(this.findemail)
+            axios.post('http://localhost:3000/api/findpwd',{
+                email: this.findemail
+            })
+            .then((r) => {
+                console.log(r)
+                this.cfcode = r.data.cfcode
+                // console.log(r.data.cfcode)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
         },
         postData() {
             this.dialog2 = false // dialog 창닫기
@@ -276,6 +429,11 @@ export default {
                 // // this.$store.commit('getToken')
                 // this.$router.push('/').catch(()=>{});
                 // this.$router.push('/') 
+                console.log(r)
+                if (!r.data.success) return console.error(r.data.msg)
+                localStorage.setItem('token', r.data.token)
+                this.$store.commit('getToken')
+                this.$router.push('/') 
             })
             .catch((e) => {
                 console.log(e)
@@ -291,4 +449,7 @@ export default {
 </script>
  
 <style scoped>
+.hiddenfield{
+    display:none
+}
 </style>

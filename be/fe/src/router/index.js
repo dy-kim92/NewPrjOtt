@@ -39,7 +39,7 @@ const routes = [
     component:  Review
   },
   {
-    path: '/board',
+    path: '/api/board/freeboard',
     name: 'FreeBoard',
     component:  FreeBoard
   },
