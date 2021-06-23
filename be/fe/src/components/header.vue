@@ -5,8 +5,12 @@
         <a href="/board">게시판&emsp;</a>
         <a href="/board2">함께봐요&emsp;</a>
         <a href="/rank">실시간 검색순위&emsp;</a>
-        <a href="/dbuser">디비유저확인&emsp;</a>
-
+        <a href="/token">토큰체크페이지&emsp;</a>
+        <button v-if="$store.state.token" @click="logOut">로그아웃&emsp;</button>
+        <br>
+        <p>테스트 :: {{authEmail}}, {{authName}}</p>
+        <a v-if="authName" href="/auth/logout">로그아웃</a>
+        <p v-else>로그인해</p>
 
         <!-- 로그인 다이얼로그 -->
         <v-btn color="warning" fab dark @click="mdUp">
@@ -60,8 +64,20 @@
                             </v-col>
                         </v-row>
                         </v-container>
+                        <v-checkbox
+                            v-model="remember"
+                            label="로그인 유지"
+                        ></v-checkbox>
                     </v-form>
                     </validation-observer>
+                    <v-col>
+                        <a href="/auth/kakao" alt="kakao login">
+                            <img alt="kakao logo" src="../assets/kakao_login_medium_wide.png" />
+                        </a>
+                        <a href="/auth/naver" alt="naver login">
+                            <img alt="naver logo" src="../assets/naver_login.png" />
+                        </a>
+                    </v-col>
                     </v-card-text>
                     <v-card-actions>
                     <v-spacer></v-spacer>
@@ -183,11 +199,10 @@
 </template>
  
 <script>
-
 import axios from 'axios'
 export default {
   name: 'main-header',
-    
+
     data () {
         return {
                 dialog: false,
@@ -200,7 +215,24 @@ export default {
                 joinEmail: '',
                 joinPassword: '',
                 checkPassword: '',
+                remember: false,
+                authEmail: '',
+                authName: '',
         }
+    },
+    created(){
+        //  쿠키 정보를 읽어오는 부분
+    var vm = this;
+    axios.get('/auth/info')
+        .then(res => {
+        console.log("front :: " , res);
+        vm = res.data;
+        this.authName = vm.name;
+        this.authEmail = vm.email;
+        })
+        .catch(err => {
+        console.log(err);
+        })
     },
     methods: {    
         mdUp () {
@@ -233,13 +265,26 @@ export default {
             axios.post('http://localhost:3000/api/login',{
                 email: this.email,
                 password: this.password,
+                remember: this.remember
             })
             .then((r) => {
-                console.log(r)
+                // console.log(r.data)
+                // alert(`안녕하세요${r.data}`)
+                // console.log(r)
+                // if (!r.data.success) return console.error(r.data.msg)
+                // // localStorage.setItem('token', r.data.token)
+                // // this.$store.commit('getToken')
+                // this.$router.push('/').catch(()=>{});
+                // this.$router.push('/') 
             })
             .catch((e) => {
                 console.log(e)
             })
+        },
+        logOut () {
+            // localStorage.removeItem('token')
+            this.$store.commit('delToken')
+            this.$router.push('/')
         }
   }
 }
