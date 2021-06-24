@@ -323,7 +323,7 @@ export default {
         this.authEmail = vm.email;
         })
         .catch(err => {
-        console.log(err);
+        // console.log(err);
         })
     },
     data () {
