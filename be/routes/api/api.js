@@ -43,9 +43,7 @@ router.use('/register', require('./register/register.js'))
 router.use('/login', require('./login/localLogin.js'))
 router.use('/findpwd', require('./findpwd/sendmail.js'))
 
-router.use('/token', require('./tokencheck')) 
-router.use('/board', require('./board')) 
-router.use('/article', require('./article'))
+
 // 토큰 검사 
 router.all('*', function(req, res, next) {
   // console.log(token)
@@ -53,13 +51,16 @@ router.all('*', function(req, res, next) {
   // 쿠키 검사
   getToken(req.signedCookies.userCookie)
     .then((v) => {
-      console.log(v)
+      // console.log('this is v', v)
       req.user = v.user
       req.token = v.token
       next()
     })
     .catch(e => res.send({ success: false, msg: '로그아웃, 재로그인후 이용해주세요.'})) 
 });
+router.use('/token', require('./tokencheck')) 
+router.use('/board', require('./board')) 
+router.use('/article', require('./article'))
 
 // 잘못들어온 url 처리 해주기 
 router.all('*', function(req, res, next) {

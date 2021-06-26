@@ -4,7 +4,12 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import './plugins'
+
+
+
+
 Vue.config.productionTip = false
+// editor 전역에서 사용
 
 new Vue({
   router,

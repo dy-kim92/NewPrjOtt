@@ -11,7 +11,7 @@ router.get('/list/:_board', (req, res, next) => {
     // console.log('get_board', _board)
     // params 값 받아오기
     let { skip, limit } = req.query
-    console.log("skip,limit",skip,limit)
+    // console.log("skip,limit",skip,limit)
     skip = parseInt(skip)
     limit = parseInt(limit)
     let total = 0
@@ -23,14 +23,14 @@ router.get('/list/:_board', (req, res, next) => {
       .then(r => {
         // 데이터 total 값 세팅
         total = r
-        console.log('데이터 total 값', r)
+        // console.log('데이터 total 값', r)
         return Article.find(f)
           .where('title')
           .skip(skip)
           .limit(limit)
           .select('-content')
            //content, password 제외
-          .populate('_user', '_password') 
+          .populate('_user', '-password') 
       })
       .then(rs => {
         res.send({ success: true, t: total, ds: rs, token: req.token})
@@ -42,6 +42,7 @@ router.get('/list/:_board', (req, res, next) => {
 // 상세 페이지
 router.get('/read/:_id', (req, res, next) => {
   const _id = req.params._id
+  
   // 조회수  { new : true }원본이 아닌 수정 된 문서를 반환
   Article.findByIdAndUpdate(_id, { $inc: { 'cnt.view': 1 } }, { new: true })
     .select('content cnt.view')
