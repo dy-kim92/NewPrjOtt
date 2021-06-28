@@ -85,7 +85,7 @@
             fab
             dark
             small
-            @click="likePlus"
+            @click="heart"
             color="pink"
           >
             <v-icon dark>
@@ -96,7 +96,7 @@
           <v-btn color="error darken-1" @click.native="ca=true">삭제</v-btn>
           <v-btn color="secondary darken-1" @click.native="dialog = false">닫기</v-btn>
         </v-card-actions>
-        <v-card-text>
+
           <v-card-text v-if="ca">
             <v-alert v-model="ca" type="warning">
               <h4>정말 진행 하시겠습니까?</h4>
@@ -104,11 +104,62 @@
               <v-btn color="secondary" @click="ca=false">취소</v-btn>
             </v-alert>
           </v-card-text>
+
+          <v-divider></v-divider>
+        <v-list two-line v-for="comment in selArticle._comments" :key="comment._id">
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{comment.content}}</v-list-item-title>
+              <v-list-item-subtitle>{{comment._user.name}}</v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-btn
+                  icon
+                  ripple
+                  @click="commentDialogOpen(comment)"
+              >
+                <v-icon right color="warning lighten-1">
+                  mdi-keyboard-return
+                </v-icon>
+              </v-btn>
+
+            </v-list-item-action>
+            <v-list-item-action>
+              <v-btn
+                  icon
+                  ripple
+                  @click="delComment(comment)"
+              >
+                <v-icon right color="error">
+                  mdi-eraser
+                </v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
+          <v-divider></v-divider>
+        </v-list>
+        <v-card-text>
+          <v-text-field
+              label="댓글 작성"
+              v-model="formComment.content"
+              append-icon="mdi-send"
+              @keyup.enter="checkComment"
+              @click:append="checkComment"
+          >
+          </v-text-field>
         </v-card-text>
+
       </v-card>
       <v-card v-else>
         <v-card-title>
           <span class="headline">글 {{(dlMode === 1) ? '작성' : '수정'}}</span>
+          <v-spacer></v-spacer>
+          <v-btn
+              icon
+              @click="dialog=!dialog"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
@@ -140,6 +191,30 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog width="400" v-model="commentDialog">
+      <v-card>
+        <v-card-text>
+          <v-card-title>
+            <span class="headline">댓글 수정</span>
+          </v-card-title>
+          <v-text-field
+              label="댓글 수정"
+              v-model="selComment.content"
+              @keyup.enter="modComment()"
+          >
+
+          </v-text-field>
+
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="warning" @click="modComment()">
+            수정
+          </v-btn>
+          <v-btn color="secondary" @click="commentDialog = false">닫기</v-btn>
+        </v-card-actions>
+      </v-card>
+
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -168,9 +243,21 @@ export default {
       search:'',
       articles: [],
       dialog: false,
+
+      commentDialog: false,
+      selArticle: {
+        _comments: []
+      },
+      selComment: {
+        content: ''
+      },
+      formComment: {
+        content: '',
+      },
+
       form: {
         title: '',
-        content: ''
+        content: '',
       },
        headers: [
         { text: '날짜', value: '_id', sortable: true, class: 'hidden-sm-and-down' },
@@ -186,7 +273,6 @@ export default {
       dlMode: 0, // 0: read, 1: write, 2: modify
       selArticle: {},
       ca: false, // 한번더 확인
-      like:0,
       toggle: false, // toggle
     }
   },
@@ -213,16 +299,20 @@ export default {
     this.get()
   },
   methods: {
-    likePlus () {
-      this.like += 1
-      console.log(this.like)
+    commentDialogOpen (c) {
+      this.commentDialog = true
+      this.selComment = c
+    },
+    checkComment () {
+      if (this.dlMode === 0) this.addComment()
+      else if (this.dlMode === 1) this.add()
     },
     addDialog () {
       this.dialog = true
       this.dlMode = 1
       this.form = {
         title: '',
-        content: ''
+        content: '',
       }
     },
     modDialog () {
@@ -290,14 +380,22 @@ export default {
           this.dlMode = 0
           this.dialog = true
           this.selArticle.content = data.d.content
-          console.log(this.selArticle.content)
           this.selArticle.cnt.view = data.d.cnt.view
+          this.selArticle._comments = data.d._comments
           this.loading = false
           this.toggle = true
         })
         .catch((e) => {
           this.$store.commit('pop', { msg: e.message, color: 'warning' })
           this.loading = false
+        })
+    },
+    heart() {
+      axios.put(`http://localhost:3000/api/article/${this.selArticle._id}/heart`, this.like)
+        .then((r) => {
+        })
+        .catch((e) => {
+          this.$store.commit('pop', { msg: e.message, color: 'warning' })
         })
     },
     mod () {
@@ -310,6 +408,7 @@ export default {
         .then(({ data }) => {
           this.dialog = false
           if (!data.success) throw new Error(data.msg)
+          console.log(this.selArticle)
           this.selArticle.title = data.d.title
           this.selArticle.content = data.d.content
           this.list()
@@ -333,6 +432,41 @@ export default {
       if (!val) return '잘못된 시간 정보'
       // 앞 8글자 16진수 변환후 1000 곱하기
       return new Date(parseInt(val.substring(0, 8), 16) * 1000).toLocaleString()
+    },
+    addComment () {
+      axios.post(`http://localhost:3000/api/comment/${this.selArticle._id}`, this.formComment)
+        .then(({ data }) => {
+          if (!data.success) throw new Error(data.msg)
+          this.formComment.content = ''
+          console.log(this.selArticle._comments)
+          this.read(this.selArticle)
+          // this.list()
+        })
+        .catch((e) => {
+          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+        })
+    },
+    delComment (cmt) {
+      axios.delete(`http://localhost:3000/api/comment/${cmt._id}`)
+        .then(({ data }) => {
+          if (!data.success) throw new Error(data.msg)
+          this.read(this.selArticle)
+        })
+        .catch((e) => {
+          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+        })
+    },
+    modComment () {
+      if (!this.selComment.content) return this.$store.commit('pop', { msg: '내용을 작성해주세요', color: 'warning' })
+      this.commentDialog = false
+      axios.put(`http://localhost:3000/api/comment/${this.selComment._id}`, { content: this.selComment.content })
+        .then(({ data }) => {
+          if (!data.success) throw new Error(data.msg)
+          this.read(this.selArticle)
+        })
+        .catch((e) => {
+          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+        })
     }
   }
 }

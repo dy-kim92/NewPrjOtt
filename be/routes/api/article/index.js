@@ -4,7 +4,7 @@ var router = express.Router();
 const User = require('../../../models/users')
 const Board = require('../../../models/boards')
 const Article = require('../../../models/articles')
-
+const Comment = require('../../../models/comments')
 // board 리스트 
 router.get('/list/:_board', (req, res, next) => {
     const _board = req.params._board
@@ -42,12 +42,20 @@ router.get('/list/:_board', (req, res, next) => {
 // 상세 페이지
 router.get('/read/:_id', (req, res, next) => {
   const _id = req.params._id
-  
-  // 조회수  { new : true }원본이 아닌 수정 된 문서를 반환
-  Article.findByIdAndUpdate(_id, { $inc: { 'cnt.view': 1 } }, { new: true })
-    .select('content cnt.view')
+  let atc = {}
+  // console.log('req.query', req.query)
+  // 조회수  { new : true }원본이 아닌 수정 된 문서를 반환 lean => 문서 수정가능
+  Article.findByIdAndUpdate(_id, { $inc: { 'cnt.view': 1 } }, { new: true }).lean()
+    .select('content cnt')
     .then(r => {
-      res.send({ success: true, d: r, token: req.token })
+      atc = r
+      atc._comments = []
+      return Comment.find({ _article: atc._id }).populate({ path: '_user', select: 'id name'}).sort({ _id: 1 }).limit(5)
+    })
+    .then(rs => {
+      if (rs) atc._comments = rs
+      console.log(rs)
+      res.send({ success: true, d: atc, token: req.token })
     })
     .catch(e => {
       res.send({ success: false, msg: e.message })
@@ -83,12 +91,26 @@ router.post('/:_board', (req, res, next) => {
 router.put('/:_id', (req, res, next) => {
   if (!req.user._id) return res.send({ success: false, msg: '게시물 수정 권한이 없습니다' })
   const _id = req.params._id
+  console.log(req.body)
   Article.findById(_id)
     .then(r => {
       if (!r) throw new Error('게시물이 존재하지 않습니다')
       if (r._user.toString() !== req.user._id) throw new Error('본인이 작성한 게시물이 아닙니다')
       return Article.findByIdAndUpdate(_id, { $set: req.body}, { new: true })
     })
+    .then(r => {
+      res.send({ success: true, d: r, token: req.token })
+    })
+    .catch(e => {
+      res.send({ success: false, msg: e.message })
+    })
+})
+//  추천 + 
+router.put('/:_id/heart', (req, res, next) => {
+  const _id = req.params._id
+  console.log('like _id',_id)
+  Article.findByIdAndUpdate(_id, { $inc: { 'cnt.like': 1 } }, { new: true })
+    .select('content cnt.view cnt.like')
     .then(r => {
       res.send({ success: true, d: r, token: req.token })
     })

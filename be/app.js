@@ -11,8 +11,10 @@ const jwt = require('jsonwebtoken'); // JWT
 const passport = require('passport'); // 소셜로그인
 const passportConfig = require('./passport');
 var app = express();
+
 passportConfig();
 const mongoose = require('mongoose')
+
 
 mongoose.connect('mongodb://localhost:27017/nemv', { useNewUrlParser: true }, (err) => {
    if (err) return console.error(err)
@@ -59,5 +61,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
