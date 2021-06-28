@@ -29,6 +29,37 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+
+var io = require('socket.io')(server, {
+  cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+      transports: ['websocket', 'polling'],
+      credentials: true
+  },
+  allowEIO3: true
+});
+
+io.on('connection' , function(socket) {
+  console.log('Connect from Client: '+ socket)
+
+  socket.on('hello', function(data){
+      console.log('hello from Client: '+ data)
+  });
+
+  socket.on('chat', function(data){
+      console.log('message from Client: '+data.message)
+      var rtnMessage = {
+          message: data.message
+      };
+
+      // 클라이언트에게 메시지를 전송한다
+      socket.broadcast.emit('chat', rtnMessage);
+  });
+
+
+})
+
 /**
  * Normalize a port into a number, string, or false.
  */

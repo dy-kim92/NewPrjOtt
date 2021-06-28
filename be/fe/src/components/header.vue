@@ -6,6 +6,7 @@
         <a href="/board2">함께봐요&emsp;</a>
         <a href="/rank">실시간 검색순위&emsp;</a>
         <a href="/token">토큰체크페이지&emsp;</a>
+        <a href="/chat">웹소켓&emsp;</a>
         <a v-if="authEmail" href="http://localhost:3000/auth/logout">로그아웃&emsp;</a>
         <!-- 로그인 다이얼로그 -->
         <v-btn color="warning" fab dark @click="mdUp">
@@ -319,6 +320,7 @@ export default {
         .then(res => {
         // console.log("front :: " , res);
         vm = res.data;
+        this.authId = vm._id;
         this.authName = vm.name;
         this.authEmail = vm.email;
         })
@@ -337,6 +339,7 @@ export default {
                 show2: false,
                 show3: false,
                 show4: false,
+                authId: '',
                 authName:'',
                 authEmail:'',
                 email: '',
