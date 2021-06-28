@@ -7,6 +7,7 @@ import FreeBoard2 from '../views/FreeBoard2.vue'
 import SearchRank from '../views/SearchRank.vue'
 import Token from '../views/token.vue'
 import E404 from '../views/e404.vue'
+import Chat from '../views/Chat.vue'
 import axios from 'axios'
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ Vue.use(VueRouter)
 //   return Promise.reject(error)
 // })
 const routes = [
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: Chat
+  },
   {
     path: '/review',
     name: 'Review',
