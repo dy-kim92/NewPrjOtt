@@ -380,7 +380,7 @@ export default {
                         console.log(r)
                     })
                     .catch((e) => {
-                        console.log(e)
+                        this.$store.commit('pop', { msg: e.message, color: 'warning' })
                     })
                 }
             })
@@ -397,7 +397,7 @@ export default {
                 // console.log(r.data.cfcode)
             })
             .catch((e) => {
-                console.log(e)
+                this.$store.commit('pop', { msg: e.message, color: 'warning' })
             })
         },
         postData() {
@@ -411,10 +411,12 @@ export default {
                         password: this.joinPassword
                     })
                     .then((r) => {
-                        console.log(r)
-                    })
+                        if (r.data.success==false){
+                            this.$store.commit('pop', { msg: '중복된 이메일입니다.', color: 'warning' })
+                        } else this.$store.commit('pop', { msg: '회원가입 완료되었습니다.', color: 'success'})
+                    })  
                     .catch((e) => {
-                        console.log(e)
+                        this.$store.commit('pop', { msg: 'e.message', color: 'warning' })
                     })
                 }
             })
@@ -427,17 +429,12 @@ export default {
                 remember: this.remember
             })
             .then((r) => {
-                // console.log(r.data)
-                // alert(`안녕하세요${r.data}`)
-                console.log(r)
-                
-                // if (!r.data.success) return console.error(r.data.msg)
-                // localStorage.setItem('token', r.data.token)
-                // this.$store.commit('getToken')
-                // this.$router.push('/') 
+                if (r.data.success==false){
+                    this.$store.commit('pop', { msg: '로그인 실패', color: 'warning' })
+                } else this.$store.commit('pop', { msg: '로그인 성공', color: 'success'})
             })
             .catch((e) => {
-                console.log(e)
+                this.$store.commit('pop', { msg: e.message, color: 'warning' })
             })
         },
         // logOut () {

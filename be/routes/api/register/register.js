@@ -14,23 +14,44 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', (req, res, next) => {
-    console.log(req.body)
-    const { name, email, password } = req.body
-    const u = new User({ name, email, password})
-    console.log('this is u.email', u.email)
-    let existEmail = User.find({email:u.email})
-    if (existEmail){
-        console.log('이메일이 이미 존재합니다.')
-    } else {
-        // db 저장 
-        u.save()
-        .then(r => {
-            res.send({ success: true, msg: r })
-        })
-        .catch(e => {
-            res.send({ success: false, msg: e.message })
-        })
-    }   
+    // console.log(req.body)
+    // const { name, email, password } = req.body
+    // const u = new User({ name, email, password})
+    // console.log('this is u.email', u.email)
+    // let existEmail = User.findOne({email:u.email})
+    // console.log(existEmail)
+    // if (existEmail){
+    //     console.log('이메일이 이미 존재합니다.')}
+  const u = req.body
+  User.findOne({ email: u.email })
+    .then((r) => {
+      if (r) throw new Error('이미 등록되어 있는 아이디입니다.')
+      return User.create(u)
+    })
+    .then((r) => {
+      res.send({ success: true })
+    })
+    .catch((e) => {
+      res.send({ success: false, msg: e.message })
+    })
+    // } else {
+    //     // db 저장 
+    //     u.save()
+    //     .then(r => {
+            
+    //     })
+    //     .catch(e => {
+    //         res.send({ success: false, msg: e.message })
+    //     })
+    // }   
+    // User.findOne({ email: u.email })
+    // .then((r) => {
+    //     if (r) throw new Error('이미 등록되어 있는 아이디입니다.')
+    //     // else u.save()
+    // })
+    // .catch((e) => {
+    //     res.send({ success: false, msg: e.message })
+    // })
 })
 
 router.all('*', function(req, res, next) {
