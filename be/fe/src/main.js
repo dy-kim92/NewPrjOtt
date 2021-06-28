@@ -14,6 +14,7 @@ Vue.use(Directives)
 Vue.use(VueMaterial)
 
 Vue.config.productionTip = false
+// editor 전역에서 사용
 
 new Vue({
   router,

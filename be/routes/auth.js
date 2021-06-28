@@ -68,7 +68,7 @@ router.get('/naver/callback', function (req, res, next) {
 function createCookie(user, res){
   const token = jwt.sign(
     {
-      id: user._id,
+      _id: user._id,
       email: user.email,
       name: user.name
     }, // 토큰에 입력할 private 값
