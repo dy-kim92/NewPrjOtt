@@ -62,6 +62,7 @@ router.all('*', function(req, res, next) {
 router.use('/token', require('./tokencheck')) 
 router.use('/board', require('./board')) 
 router.use('/article', require('./article'))
+router.use('/movie', require('./movie'))
 router.use('/comment', require('./comment'))
 
 // 잘못들어온 url 처리 해주기 
