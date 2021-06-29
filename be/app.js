@@ -6,6 +6,7 @@ var logger = require('morgan');
 const history = require('connect-history-api-fallback')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var Movie = require('./models/movies');
 const cors = require('cors') // 외부요청 허용
 const jwt = require('jsonwebtoken'); // JWT
 const passport = require('passport'); // 소셜로그인
@@ -61,6 +62,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+// const User = require('./models/users')
+// const Board = require('./models/boards')
+// var Movie = require('./models/movies');
+// Movie.create({"title_kr":"2"})
 
 
 module.exports = app;
