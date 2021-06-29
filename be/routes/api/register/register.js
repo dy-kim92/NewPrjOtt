@@ -18,7 +18,7 @@ router.post('/', (req, res, next) => {
     const { name, email, password } = req.body
     const u = new User({ name, email, password})
     console.log('this is u.email', u.email)
-    let existEmail = User.find({email:u.email})
+    let existEmail = User.findOne({email:u.email})
     if (existEmail){
         console.log('이메일이 이미 존재합니다.')
     } else {

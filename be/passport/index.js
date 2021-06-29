@@ -6,8 +6,4 @@ module.exports = () => {
     kakao();
     naver();
     
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
