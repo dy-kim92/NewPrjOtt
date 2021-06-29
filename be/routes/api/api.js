@@ -63,6 +63,7 @@ router.use('/token', require('./tokencheck'))
 router.use('/board', require('./board')) 
 router.use('/article', require('./article'))
 router.use('/comment', require('./comment'))
+router.use('/chat', require('./chat'))
 
 // 잘못들어온 url 처리 해주기 
 router.all('*', function(req, res, next) {

@@ -4,6 +4,7 @@
             <md-app-toolbar class="md-primary">
                 <div class="md-toolbar-row">
                     <span class="md-title">웹소켓 테스트</span>
+                    <p>ID : {{authId}}, NAME : {{authName}}, EMAIL : {{authEmail}}</p>
                 </div>
             </md-app-toolbar>
             <md-app-content>
@@ -29,26 +30,27 @@
 
 <script>
 
+import axios from 'axios'
 
     export default {
         name: 'HelloWorld',
-        created(){
-        var vm = this;
-        axios.get('http://localhost:3000/auth/info')
-            .then(res => {
-            // console.log("front :: " , res);
-            vm = res.data;
-            this.authName = vm.name;
-            this.authEmail = vm.email;
-            this.authId = vm._id;
-            })
-            .catch(err => {
-            // console.log(err);
-            })
-        },
         created() {
+            var vm = this;
+            axios.get('http://localhost:3000/auth/info')
+                .then(res => {
+                // console.log("front :: " , res);
+                vm = res.data;
+                this.authName = vm.name;
+                this.authEmail = vm.email;
+                this.authId = vm._id;
+                })
+                .catch(err => {
+                // console.log(err);
+            })
+
+            //  클라이언트로부터 새로운 대화내용 받아와 표시
             this.$socket.on('chat', (data)=> {
-                this.textarea += "[" + this.authName + "] " + data.message + "\n"
+                this.textarea += "[" + data.authName + "] " + data.message + "\n"
             })
         },
         data() {
@@ -63,9 +65,10 @@
         },
         methods: {
             sendMessage () {
-
+                //  입력 내용 전송
                 this.$socket.emit('chat',{
-                    message: this.message
+                    message: this.message,
+                    authName: this.authName
                 });
 
                 this.textarea += "[" + this.authName + "] " + this.message + "\n"

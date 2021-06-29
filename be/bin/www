@@ -50,9 +50,11 @@ io.on('connection' , function(socket) {
   });
 
   socket.on('chat', function(data){
-      console.log('message from Client: '+data.message)
+      console.log('message from Client: ' + data.message)
+      console.log('name from : ' + data.authName)
       var rtnMessage = {
-          message: data.message
+          message: data.message,
+          authName: data.authName
       };
 
       // 클라이언트에게 메시지를 전송한다
