@@ -64,6 +64,7 @@ router.use('/board', require('./board'))
 router.use('/article', require('./article'))
 router.use('/movie', require('./movie'))
 router.use('/comment', require('./comment'))
+router.use('/mvcomment', require('./mvcomment'))
 router.use('/chat', require('./chat'))
 
 // 잘못들어온 url 처리 해주기 

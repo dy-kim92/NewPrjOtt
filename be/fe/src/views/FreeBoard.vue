@@ -450,6 +450,7 @@ export default {
       axios.delete(`http://localhost:3000/api/comment/${cmt._id}`)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
+          this.$store.commit('pop', { msg: '삭제완료', color: 'success' })
           this.read(this.selArticle)
         })
         .catch((e) => {
@@ -462,6 +463,7 @@ export default {
       axios.put(`http://localhost:3000/api/comment/${this.selComment._id}`, { content: this.selComment.content })
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
+          this.$store.commit('pop', { msg: '수정완료', color: 'success' })
           this.read(this.selArticle)
         })
         .catch((e) => {
