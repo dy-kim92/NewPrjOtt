@@ -5,8 +5,8 @@
         <v-card>
           <v-img
             class="white--text"
-            height="70px"
-            src="https://demo.ycart.kr/shopboth_marmalade_001/data/editor/1612/cd2f39a0598c81712450b871c218164f_1482469121_0784.jpg"
+            height="120px"
+            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
           >
             <v-container fill-height fluid>
               <v-layout fill-height>
@@ -69,7 +69,7 @@
     >
       <v-icon>add</v-icon>
     </v-btn>
-    <v-dialog v-model="dialog" persistent max-width="1000px">
+    <v-dialog v-model="dialog" persistent max-width="1200px">
       <v-card v-if="!dlMode">
         <v-card-title>
           <span class="headline">{{selArticle.title}}</span>

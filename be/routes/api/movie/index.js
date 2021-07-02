@@ -45,22 +45,21 @@ router.get('/read/:_id', (req, res, next) => {
         res.send({ success: false, msg: e.message })
       })
   })
-
-
-
-
-
-
-module.exports = router;
-
-
-
-
-
-
-
-
-
+//  추천 + 
+router.put('/read/:_id/rating', (req, res, next) => {
+  const _id = req.params._id
+  let rating = req.body.rating
+  console.log('this is rating',rating)
+  Movie.findByIdAndUpdate(_id, { $push: {rate:rating}})
+    .then(r => {
+      console.log(r)
+      res.send({ success: true, d: r, token: req.token })
+    })
+    .catch(e => {
+      console.log(e)
+      res.send({ success: false, msg: e.message })
+    })
+})
 
 
 module.exports = router;

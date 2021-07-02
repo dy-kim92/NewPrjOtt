@@ -5,8 +5,8 @@
         <v-card>
           <v-img
             class="white--text"
-            height="70px"
-            src="https://cdn.pixabay.com/photo/2017/11/24/10/43/ticket-2974645__480.jpg"
+            height="120px"
+            src="https://cdn.pixabay.com/photo/2019/02/10/09/51/photographer-3986846__340.jpg"
           >
             <v-container fill-height fluid>
               <v-layout fill-height>
@@ -91,6 +91,7 @@
           출연: {{detailPageInfo.actor}}</br>
           장르: {{detailPageInfo.genre}}</br>      
           줄거리: {{detailPageInfo.synopsis}}</br>
+          AAC Rate : {{ avgRate || ""}}
           <!-- rate, img  -->
         </v-card-text>
         <v-card-actions>
@@ -98,7 +99,7 @@
           <v-btn
             color="yellow darken-1"
             text
-            @click="dialog = false"
+            @click="dialogRate = true"
           >
             <v-icon>mdi-ticket</v-icon>
           </v-btn>
@@ -178,6 +179,40 @@
       </v-card>
 
     </v-dialog>
+    <!-- 별점 dialog -->
+    <v-dialog width="600" v-model="dialogRate">
+      <v-card>
+        <v-card-title class= "text-h5">
+          이 영화는 어떠셨나요?
+        </v-card-title>
+        <v-card-text>
+          <div class= "text-center mt-12">
+            <v-rating
+              v-model="rating"
+              color = "yellow"
+              background-color="grey darken-1"
+              empty-icon = "$ratingFull"
+              half-increments
+              hover
+              large
+            ></v-rating>
+          </div>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="justify-space-between">
+          <v-btn text
+            @click="dialogRate = false"
+          >
+            취소
+          </v-btn>
+          <v-btn text
+            @click = "Rating"
+          >
+            등록
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     
   </v-container>
 </template>
@@ -211,7 +246,9 @@ export default {
         content: '',
       },
       toggle: false,
-      
+
+      rating: 0,
+      dialogRate: false,
     }
   },
   watch: {
@@ -236,7 +273,14 @@ export default {
     numOfPages() {
       return Math.ceil(this.dataTotal / this.dataPerPage);
     },
-
+    avgRate () {
+      let sumRate = 0
+      for (let i = 0; i < this.detailPageInfo.rate.length; i++) {
+        sumRate += parseFloat(this.detailPageInfo.rate[i])
+      }
+      let avgRateFixed = (sumRate / this.detailPageInfo.rate.length).toFixed(2)
+      return avgRateFixed
+    }
   },
   mounted () {
     this.get()
@@ -299,9 +343,8 @@ export default {
           this.detailPageInfo.director = data.d.director
           this.detailPageInfo.actor = data.d.actor
           this.detailPageInfo.synopsis = data.d.synopsis
-          this.detailPageInfo.rate= data.d.rate 
+          this.detailPageInfo.rate= data.d.rate
           this.detailPageInfo._comments = data.d._comments
-          console.log(this.detailPageInfo._comments)
           this.toggle = true
           this.loading = false
         })
@@ -341,13 +384,25 @@ export default {
     modComment () {
       if (!this.selComment.content) return this.$store.commit('pop', { msg: '내용을 작성해주세요', color: 'warning' })
       this.commentDialog = false
-      axios.put(`http://localhost:3000/api/mvcomment/${this.selComment._id}`, { content: this.selComment.content })
+      axios.put(`http://localhost:3000/api/mvcomment/${this.detailPageInfo._id}`, { content: this.selComment.content })
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.$store.commit('pop', { msg: '수정완료', color: 'success' })
           this.detailPage(this.detailPageInfo)
         })
         .catch((e) => {
+          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+        })
+    },
+    Rating() {
+      axios.put(`http://localhost:3000/api/movie/read/${this.detailPageInfo._id}/rating`, {rating:this.rating})
+        .then((r) => {
+          console.log(r)
+          this.dialogRate = false
+          this.$store.commit('pop', { msg: '등록완료', color: 'warning' })
+        })
+        .catch((e) => {
+          this.dialogRate = false
           this.$store.commit('pop', { msg: e.message, color: 'warning' })
         })
     },
