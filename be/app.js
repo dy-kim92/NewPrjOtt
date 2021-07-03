@@ -11,6 +11,7 @@ const cors = require('cors') // 외부요청 허용
 const jwt = require('jsonwebtoken'); // JWT
 const passport = require('passport'); // 소셜로그인
 const passportConfig = require('./passport');
+// const NEWS = require('./models/news');
 var app = express();
 
 passportConfig();
@@ -66,6 +67,13 @@ app.use(function(err, req, res, next) {
 // const Board = require('./models/boards')
 // var Movie = require('./models/movies');
 // Movie.create({"title_kr":"2"})
+// NEWS.create({"title":"2"})
 
+// 크롤링 최신 뉴스 파이썬파일 실행
+// let  { PythonShell }  =  require ( 'python-shell' )
+// PythonShell . run ( '25.py' ,  null ,  function  ( err )  { 
+//   if  ( err )  throw  err ; 
+//   console . log ( 'finished' ) ; 
+// } ) ;
 
 module.exports = app;

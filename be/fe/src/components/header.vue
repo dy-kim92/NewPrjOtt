@@ -7,6 +7,7 @@
         <a href="/rank">실시간 검색순위&emsp;</a>
         <a href="/token">토큰체크페이지&emsp;</a>
         <a href="/chat">웹소켓&emsp;</a>
+        <a href="/news">최신뉴스&emsp;</a>
         <a v-if="authEmail" href="http://localhost:3000/auth/logout">로그아웃&emsp;</a>
         <!-- 로그인 다이얼로그 -->
         <v-btn color="warning" fab dark @click="mdUp">

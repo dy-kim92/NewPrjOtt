@@ -43,6 +43,7 @@ const getToken = async(t) => {
 router.use('/register', require('./register/register.js'))
 router.use('/login', require('./login/localLogin.js'))
 // router.use('/findpwd', require('./findpwd/sendmail.js'))
+router.use('/news', require('./news'))
 
 
 // 토큰 검사 
