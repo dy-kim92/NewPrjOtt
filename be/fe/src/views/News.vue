@@ -21,6 +21,9 @@
             </v-img>
           </v-card>
         </v-flex>
+        <video width="320" height="240" autoplay>
+          <source src="../assets/waves.mp4" type="video/mp4">
+        </video>
         <v-flex xs12>
           <v-data-table
             hide-default-footer

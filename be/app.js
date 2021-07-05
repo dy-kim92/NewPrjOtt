@@ -69,11 +69,16 @@ app.use(function(err, req, res, next) {
 // Movie.create({"title_kr":"2"})
 // NEWS.create({"title":"2"})
 
-// 크롤링 최신 뉴스 파이썬파일 실행
-// let  { PythonShell }  =  require ( 'python-shell' )
+// 크롤링 최신 뉴스 파이썬파일 실행 & 스케줄 설정( 매일 자정 )
+
+// const scheduler  = require('node-schedule');
+//                       min, hour, day of month, month , day of week
+// const schedule = scheduler.scheduleJob("0 0 * * *", function() {
+//   console.log("스케줄러가 실행됩니다!");
+//   let  { PythonShell }  =  require ( 'python-shell' )
 // PythonShell . run ( '25.py' ,  null ,  function  ( err )  { 
 //   if  ( err )  throw  err ; 
 //   console . log ( 'finished' ) ; 
 // } ) ;
-
+// });
 module.exports = app;
