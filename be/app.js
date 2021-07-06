@@ -7,6 +7,8 @@ const history = require('connect-history-api-fallback')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var Movie = require('./models/movies');
+var Cine = require('./models/cines');
+
 const cors = require('cors') // 외부요청 허용
 const jwt = require('jsonwebtoken'); // JWT
 const passport = require('passport'); // 소셜로그인
@@ -67,7 +69,6 @@ app.use(function(err, req, res, next) {
 // const Board = require('./models/boards')
 // var Movie = require('./models/movies');
 // Movie.create({"title_kr":"2"})
-// NEWS.create({"title":"2"})
 
 // 크롤링 최신 뉴스 파이썬파일 실행 & 스케줄 설정( 매일 자정 )
 
@@ -81,4 +82,12 @@ app.use(function(err, req, res, next) {
 //   console . log ( 'finished' ) ; 
 // } ) ;
 // });
+
+// cine 영화정보 가져오기
+// let  { PythonShell }  =  require ( 'python-shell' )
+// PythonShell . run ( '27.py' ,  null ,  function  ( err )  { 
+//   if  ( err )  throw  err ; 
+//   console . log ( 'finished' ) ; 
+// } ) ;
+
 module.exports = app;

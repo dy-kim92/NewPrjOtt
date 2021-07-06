@@ -2,6 +2,7 @@ var express = require('express');
 var createError = require('http-errors');
 var router = express.Router();
 const News = require('../../../models/news')
+const Cine = require('../../../models/cines')
 // News 리스트 
 router.get('/list/latest', (req, res, next) => {
     News.find()
@@ -12,4 +13,14 @@ router.get('/list/latest', (req, res, next) => {
         res.send({ success: false, msg: e.message })
       })
   });
+router.get('/list/cine', (req, res, next) => {
+  Cine.find()
+    .then(r => {
+      console.log('t',r)
+      res.send({ success: true, dr: r, token: req.token})
+    })
+    .catch(e => {
+      res.send({ success: false, msg: e.message })
+    })
+});
 module.exports = router;

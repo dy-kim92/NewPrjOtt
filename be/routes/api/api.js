@@ -46,6 +46,7 @@ router.use('/login', require('./login/localLogin.js'))
 router.use('/news', require('./news'))
 
 
+
 // 토큰 검사 
 router.all('*', function(req, res, next) {
   // console.log(token)
