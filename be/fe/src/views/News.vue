@@ -2,7 +2,34 @@
   <v-container grid-list-md>
     <v-layout row wrap>
       <v-flex xs12>
-        
+      <v-carousel
+      cycle
+      height="65vh"
+      hide-delimiters
+      show-arrows-on-hover
+      id="mainCarousel"
+     >
+    <v-carousel-item
+      v-for="slide in cine"
+      :key="slide"
+      class="carousel-item"
+    >
+        <v-row >
+          <!-- 캐러셀 이미지 -->
+         <v-col md="9" sm="12" id="movieInfoBanner" >
+        <img :width="1200" :src="slide.img" >
+         </v-col>
+         <!-- 캐러셀 텍스트 -->
+         <v-col md="3" sm="12" class="white--text  intro">
+           <div>
+          <h1><strong>{{slide.title}}</strong></h1>
+           <br/>
+          <v-btn dark type="button" @click="readCine(slide.link)" class="detailBtn"> 자세히 보기 </v-btn>
+           </div>
+      </v-col>
+        </v-row>
+    </v-carousel-item>
+  </v-carousel>
       </v-flex>
         <v-flex xs12>
           <v-data-table
@@ -72,6 +99,10 @@ export default {
             this.$store.commit('pop', { msg: e.message, color: 'warning' })
           })
       
+    },
+    readCine (url) {
+      console.log('this is url',url)
+      var ret = window.open(url)
     }
   }
 
