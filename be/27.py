@@ -26,7 +26,7 @@ def article_crawling():
     linkslist = []
     links = soup.select("ul.news li a")
     for link in links:
-        if len(linkslist) == 4:
+        if len(linkslist) == 8:
             break
         k = link['href']
         kk = 'http://www.cine21.com' + k
@@ -34,16 +34,16 @@ def article_crawling():
     newslist = []
     imglist = []
     for i in news:
-        if len(newslist) == 4:
+        if len(newslist) == 8:
             break
         tit = i.get_text()
         newslist.append(tit)
     for i in imgs:
-        if len(imglist) == 4:
+        if len(imglist) == 8:
             break
         img = i.find("img")["src"]
         imglist.append(img)
-    for i in range(4):
+    for i in range(8):
         article = {"title": newslist[i], "img": imglist[i], "link": linkslist[i]}
         collection.insert_one(article)
 article_crawling()

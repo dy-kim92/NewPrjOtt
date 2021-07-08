@@ -45,6 +45,7 @@ export default {
   },
   data () {
     return {
+      langs: ['ko', 'en'],
       items: [
         { text: 'Real-Time', icon: 'mdi-numeric-1-box' },
         { text: 'Audience', icon: 'mdi-numeric-2-box' },

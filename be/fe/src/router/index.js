@@ -9,6 +9,7 @@ import Token from '../views/token.vue'
 import E404 from '../views/e404.vue'
 import Chat from '../views/Chat.vue'
 import News from '../views/News.vue'
+
 Vue.use(VueRouter)
 
 
@@ -53,6 +54,7 @@ const routes = [
     name: 'news',
     component: News
   },
+  
   {
     path: '*',
     name: 'error',

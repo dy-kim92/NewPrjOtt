@@ -1,14 +1,14 @@
 <template>
     <div>
-        <a href="/">로고&emsp;</a>
-        <a href="/review">리뷰&emsp;</a>
-        <a href="/freeboard">게시판&emsp;</a>
-        <a href="/board2">함께봐요&emsp;</a>
-        <a href="/rank">실시간 검색순위&emsp;</a>
-        <a href="/token">토큰체크페이지&emsp;</a>
-        <a href="/chat">웹소켓&emsp;</a>
-        <a href="/news">최신뉴스&emsp;</a>
-        <a v-if="authEmail" href="http://localhost:3000/auth/logout">로그아웃&emsp;</a>
+        <a href="/">{{$t('nav.main')}}&emsp;</a>
+        <a href="/review">{{$t('nav.review')}}&emsp;</a>
+        <a href="/freeboard">{{$t('nav.board')}}&emsp;</a>
+        <a href="/board2">{{$t('nav.with')}}&emsp;</a>
+        <a href="/rank">{{$t('nav.realTime')}}&emsp;</a>
+        <a href="/chat">{{$t('nav.chat')}}&emsp;</a>
+        <a href="/news">{{$t('nav.news')}}&emsp;</a>
+        <a v-if="authEmail" href="http://localhost:3000/auth/logout">{{$t('nav.logout')}}&emsp;</a>
+        
         <!-- 로그인 다이얼로그 -->
         <v-btn color="warning" fab dark @click="mdUp">
             <v-icon>mdi-account-circle</v-icon>
@@ -303,6 +303,17 @@
             </v-card>
             </v-dialog>
         </v-btn>
+        <v-col
+        cols="1" >
+        <v-select v-model="$i18n.locale"
+        label="Language"
+        outlined
+        :items="langs">
+        <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">
+            {{ lang }}
+        </option>
+        </v-select>
+        </v-col>
     </div>
 
 
@@ -331,7 +342,7 @@ export default {
     },
     data () {
         return {
-
+                langs: ['한국어', 'English', '日本語'],
                 dialog: false,
                 dialog2: false,
                 dialog3: false,
@@ -358,7 +369,8 @@ export default {
                 
         }
     },
-    methods: {   
+    methods: {  
+        
         mdUp () {
             this.dialog = true
         },

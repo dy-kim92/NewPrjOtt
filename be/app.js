@@ -84,10 +84,10 @@ app.use(function(err, req, res, next) {
 // });
 
 // cine 영화정보 가져오기
-// let  { PythonShell }  =  require ( 'python-shell' )
-// PythonShell . run ( '27.py' ,  null ,  function  ( err )  { 
-//   if  ( err )  throw  err ; 
-//   console . log ( 'finished' ) ; 
-// } ) ;
+let  { PythonShell }  =  require ( 'python-shell' )
+PythonShell . run ( '27.py' ,  null ,  function  ( err )  { 
+  if  ( err )  throw  err ; 
+  console . log ( 'finished' ) ; 
+} ) ;
 
 module.exports = app;

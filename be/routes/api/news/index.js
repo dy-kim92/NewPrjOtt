@@ -16,7 +16,6 @@ router.get('/list/latest', (req, res, next) => {
 router.get('/list/cine', (req, res, next) => {
   Cine.find()
     .then(r => {
-      console.log('t',r)
       res.send({ success: true, dr: r, token: req.token})
     })
     .catch(e => {

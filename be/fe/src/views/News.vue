@@ -2,7 +2,7 @@
   <v-container grid-list-md>
     <v-layout row wrap>
       <v-flex xs12>
-      <v-carousel
+      <!-- <v-carousel
       cycle
       height="65vh"
       hide-delimiters
@@ -15,11 +15,9 @@
       class="carousel-item"
     >
         <v-row >
-          <!-- 캐러셀 이미지 -->
          <v-col md="9" sm="12" id="movieInfoBanner" >
-        <img :width="1200" :src="slide.img" >
+        <img :width="1000" :src="slide.img" >
          </v-col>
-         <!-- 캐러셀 텍스트 -->
          <v-col md="3" sm="12" class="white--text  intro">
            <div>
           <h1><strong>{{slide.title}}</strong></h1>
@@ -29,7 +27,41 @@
       </v-col>
         </v-row>
     </v-carousel-item>
-  </v-carousel>
+  </v-carousel> -->
+      <v-sheet
+        class="mx-auto"
+        elevation="10"
+        max-width="1500"
+        style="background-color:white;"
+        >
+          <v-slide-group
+            v-model="model"
+            class="pa-4"
+            show-arrows
+          >
+            <v-slide-item
+              v-for="slide in cine"
+              :key="slide"
+              v-slot="{ active, toggle }"
+            >
+            <v-card
+              :color="active ? 'red' : 'white'"
+              class="ma-4"
+              height="220"
+              width="310"
+              @click="readCine(slide.link)"
+            >
+                <v-img
+                  width="310px"
+                  height="160px"
+                  :src="slide.img"
+                >
+                </v-img>
+                <h3 class="pa-2 black--text">{{slide.title}}</h3>  
+            </v-card>
+          </v-slide-item>
+        </v-slide-group>
+      </v-sheet>  
       </v-flex>
         <v-flex xs12>
           <v-data-table
@@ -50,6 +82,7 @@
         </v-flex>
     </v-layout>
   </v-container>
+  
 </template>
 
 <script>
@@ -77,7 +110,6 @@ export default {
         axios.get('http://localhost:3000/api/news/list/latest')
           .then(({ data }) => {
             if (!data.success) throw new Error(data.msg)
-            console.log(data)
             this.articles = data.ds
             this.loading = false
           })
@@ -92,7 +124,6 @@ export default {
     cinelist () {
       axios.get('http://localhost:3000/api/news/list/cine')
           .then(({ data }) => {
-            console.log('cine data', data)
             this.cine = data.dr
           })
           .catch((e) => {
