@@ -1,21 +1,50 @@
 <template>
   <v-row>
+    <v-card
+      class="mx-auto"
+      max-width="344"
+      outlined
+      v-for="item in movieRank"
+      :key="item"
+    >
+      <v-list-item three-line>
+        <v-list-item-content>
+          <v-list-item-title class="text-h5 mb-1">
+            {{item.title}}
+          </v-list-item-title>
+          <v-list-item-subtitle><b>예매율{{item.bookingrate}}</b></v-list-item-subtitle>
+        </v-list-item-content>
+
+        
+      </v-list-item>
+      <v-img
+          width="100px"
+          height="150px"
+          :src="item.img"
+        >
+        </v-img>
+    </v-card>
       <v-card>
+        <!-- <v-img
+      src="https://hips.hearstapps.com/digitalspyuk.cdnds.net/17/31/1501854760-certified-fresh.png?resize=480:*"
+      height="300px"
+      width="300px"
+      dark
+    ></v-img> -->
         <v-list>
-      <v-subheader>씨네21 박스오피스순위</v-subheader>
+      <v-subheader>POPULAR STREAMING MOVIES</v-subheader>
       <v-list-item-group
-        v-model="selectedItem"
         color="primary"
       >
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in movieRank"
           :key="i"
         >
           <v-list-item-icon>
-            <v-icon v-text="item.icon"></v-icon>
+            <v-icon>mdi-movie-open</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title v-text="item.text"></v-list-item-title><small>관객수</small>
+            <v-list-item-title v-text="item.popular"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -38,13 +67,18 @@
 <script>
 import DoughnutChart from './DoughtnutChart.vue'
 import BarChart from './BarChart.vue'
+import axios from 'axios'
 export default {
   components:{
     DoughnutChart,
     BarChart,
   },
+  mounted () {
+    this.list()
+  },
   data () {
     return {
+      movieRank: [],
       langs: ['ko', 'en'],
       items: [
         { text: 'Real-Time', icon: 'mdi-numeric-1-box' },
@@ -114,6 +148,20 @@ export default {
 
       
     }
+  },
+  methods:{
+    list () {
+      console.log("start")
+        axios.get('http://localhost:3000/api/movierank/list/rank')
+          .then(({ data }) => {
+            console.log(data)
+            this.movieRank = data.ds
+          })
+          .catch((e) => {
+            this.$store.commit('pop', { msg: e.message, color: 'warning' })
+          })
+    },
+
   }
 }
 </script>

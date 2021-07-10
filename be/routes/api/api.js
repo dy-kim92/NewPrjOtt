@@ -42,9 +42,9 @@ const getToken = async(t) => {
 // api/  register,login,findpwd 연결시키기  
 router.use('/register', require('./register/register.js'))
 router.use('/login', require('./login/localLogin.js'))
-// router.use('/findpwd', require('./findpwd/sendmail.js'))
+router.use('/findpwd', require('./findpwd/sendmail.js'))
 router.use('/news', require('./news'))
-
+router.use('/movierank', require('./movierank'))
 
 
 // 토큰 검사 

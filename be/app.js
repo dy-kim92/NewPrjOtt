@@ -77,17 +77,22 @@ app.use(function(err, req, res, next) {
 // const schedule = scheduler.scheduleJob("0 0 * * *", function() {
 //   console.log("스케줄러가 실행됩니다!");
 //   let  { PythonShell }  =  require ( 'python-shell' )
-// PythonShell . run ( '25.py' ,  null ,  function  ( err )  { 
+// PythonShell . run ( 'article.py' ,  null ,  function  ( err )  { 
 //   if  ( err )  throw  err ; 
 //   console . log ( 'finished' ) ; 
 // } ) ;
 // });
 
 // cine 영화정보 가져오기
-let  { PythonShell }  =  require ( 'python-shell' )
-PythonShell . run ( '27.py' ,  null ,  function  ( err )  { 
-  if  ( err )  throw  err ; 
-  console . log ( 'finished' ) ; 
-} ) ;
-
+// let  { PythonShell }  =  require ( 'python-shell' )
+// PythonShell . run ( 'cine.py' ,  null ,  function  ( err )  { 
+//   if  ( err )  throw  err ; 
+//   console . log ( 'finished' ) ; 
+// } ) ;
+// movierank 네이버 영화 순위 가져오기
+// let  { PythonShell }  =  require ( 'python-shell' )
+// PythonShell . run ( 'movierank.py' ,  null ,  function  ( err )  { 
+//   if  ( err )  throw  err ; 
+//   console . log ( 'finished' ) ; 
+// } ) ;
 module.exports = app;
