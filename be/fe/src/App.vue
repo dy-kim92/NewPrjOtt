@@ -1,12 +1,11 @@
 <template>
   <v-app>
-
    <div id="header">
       <main-header/>
     </div>
 
     <v-main>
-      <router-view/>
+      <router-view class="pa-0 ma-0"/>
     </v-main>
 
     <div id="footer">
@@ -43,3 +42,14 @@ export default {
   })
 }
 </script>
+<style scoped>
+@font-face {
+    font-family: 'f1';
+    src: url('./assets/NEXON Lv1 Gothic Low OTF Bold.otf');
+}
+* {
+    box-sizing: border-box;
+    font-family: 'f1';
+    letter-spacing: 1.5px;
+} 
+</style>

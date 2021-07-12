@@ -1,10 +1,7 @@
 {
     "nav": {
-      "main": "홈",
       "review": "리뷰",
       "board": "게시판",
-      "with": "함께봐요",
-      "realTime": "실시간검색순위",
       "chat": "채팅",
       "news": "뉴스",
       "logout": "로그아웃"

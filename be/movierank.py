@@ -15,35 +15,27 @@ collection = db['movieranks']
 collection.drop()
 collection = db['movieranks']
 def movieRank_crawling():
-    url = "https://movie.naver.com/movie/running/current.nhn?view=list&tab=normal&order=reserve#"
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
-    res = requests.get(url, headers= headers)
+    url = "http://www.cgv.co.kr/movies/"
+    res = requests.get(url)
     res.raise_for_status()
     soup = BeautifulSoup(res.text, "lxml")
-    rank = soup.find_all("dt", attrs={"class":"tit"})
-    title = []
-    for i in rank:
-        if len(title) == 7:
-            break
-        tit = i.find('a').get_text()
-        title.append(tit)
-    image = soup.find_all("div", attrs={"class":"thumb"})
+    moviechart = soup.find_all("div", attrs={"class":"box-image"})
+    moviechart2 = soup.find_all("div", attrs={"class":"box-contents"})
     images = []
-    for i in image:
-        if (len(images)) == 7:
+    bookingRate = []
+    title = []
+    for i in moviechart:
+        if len(images) == 7:
             break
         img = i.find('img')['src']
         images.append(img)
-    rate = soup.find_all("div", attrs={"class":"star_t1 b_star"})
-    bookingRate = []
-    for i in rate:
-        l = ''
-        if (len(bookingRate)) == 7:
+    for i in moviechart2:
+        if len(bookingRate) == 7:
             break
-        k = i.find("span").get_text()
-        l += k
-        l += '%'
-        bookingRate.append(l)
+        rate = i.find('strong', attrs={"class":"percent"}).find("span").get_text()
+        tit = i.find('strong', attrs={"class":"title"}).get_text()
+        bookingRate.append(rate)  
+        title.append(tit)
     url = "https://www.rottentomatoes.com/"
     headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"}
     res = requests.get(url, headers= headers)

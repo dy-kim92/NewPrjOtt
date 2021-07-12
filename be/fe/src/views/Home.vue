@@ -1,66 +1,94 @@
 <template>
-  <v-row>
-    <v-card
-      class="mx-auto"
-      max-width="344"
-      outlined
-      v-for="item in movieRank"
-      :key="item"
-    >
-      <v-list-item three-line>
-        <v-list-item-content>
-          <v-list-item-title class="text-h5 mb-1">
-            {{item.title}}
-          </v-list-item-title>
-          <v-list-item-subtitle><b>예매율{{item.bookingrate}}</b></v-list-item-subtitle>
-        </v-list-item-content>
+  <v-container class="" fluid>
+    <video autoplay muted loop class="mainvideo" >
+      <source src="../assets/blackwidow.mp4" type="video/mp4"/>
+    </video>
+      <v-content>
+      <v-row>
+        <v-col cols="12">
+          <v-sheet
+          class="netRec ma-8"
+          elevation="8"
+          max-width="92vw"
+          dark
+          >
+          <h1 class="font-weight-black" style="font-family:none; margin-left:5px">박스오피스 TOP7</h1>
+          <v-slide-group
+            class="pa-5"
+            show-arrows
+          >
+            <v-slide-item
+              class="card-item"
+              v-for="(slide,i) in movieRank"
+              :key="slide"
+              v-slot="{ active, toggle }"
+            >
+              <v-card
+              :color="active ? 'red' : 'black'"
+              class="ma-5 cards"
+              max-height="300px"
+              width="280px"
+              @click="toggle"
+              to="/"
+              hover
+              >
+              <h1 style="right:-16%; color:transparent;">{{i+1}}</h1>
+              <v-img
+                class="white--text align-end"
+                width="150px"
+                height="240px"
+                :src="slide.img"
+              >
+                <!-- <v-card-title class="cards-title">{{slide.title}}</v-card-title> -->
+              </v-img>
+            </v-card>
+              </v-slide-item>
+            </v-slide-group>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-content>
+    <v-row justify="center" >
+      <v-col cols="3">
+        <v-card dark class="card1">
+          <v-list>
+            <v-subheader>POPULAR STREAMING MOVIES</v-subheader>
+            <v-list-item-group
+              color="primary"
+            >
+              <v-list-item
+                v-for="(item, i) in movieRank"
+                :key="i"
+              >
+                <v-list-item-icon>
+                  <v-icon>mdi-movie-open</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.popular"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </v-card>
+      </v-col>
+      <v-col cols="3" offset="1">
+        <v-card dark class="card2">
+          <v-card-title>국내 OTT 시장 점유율</v-card-title>
+          <v-card-subtitle>단위:만</v-card-subtitle>
+          <doughnut-chart :chart-data="doughnutCollection" :options="optionss"></doughnut-chart>
+        </v-card>
+      </v-col>
+      <v-col cols="3" offset="1">
+        <v-card dark class="card3">
+          <v-card-title>OTT 이용요금</v-card-title>
+          <v-card-subtitle>단위:백원(기본요금기준)</v-card-subtitle>
+          <bar-chart :chart-data="barchartdata" :options="options"></bar-chart>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 
-        
-      </v-list-item>
-      <v-img
-          width="100px"
-          height="150px"
-          :src="item.img"
-        >
-        </v-img>
-    </v-card>
-      <v-card>
-        <!-- <v-img
-      src="https://hips.hearstapps.com/digitalspyuk.cdnds.net/17/31/1501854760-certified-fresh.png?resize=480:*"
-      height="300px"
-      width="300px"
-      dark
-    ></v-img> -->
-        <v-list>
-      <v-subheader>POPULAR STREAMING MOVIES</v-subheader>
-      <v-list-item-group
-        color="primary"
-      >
-        <v-list-item
-          v-for="(item, i) in movieRank"
-          :key="i"
-        >
-          <v-list-item-icon>
-            <v-icon>mdi-movie-open</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.popular"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
-      </v-card>
-      <v-card>
-        <v-card-title>국내 OTT 점유율</v-card-title>
-        <v-card-subtitle>단위:만</v-card-subtitle>
-        <doughnut-chart :chart-data="doughnutCollection" :options="optionss"></doughnut-chart>
-      </v-card>
-      <v-card>
-        <v-card-title>OTT 이용요금</v-card-title>
-        <v-card-subtitle>단위:백원(기본요금기준)</v-card-subtitle>
-        <bar-chart :chart-data="barchartdata" :options="options"></bar-chart>
-      </v-card>
-  </v-row>
+  
   
 </template>
 
@@ -166,6 +194,69 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.mainvideo{
+  position: relative;
+  max-height: 90vh;
+  width: 100%;
+  object-fit: fill;
+  overflow: hidden;
+}
+.container {
+  padding: 0;
+}
+.netRec{
+  background-color: black;
+  /* border: solid 1px white; */
+  margin-bottom: 10px;
+  padding: 0px;
+  top: -10%;
+}
+.card-item{
+    margin: 30px;
+    transform-style: preserve-3d;
+    perspective: 700px;
+    animation: spin 3s infinite linear;
+}
+.cards{
+    display: flex;
+    margin: 30px;
+    transform-style: preserve-3d;
+    perspective: 700px;
+    animation: spin 5s infinite linear;
+    /* background-color: black; */
+    margin: 0px;
+    padding: 0px;
+}
+.cards h1{
+    font-size: 12em;
+    font-family: 'Babas Neue' !important;
+    width: 140px;
+    height: 200px;
+    margin:0px;
+    transform: translateZ(1px);
+    position: relative;
+    -webkit-text-stroke: grey 3px;
+}
+@keyframes spin {
+   from{
+    transform: rotateY(-20deg);
+  }to{
+    transform: rotateY(20deg);
+  }
+}
 
+.mainvideo{
+  position: relative;
+  max-height: 90vh;
+  width: 100%;
+  object-fit: fill;
+  overflow: hidden;
+}
+.container{
+  background: #101010;
+}
+.card1{
+  height: 550px;
+}
 </style>

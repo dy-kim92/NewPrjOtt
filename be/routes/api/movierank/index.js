@@ -7,11 +7,9 @@ const MovieRank = require('../../../models/movierank')
 router.get('/list/rank', (req, res, next) => {
     MovieRank.find()
       .then(rs => {
-          console.log('suc')
         res.send({ success: true, ds: rs, token: req.token})
       })
       .catch(e => {
-        console.log('fail')
         res.send({ success: false, msg: e.message })
       })
   });

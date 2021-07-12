@@ -3,8 +3,6 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Review from '../views/Review.vue'
 import FreeBoard from '../views/FreeBoard.vue'
-import FreeBoard2 from '../views/FreeBoard2.vue'
-import SearchRank from '../views/SearchRank.vue'
 import Token from '../views/token.vue'
 import E404 from '../views/e404.vue'
 import Chat from '../views/Chat.vue'
@@ -28,16 +26,6 @@ const routes = [
     path: '/freeboard',
     name: 'FreeBoard',
     component:  FreeBoard
-  },
-  {
-    path: '/board2',
-    name: 'FreeBoard2',
-    component:  FreeBoard2
-  },
-  {
-    path: '/rank',
-    name: 'Rank',
-    component:  SearchRank
   },
   {
     path: '/',

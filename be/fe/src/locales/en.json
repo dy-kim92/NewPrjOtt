@@ -1,10 +1,7 @@
 {
   "nav": {
-    "main": "Home",
     "review": "Review",
     "board": "Board",
-    "with": "With me",
-    "realTime": "Search Rank",
     "chat": "Chat",
     "news": "News",
     "logout": "LogOut"

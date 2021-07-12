@@ -89,7 +89,7 @@ app.use(function(err, req, res, next) {
 //   if  ( err )  throw  err ; 
 //   console . log ( 'finished' ) ; 
 // } ) ;
-// movierank 네이버 영화 순위 가져오기
+// movierank CGV 영화 순위 가져오기
 // let  { PythonShell }  =  require ( 'python-shell' )
 // PythonShell . run ( 'movierank.py' ,  null ,  function  ( err )  { 
 //   if  ( err )  throw  err ; 
