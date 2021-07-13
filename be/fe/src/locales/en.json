@@ -4,6 +4,14 @@
     "board": "Board",
     "chat": "Chat",
     "news": "News",
-    "logout": "LogOut"
+    "logout": "LogOut",
+    "login": "Login"
+  },
+  "home": {
+    "boxOffice": "BOXOFFICE TOP7",
+    "marketShare": "Korea OTT Market Share",
+    "unit":"10000 per unit",
+    "usageFee":"usage fee(Basic rate standard)",
+    "usageFeeUnit":"100 per unit"
   }
 }

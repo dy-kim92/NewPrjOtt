@@ -4,6 +4,14 @@
       "board": "게시판",
       "chat": "채팅",
       "news": "뉴스",
-      "logout": "로그아웃"
+      "logout": "로그아웃",
+      "login": "로그인"
+    },
+    "home": {
+      "boxOffice": "박스오피스 TOP7",
+      "marketShare": "국내 OTT 시장 점유율",
+      "unit":"단위:만",
+      "usageFee":"OTT 이용요금(기본요금기준)",
+      "usageFeeUnit":"단위:백원"
     }
 }

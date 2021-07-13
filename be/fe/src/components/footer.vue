@@ -1,5 +1,7 @@
 <template>
-  <H1>FOOTER</H1>
+  <v-footer color="#000C1D">
+    <h1 class="text">asdadasdasdasdadasdasdad</h1>
+  </v-footer>
 </template>
  
 <script>
@@ -9,4 +11,5 @@ export default {
 </script>
  
 <style scoped>
+
 </style>

@@ -4,6 +4,14 @@
     "board": "ボード",
     "chat": "チャット",
     "news": "ニュース",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "login": "ログイン"
+  },
+  "home": {
+    "boxOffice": "週間ランキング TOP7",
+    "marketShare": "韓国のOTTマーケットシェア",
+    "unit":"単位:10000",
+    "usageFee":"利用料金(基本料金基準)",
+    "usageFeeUnit":"単位:100"
   }
 }

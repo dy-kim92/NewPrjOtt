@@ -19,7 +19,7 @@
        <v-btn
          @click="$store.commit('pop', { act: false })"
        >
-         닫기
+         <v-icon>mdi-close</v-icon>
        </v-btn>
      </v-snackbar>
   </v-app>
