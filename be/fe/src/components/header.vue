@@ -1,43 +1,167 @@
 <template>
-    <div>
-        <a href="/">로고&emsp;</a>
-        <a href="/review">리뷰&emsp;</a>
-        <a href="/freeboard">게시판&emsp;</a>
-        <a href="/board2">함께봐요&emsp;</a>
-        <a href="/rank">실시간 검색순위&emsp;</a>
-        <a href="/token">토큰체크페이지&emsp;</a>
-        <a href="/chat">웹소켓&emsp;</a>
-        <a v-if="authEmail" href="http://localhost:3000/auth/logout">로그아웃&emsp;</a>
-        <!-- 로그인 다이얼로그 -->
-        <v-btn color="warning" fab dark @click="mdUp">
-            <v-icon>mdi-account-circle</v-icon>
-            
-            <v-dialog v-model="dialog" persistent max-width="500px">
-                <v-card>
-                    <v-card-title>
-                    <span class="headline">로그인</span>
-                    </v-card-title>
-                    <v-card-text>
-                    <validation-observer>
-                    <v-form>
-                        <v-container fluid>
-                        <v-row>
-                            <v-col cols="12" sm="6">
+    <!-- <a href="/">{{$t('nav.main')}}&emsp;</a>
+    <a href="/review">{{$t('nav.review')}}&emsp;</a>
+    <a href="/freeboard">{{$t('nav.board')}}&emsp;</a>
+    <a href="/board2">{{$t('nav.with')}}&emsp;</a>
+    <a href="/rank">{{$t('nav.realTime')}}&emsp;</a>
+    <a href="/chat">{{$t('nav.chat')}}&emsp;</a>
+    <a href="/news">{{$t('nav.news')}}&emsp;</a>
+     -->
+    <v-container class="pa-0 ma-0" fluid>
+        <v-row class="header">
+            <div class="col-md-1">
+                <a href="/" id="gohome">
+                    AAC
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="/review" class="menu white--text">
+                    {{$t('nav.review')}}
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="/freeboard" class="menu white--text">
+                    {{$t('nav.board')}}
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="/news" class="menu white--text">
+                    {{$t('nav.news')}}
+                </a>
+            </div>
+            <div class="col-md-2">
+                <a href="/chat" class="menu white--text">
+                    {{$t('nav.chat')}}
+                </a>
+            </div>
+            <!-- 언어변경 -->
+            <v-col
+            class="col-md-2">
+                <v-select v-model="$i18n.locale"
+                dark
+                label="Language"
+                class="language"
+                outlined
+                :items="langs">
+                <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">
+                    {{ lang }}
+                </option>
+                </v-select>
+            </v-col>
+            <!-- 로그인 다이얼로그 -->
+            <v-col class="col-md-1">
+                <v-btn dark @click="mdUp">
+                    <v-icon class="icon">mdi-account-circle</v-icon>
+                    
+                    <v-dialog v-model="dialog" persistent max-width="500px">
+                        <v-card>
+                            <v-card-title>
+                            <span class="headline">로그인</span>
+                            </v-card-title>
+                            <v-card-text>
+                            <validation-observer>
+                            <v-form>
+                                <v-container fluid>
+                                <v-row>
+                                    <v-col cols="12" sm="6">
+                                    <validation-provider
+                                        v-slot="{errors}"
+                                        name="이메일"
+                                        :rules="{
+                                            required:true,
+                                            email:true,
+                                            }">
+                                        <v-text-field
+                                            v-model="email"
+                                            label="E-mail"
+                                            :error-messages="errors"
+                                        ></v-text-field>
+                                    </validation-provider>
+                                    </v-col>
+                                    <v-col cols="12" sm="6">
+                                    <validation-provider
+                                        v-slot="{errors}"
+                                        name="비밀번호"
+                                        :rules="{
+                                            required:true,
+                                            min:8,
+                                            }"
+                                    >
+                                    <v-text-field
+                                        v-model="password"
+                                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="show1 ? 'text' : 'password'"
+                                        name="input-10-1"
+                                        label="Password"
+                                        :counter=8
+                                        @click:append="show1 = !show1"
+                                        :error-messages="errors"
+                                    ></v-text-field>
+                                    </validation-provider>
+                                    </v-col>
+                                </v-row>
+                                </v-container>
+                                <small type="button" @click="mdUp3">비밀번호찾기</small>
+                                <v-checkbox
+                                    v-model="remember"
+                                    label="로그인 유지"
+                                ></v-checkbox>
+                            </v-form>
+                            </validation-observer>
+                            <v-col>
+                                <a href="/auth/kakao" alt="kakao login">
+                                    <img src="../assets/kakao_login_medium_wide.png" alt="kakao">
+                                </a>
+                                <a href="/auth/naver" alt="naver login">
+                                    <img src="../assets/naver_login.png" alt="naver">
+                                </a>
+                            </v-col>
+                            </v-card-text>
+                            <v-card-actions>    
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary" @click="mdUp2">회원가입</v-btn>
+                            <v-btn color="primary" @click="postLoginData" router-link to="/">로그인</v-btn>
+                            <v-btn color="primary" @click.native="dialog = false">닫기</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                    <!-- 회원가입 다이얼로그 -->
+                    <v-dialog v-model="dialog2" width="500">
+                    <v-card>
+                        <v-card-title class="text-h5 grey lighten-2">
+                        회원가입
+                        </v-card-title>
+
+                        <br>
+                        <v-card-text>
+                        <validation-observer
+                            ref="observer"
+                            v-slot="{ invalid }"
+                        >
+                        <v-form @submit.prevent="postData">
+                            <!-- 닉네임 -->
+                            <validation-provider
+                                v-slot="{errors}"
+                                name="닉네임"
+                                :rules="{
+                                    required:true,
+                                    max:8,
+                                    }"
+                            >
+                            <v-text-field v-model="name" :counter="8" label="NickName" :error-messages="errors"></v-text-field>
+                            </validation-provider>
+                            <!-- 이메일 -->
                             <validation-provider
                                 v-slot="{errors}"
                                 name="이메일"
                                 :rules="{
                                     required:true,
                                     email:true,
-                                    }">
-                                <v-text-field
-                                    v-model="email"
-                                    label="E-mail"
-                                    :error-messages="errors"
-                                ></v-text-field>
+                                    }"
+                            >
+                            <v-text-field v-model="joinEmail" label="E-mail" :error-messages="errors"></v-text-field>
                             </validation-provider>
-                            </v-col>
-                            <v-col cols="12" sm="6">
+                            <!-- 비밀번호 & 비밀번호 확인 -->
                             <validation-provider
                                 v-slot="{errors}"
                                 name="비밀번호"
@@ -46,266 +170,185 @@
                                     min:8,
                                     }"
                             >
-                            <v-text-field
-                                v-model="password"
-                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :type="show1 ? 'text' : 'password'"
-                                name="input-10-1"
-                                label="Password"
-                                :counter=8
-                                @click:append="show1 = !show1"
-                                :error-messages="errors"
+                            <v-text-field v-model="joinPassword"
+                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show1 ? 'text' : 'password'"
+                                    name="input-10-1"
+                                    label="비밀번호"
+                                    counter
+                                    @click:append="show1 = !show1"
+                                    :error-messages="errors"
                             ></v-text-field>
                             </validation-provider>
-                            </v-col>
-                        </v-row>
-                        </v-container>
-                        <small type="button" @click="mdUp3">비밀번호찾기</small>
-                        <v-checkbox
-                            v-model="remember"
-                            label="로그인 유지"
-                        ></v-checkbox>
-                    </v-form>
-                    </validation-observer>
-                    <v-col>
-                        <a href="/auth/kakao" alt="kakao login">
-                            <img src="../assets/kakao_login_medium_wide.png" alt="kakao">
-                        </a>
-                        <a href="/auth/naver" alt="naver login">
-                            <img src="../assets/naver_login.png" alt="naver">
-                        </a>
-                    </v-col>
-                    </v-card-text>
-                    <v-card-actions>    
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="mdUp2">회원가입</v-btn>
-                    <v-btn color="primary" @click="postLoginData" router-link to="/">로그인</v-btn>
-                    <v-btn color="primary" @click.native="dialog = false">닫기</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
-            <!-- 회원가입 다이얼로그 -->
-            <v-dialog v-model="dialog2" width="500">
-            <v-card>
-                <v-card-title class="text-h5 grey lighten-2">
-                회원가입
-                </v-card-title>
-
-                <br>
-                <v-card-text>
-                <validation-observer
-                    ref="observer"
-                    v-slot="{ invalid }"
-                >
-                <v-form @submit.prevent="postData">
-                    <!-- 닉네임 -->
-                    <validation-provider
-                        v-slot="{errors}"
-                        name="닉네임"
-                        :rules="{
-                            required:true,
-                            max:8,
-                            }"
-                    >
-                    <v-text-field v-model="name" :counter="8" label="NickName" :error-messages="errors"></v-text-field>
-                    </validation-provider>
-                    <!-- 이메일 -->
-                    <validation-provider
-                        v-slot="{errors}"
-                        name="이메일"
-                        :rules="{
-                            required:true,
-                            email:true,
-                            }"
-                    >
-                    <v-text-field v-model="joinEmail" label="E-mail" :error-messages="errors"></v-text-field>
-                    </validation-provider>
-                    <!-- 비밀번호 & 비밀번호 확인 -->
-                    <validation-provider
-                        v-slot="{errors}"
-                        name="비밀번호"
-                        :rules="{
-                            required:true,
-                            min:8,
-                            }"
-                    >
-                    <v-text-field v-model="joinPassword"
-                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :type="show1 ? 'text' : 'password'"
-                            name="input-10-1"
-                            label="비밀번호"
-                            counter
-                            @click:append="show1 = !show1"
-                            :error-messages="errors"
-                    ></v-text-field>
-                    </validation-provider>
-                    <!--비밀번호 일치 Validation -->
-                    <validation-provider
-                        v-slot="{errors}"
-                        name="비밀번호확인"
-                        :rules="{
-                            required:true,
-                            confirmed:'비밀번호'
-                            }"
-                    >
-                    <v-text-field v-model="checkPassword"
-                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :type="show2 ? 'text' : 'password'"
-                            name="input-10-1"
-                            label="비밀번호 확인"
-                            counter
-                            @click:append="show2 = !show2"
-                            :error-messages="errors"
-                    ></v-text-field>
-                    </validation-provider>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" type="submit" :disabled="invalid">확인</v-btn>
-                <v-btn color="primary" @click="dialog2 = false">취소</v-btn>
-                </v-card-actions>
-                </v-form>
-                </validation-observer>
-                </v-card-text>
-            </v-card>
-            </v-dialog>
-            <!-- 비밀번호찾기 다이얼로그 -->
-            <v-dialog
-            v-model="dialog3"
-            max-width="600px"
-            >
-            <v-card>
-                <!-- 다이얼로그 타이틀 -->
-                <v-card-title>
-                <span class="text-h5">비밀번호찾기</span>
-                </v-card-title>
-                <validation-observer
-                    ref="observer"
-                    v-slot="{ invalid }"
-                >
-                <v-form @submit.prevent="postUpdateData">
-                    <v-card-text>
-                    <v-container>
-                        <v-row>
-                        <v-col cols="8">
+                            <!--비밀번호 일치 Validation -->
                             <validation-provider
                                 v-slot="{errors}"
-                                name="이메일"
+                                name="비밀번호확인"
                                 :rules="{
                                     required:true,
-                                    email:true,
+                                    confirmed:'비밀번호'
                                     }"
                             >
-                            <v-text-field
-                            label="이메일을 입력해주세요"
-
-                            :error-messages="errors"
-                            v-model="findemail"
+                            <v-text-field v-model="checkPassword"
+                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show2 ? 'text' : 'password'"
+                                    name="input-10-1"
+                                    label="비밀번호 확인"
+                                    counter
+                                    @click:append="show2 = !show2"
+                                    :error-messages="errors"
                             ></v-text-field>
                             </validation-provider>
-                        </v-col>
-                        <v-col cols="4">
-                            <v-btn
-                            elevation="2"
-                            plain
-                            @click="postFindPwdData"
-                            >인증코드전송</v-btn>
-                        </v-col>
-                        <v-col cols="12">
-                            <validation-provider
-                                v-slot="{errors}"
-                                name="인증코드"
-                                :rules="{
-                                    required:true,
-                                    confirmed:'인증코드확인체크'
-                                    }"
-                            >
-                            <v-text-field
-                            label="인증코드를 입력해주세요"
-                            v-model="inputcfcode"
-                            :error-messages="errors"
-                            ></v-text-field>
-                            </validation-provider>
-                        </v-col>
-                        <validation-provider
-                        name="인증코드확인체크">
-                        <v-text-field 
-                        v-model="cfcode" :type="password"
-                         class="hiddenfield">
-                        </v-text-field>
-                        </validation-provider>
-                        <v-col cols="12">
-                        <validation-provider
-                            v-slot="{errors}"
-                            name="새로운비밀번호"
-                            :rules="{
-                                required:true,
-                                min:8,
-                                }"
-                        >
-                        <v-text-field v-model="newpassword"
-                                :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :type="show3 ? 'text' : 'password'"
-                                name="input-10-1"
-                                label="새로운 비밀번호를 입력해주세요"
-                                counter
-                                @click:append="show3 = !show3"
-                                :error-messages="errors"
-                            ></v-text-field>
-                        </validation-provider>
-                        </v-col>
-                    <!--비밀번호 일치 Validation -->
-                    <v-col cols="12">
-                        <validation-provider
-                            v-slot="{errors}"
-                            name="새로운비밀번호확인"
-                            :rules="{
-                                required:true,
-                                confirmed:'새로운비밀번호'
-                                }"
-                        >
-                        <v-text-field v-model="newpasswordck"
-                                :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :type="show4 ? 'text' : 'password'"
-                                name="input-10-1"
-                                label="비밀번호 확인"
-                                counter
-                                @click:append="show4 = !show4"
-                                :error-messages="errors"
-                        ></v-text-field>
-                        </validation-provider>
-                        </v-col>
-                    </v-row>
-                    </v-container>
-                    </v-card-text>
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="dialog3 = false"
-                >
-                    취소
-                </v-btn>
-                <v-btn
-                    color="blue darken-1"
-                    type="submit"
-                    :disabled='invalid'
-                >
-                    전송
-                </v-btn>
-                </v-card-actions>
-                </v-form>
-                </validation-observer>
-            </v-card>
-            </v-dialog>
-        </v-btn>
-    </div>
 
+                        <v-divider></v-divider>
 
-    
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" type="submit" :disabled="invalid">확인</v-btn>
+                        <v-btn color="primary" @click="dialog2 = false">취소</v-btn>
+                        </v-card-actions>
+                        </v-form>
+                        </validation-observer>
+                        </v-card-text>
+                    </v-card>
+                    </v-dialog>
+                    <!-- 비밀번호찾기 다이얼로그 -->
+                    <v-dialog
+                    v-model="dialog3"
+                    max-width="600px"
+                    >
+                    <v-card>
+                        <!-- 다이얼로그 타이틀 -->
+                        <v-card-title>
+                        <span class="text-h5">비밀번호찾기</span>
+                        </v-card-title>
+                        <validation-observer
+                            ref="observer"
+                            v-slot="{ invalid }"
+                        >
+                        <v-form @submit.prevent="postUpdateData">
+                            <v-card-text>
+                            <v-container>
+                                <v-row>
+                                <v-col cols="8">
+                                    <validation-provider
+                                        v-slot="{errors}"
+                                        name="이메일"
+                                        :rules="{
+                                            required:true,
+                                            email:true,
+                                            }"
+                                    >
+                                    <v-text-field
+                                    label="이메일을 입력해주세요"
+
+                                    :error-messages="errors"
+                                    v-model="findemail"
+                                    ></v-text-field>
+                                    </validation-provider>
+                                </v-col>
+                                <v-col cols="4">
+                                    <v-btn
+                                    elevation="2"
+                                    plain
+                                    @click="postFindPwdData"
+                                    >인증코드전송</v-btn>
+                                </v-col>
+                                <v-col cols="12">
+                                    <validation-provider
+                                        v-slot="{errors}"
+                                        name="인증코드"
+                                        :rules="{
+                                            required:true,
+                                            confirmed:'인증코드확인체크'
+                                            }"
+                                    >
+                                    <v-text-field
+                                    label="인증코드를 입력해주세요"
+                                    v-model="inputcfcode"
+                                    :error-messages="errors"
+                                    ></v-text-field>
+                                    </validation-provider>
+                                </v-col>
+                                <validation-provider
+                                name="인증코드확인체크">
+                                <v-text-field 
+                                v-model="cfcode" :type="password"
+                                    class="hiddenfield">
+                                </v-text-field>
+                                </validation-provider>
+                                <v-col cols="12">
+                                <validation-provider
+                                    v-slot="{errors}"
+                                    name="새로운비밀번호"
+                                    :rules="{
+                                        required:true,
+                                        min:8,
+                                        }"
+                                >
+                                <v-text-field v-model="newpassword"
+                                        :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="show3 ? 'text' : 'password'"
+                                        name="input-10-1"
+                                        label="새로운 비밀번호를 입력해주세요"
+                                        counter
+                                        @click:append="show3 = !show3"
+                                        :error-messages="errors"
+                                    ></v-text-field>
+                                </validation-provider>
+                                </v-col>
+                            <!--비밀번호 일치 Validation -->
+                            <v-col cols="12">
+                                <validation-provider
+                                    v-slot="{errors}"
+                                    name="새로운비밀번호확인"
+                                    :rules="{
+                                        required:true,
+                                        confirmed:'새로운비밀번호'
+                                        }"
+                                >
+                                <v-text-field v-model="newpasswordck"
+                                        :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="show4 ? 'text' : 'password'"
+                                        name="input-10-1"
+                                        label="비밀번호 확인"
+                                        counter
+                                        @click:append="show4 = !show4"
+                                        :error-messages="errors"
+                                ></v-text-field>
+                                </validation-provider>
+                                </v-col>
+                            </v-row>
+                            </v-container>
+                            </v-card-text>
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="blue darken-1"
+                            text
+                            @click="dialog3 = false"
+                        >
+                            취소
+                        </v-btn>
+                        <v-btn
+                            color="blue darken-1"
+                            type="submit"
+                            :disabled='invalid'
+                        >
+                            전송
+                        </v-btn>
+                        </v-card-actions>
+                        </v-form>
+                        </validation-observer>
+                    </v-card>
+                    </v-dialog>
+                </v-btn>
+            </v-col>
+            <v-col cols="1" v-if="authEmail">
+                <a href="http://localhost:3000/auth/logout">{{$t('nav.logout')}}&emsp;</a>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
  
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPJGZBZSSJ"></script>
@@ -337,7 +380,7 @@ export default {
     },
     data () {
         return {
-
+                langs: ['한국어', 'English', '日本語'],
                 dialog: false,
                 dialog2: false,
                 dialog3: false,
@@ -364,7 +407,8 @@ export default {
                 
         }
     },
-    methods: {   
+    methods: {  
+        
         mdUp () {
             this.dialog = true
         },
@@ -460,5 +504,47 @@ export default {
 <style scoped>
 .hiddenfield{
     display:none
+}
+.row{
+  display: flex;
+  margin: 0px;
+}
+.header {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  position: fixed;
+  /* display:ab; */
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+a { 
+    text-decoration:none;
+ } 
+.menu{
+  font-size: 2em;
+  font-weight: 900;
+}
+#gohome {
+  width: 100%;
+  height: 48px;
+  padding: 0px;
+  margin-left: 30px;
+  font-size: 2em;
+  font-weight:900;
+  color: red;
+}
+.header .col-md-2{
+    text-align:center;
+}
+.header .col-md-1{
+    text-align:center;
+}
+.language {
+    width:200px;
+}
+.icon {
+    width:70px;
 }
 </style>

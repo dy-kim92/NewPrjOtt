@@ -17,6 +17,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.14",
     "morgan": "~1.9.1",
+    "node-schedule": "^2.0.0",
     "nodemailer": "^6.6.1",
     "nodemon": "^2.0.7",
     "passport": "^0.4.1",
@@ -24,6 +25,7 @@
     "passport-local": "^1.0.0",
     "passport-naver": "^1.0.6",
     "pug": "2.0.0-beta11",
+    "python-shell": "^3.0.0",
     "socket.io": "^4.1.2"
   }
 }

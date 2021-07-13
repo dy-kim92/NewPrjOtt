@@ -7,10 +7,13 @@ const history = require('connect-history-api-fallback')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var Movie = require('./models/movies');
+var Cine = require('./models/cines');
+
 const cors = require('cors') // 외부요청 허용
 const jwt = require('jsonwebtoken'); // JWT
 const passport = require('passport'); // 소셜로그인
 const passportConfig = require('./passport');
+// const NEWS = require('./models/news');
 var app = express();
 
 passportConfig();
@@ -67,5 +70,29 @@ app.use(function(err, req, res, next) {
 // var Movie = require('./models/movies');
 // Movie.create({"title_kr":"2"})
 
+// 크롤링 최신 뉴스 파이썬파일 실행 & 스케줄 설정( 매일 자정 )
 
+// const scheduler  = require('node-schedule');
+//                       min, hour, day of month, month , day of week
+// const schedule = scheduler.scheduleJob("0 0 * * *", function() {
+//   console.log("스케줄러가 실행됩니다!");
+//   let  { PythonShell }  =  require ( 'python-shell' )
+// PythonShell . run ( 'article.py' ,  null ,  function  ( err )  { 
+//   if  ( err )  throw  err ; 
+//   console . log ( 'finished' ) ; 
+// } ) ;
+// });
+
+// cine 영화정보 가져오기
+// let  { PythonShell }  =  require ( 'python-shell' )
+// PythonShell . run ( 'cine.py' ,  null ,  function  ( err )  { 
+//   if  ( err )  throw  err ; 
+//   console . log ( 'finished' ) ; 
+// } ) ;
+// movierank CGV 영화 순위 가져오기
+// let  { PythonShell }  =  require ( 'python-shell' )
+// PythonShell . run ( 'movierank.py' ,  null ,  function  ( err )  { 
+//   if  ( err )  throw  err ; 
+//   console . log ( 'finished' ) ; 
+// } ) ;
 module.exports = app;

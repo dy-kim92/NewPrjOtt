@@ -3,6 +3,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 config/
 findpwd/
+blackwidow.mp4
+waves.mp4
 ### Node ###
 # Logs
 logs

@@ -1,0 +1,9 @@
+{
+  "nav": {
+    "review": "Review",
+    "board": "Board",
+    "chat": "Chat",
+    "news": "News",
+    "logout": "LogOut"
+  }
+}
