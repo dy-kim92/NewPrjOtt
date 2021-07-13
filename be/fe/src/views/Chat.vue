@@ -68,7 +68,8 @@ import axios from 'axios'
                 //  입력 내용 전송
                 this.$socket.emit('chat',{
                     message: this.message,
-                    authName: this.authName
+                    authName: this.authName,
+                    room: 'free'
                 });
 
                 this.textarea += "[" + this.authName + "] " + this.message + "\n"
