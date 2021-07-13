@@ -42,12 +42,111 @@ var io = require('socket.io')(server, {
   allowEIO3: true
 });
 
+let rooms = [];
+
+//  입장인원 카운트 변수
+var cnt1 = 0;
+var cnt2 = 0;
+var cnt3 = 0;
+var cnt4 = 0;
+
 io.on('connection' , function(socket) {
   console.log('Connect from Client: '+ socket)
 
-  socket.on('hello', function(data){
-      console.log('hello from Client: '+ data)
+  //  소켓 연결 시 방별 사용자 수 전송
+  socket.emit('update', {
+    cnt1: cnt1,
+    cnt2: cnt2,
+    cnt3: cnt3,
+    cnt4: cnt4
   });
+  console.log('접속시 : ' + cnt1 + cnt2 + cnt3 + cnt4)
+
+  //  방 입장 ============================================
+  socket.on('req_join_room', function(data){
+    let roomName = data.roomName;
+    if(!rooms.includes(roomName)) {
+      rooms.push(roomName);
+    }else{        
+      // does nothing
+    }
+    //  roomName 이름의 방으로 접속
+    socket.join(roomName);
+    console.log(roomName + " 접속")
+
+    //  roomName 별 접속자 수 카운트 +
+    if(roomName == 'chat1'){
+      cnt1++
+    }else if(roomName == 'chat2'){
+      cnt2++
+    }else if(roomName == 'chat3'){
+      cnt3++
+    }else if(roomName == 'chat4'){
+      cnt4++
+    }
+
+    //  welcome msg 전송
+    var rtnMessage = {
+        authName: data.authName,
+        message: ' 님이 접속하셨습니다.',
+    };
+
+    //  접속자 수 업데이트
+    socket.broadcast.emit('update', {
+      cnt1: cnt1,
+      cnt2: cnt2,
+      cnt3: cnt3,
+      cnt4: cnt4
+    });
+    console.log('입장시 : ' + cnt1 + cnt2 + cnt3 + cnt4)
+    socket.to(roomName).emit('noti_join_room', rtnMessage);
+  });
+
+  //  방 퇴장 ============================================
+  socket.on('req_exit_room', function(data){
+    var roomName = data.roomName;
+
+    //  roomName 별 접속자 수 카운트 -
+    if(roomName == 'chat1'){
+      cnt1--;
+    }else if(roomName == 'chat2'){
+      cnt2--;
+    }else if(roomName == 'chat3'){
+      cnt3--;
+    }else if(roomName == 'chat4'){
+      cnt4--;
+    }
+
+    //  접속자 수 업데이트
+    socket.broadcast.emit('update', {
+      cnt1: cnt1,
+      cnt2: cnt2,
+      cnt3: cnt3,
+      cnt4: cnt4
+    });
+    console.log('퇴장시 : ' + cnt1 + cnt2 + cnt3 + cnt4)
+
+    //  방에 접속한 사용자에게 퇴장메세지 전송
+    var rtnMessage = {
+      authName: data.authName,
+      message: ' 님이 퇴장하셨습니다.',
+    };
+    socket.to(roomName).emit('noti_exit_room', rtnMessage);
+  });
+
+  //  메세지 전송 ============================================
+  socket.on('chatMsg', function(data){
+    console.log('message from Client: ' + data.message)
+    console.log('name from : ' + data.authName)
+    var rtnMessage = {
+        message: data.message,
+        authName: data.authName
+    };
+
+    // 클라이언트에게 메시지를 전송한다
+    socket.to(data.roomName).emit('getMsg', rtnMessage);
+  });
+
 
   socket.on('chat', function(data){
       console.log('message from Client: ' + data.message)

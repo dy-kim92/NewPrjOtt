@@ -308,9 +308,16 @@
     
 </template>
  
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QPJGZBZSSJ"></script>
 <script>
 
 import axios from 'axios'
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-QPJGZBZSSJ');
 
 export default {
   name: 'main-header',
@@ -431,7 +438,11 @@ export default {
             .then((r) => {
                 if (r.data.success==false){
                     this.$store.commit('pop', { msg: '로그인 실패', color: 'warning' })
-                } else this.$store.commit('pop', { msg: '로그인 성공', color: 'success'})
+                } else {
+                    this.$store.commit('pop', { msg: '로그인 성공', color: 'success'})
+                    this.$router.go();
+                }
+                    
             })
             .catch((e) => {
                 this.$store.commit('pop', { msg: e.message, color: 'warning' })
@@ -441,8 +452,10 @@ export default {
         //     // this.$router.push('/auth/logout')
         // }
   }
+  
 }
 </script>
+
  
 <style scoped>
 .hiddenfield{
