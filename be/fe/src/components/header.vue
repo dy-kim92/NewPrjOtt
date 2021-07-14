@@ -11,7 +11,7 @@
         <v-row class="header">
             <div class="col-md-1">
                 <a href="/" id="gohome">
-                    AAC
+                    <img  class="logo" src="../assets/001.png">
                 </a>
             </div>
             <div class="col-md-2">
@@ -545,5 +545,9 @@ a {
 .icon {
     width:70px;
 }
-
+.logo {
+    width:150px;
+    margin-left: -45px;
+    margin-top: -40px;
+}
 </style>

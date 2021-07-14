@@ -7,9 +7,9 @@
     <v-main>
       <router-view class="pa-0 ma-0"/>
     </v-main>
-
     <div id="footer">
       <main-footer/>
+      <back-to-top class="btt" text="Back to top" visibleoffset="100"></back-to-top>
     </div>
    <v-snackbar
        v-model="$store.state.sb.act"
@@ -28,13 +28,14 @@
 <script>
 import MainHeader from './components/header.vue'
 import MainFooter from './components/footer.vue'
- 
+import BackToTop from 'vue-backtotop'
 export default {
   name: 'App',
 
   components  : {
     'main-header': MainHeader,
-    'main-footer': MainFooter
+    'main-footer': MainFooter,
+    BackToTop
   },
 
   data: () => ({
