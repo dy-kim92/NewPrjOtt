@@ -1,5 +1,5 @@
 <template>
-  <v-containers>
+  <v-container fluid>
     <v-row>
       <v-col cols="11" class="mx-auto">
         <v-card class="" style="padding:0; margin:0; border-radius:30px;">
@@ -17,14 +17,15 @@
     <v-row style="text-align:center; margin-top:50px;">
       <v-col col="10" offset="1" >
         <!-- 채팅방이름 ,참여인원수변수 , 클릭이벤트 -->
-        <v-card class="chatroom " >
+        <div class="chatroomdiv">
+          <h1 class="white--text">영화</h1>
+        <v-card class="chatroom ">
           <v-img
             class="white--text"
             height="240px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="../assets/chatimg1.jpg"
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
-          비트컴퓨터1
           </v-img>
             <div class="d-inline-flex">
               <v-icon class="icon">mdi-account-circle</v-icon>
@@ -34,14 +35,17 @@
               </button>
             </div>
         </v-card>
+        </div>
+
+        <div class="chatroomdiv">
+          <h1 class="white--text">드라마</h1>
         <v-card class="chatroom" >
           <v-img
             class="white--text"
             height="240px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="../assets/chatimg2.jpg"
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
-          비트컴퓨터2
           </v-img>
             <div class="d-inline-flex">
               <v-icon class="icon">mdi-account-circle</v-icon>
@@ -51,14 +55,17 @@
               </button>
             </div>
         </v-card>
+        </div>
+
+        <div class="chatroomdiv">
+          <h1 class="white--text">TV프로그램</h1>
         <v-card class="chatroom" >
           <v-img
             class="white--text"
             height="240px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="../assets/chatimg3.jpg"
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
-          비트컴퓨터3
           </v-img>
             <div class="d-inline-flex">
               <v-icon class="icon">mdi-account-circle</v-icon>
@@ -68,14 +75,17 @@
               </button>
             </div>
         </v-card>
+        </div>
+
+        <div class="chatroomdiv">
+          <h1 class="white--text">애니</h1>
         <v-card class="chatroom" >
           <v-img
             class="white--text"
             height="240px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="../assets/chatimg4.jpg"
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
-          비트컴퓨터4
           </v-img>
             <div class="d-inline-flex">
               <v-icon class="icon">mdi-account-circle</v-icon>
@@ -85,6 +95,7 @@
               </button>
             </div>
         </v-card>
+        </div>
       </v-col>
     </v-row>
     <v-row >
@@ -93,17 +104,18 @@
         </div>
       </v-col>
     </v-row >
+    
     <!-- 채팅방 다이얼로그 -->
       <v-dialog v-model="dialog" persistent width="500">
-      <v-card>
-        <v-card-title class="text-h5 grey lighten-2">
-          {{flag}}
+      <v-card dark>
+        <v-card-title class="text-h5 lighten-2">
+          {{flagName}}
         </v-card-title>
 
         <v-card-text>
           <!-- <label>내용</label> -->
           <md-field>
-          <md-textarea class="ta" v-model="textarea" disabled v-auto-scroll-bottom></md-textarea>
+          <md-textarea class="ta" v-model="textarea" disabled v-auto-scroll-bottom rows="10" row-height="50"></md-textarea>
           </md-field>
           <!-- <label>입력</label> -->
           <v-text-field
@@ -117,15 +129,13 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="exitRoom">
+          <v-btn color="white" text @click="exitRoom">
             나가기
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog> 
-  </v-containers>
-
-      
+  </v-container>
 
 </template>
 
@@ -136,7 +146,7 @@ import axios from 'axios'
 export default {
     created() {
         var vm = this;
-        axios.get('http://localhost:3000/auth/info')
+        axios.get('/auth/info')
             .then(res => {
             // console.log("front :: " , res);
             vm = res.data;
@@ -208,13 +218,15 @@ export default {
       chat2cnt: null,
       chat3cnt: null,
       chat4cnt: null,
-      flag: ''
+      flag: '',
+      flagName: ''
     }
   },
   methods: {
     chat1 () {
       this.dialog = true
-      this.flag = 'chat1'
+      this.flag = 'chat1';
+      this.flagName = '영화';
       this.roomName = 'chat1';
       this.$socket.emit('req_join_room', {
         roomName: this.roomName,
@@ -224,6 +236,7 @@ export default {
     chat2 () {
       this.dialog = true
       this.flag = 'chat2'
+      this.flagName = '드라마';
       this.roomName = 'chat2';
       this.$socket.emit('req_join_room', {
         roomName: this.roomName,
@@ -233,6 +246,7 @@ export default {
     chat3 () {
       this.dialog = true
       this.flag = 'chat3'
+      this.flagName = 'TV프로그램';
       this.roomName = 'chat3';
       this.$socket.emit('req_join_room', {
         roomName: this.roomName,
@@ -242,6 +256,7 @@ export default {
     chat4 () {
       this.dialog = true
       this.flag = 'chat4'
+      this.flagName = '애니';
       this.roomName = 'chat4';
       this.$socket.emit('req_join_room', {
         roomName: this.roomName,
@@ -249,15 +264,37 @@ export default {
       });
     },
     sendMessage () {
+      //  비속어 필터
+      var bad_words = ["존나", "시발", "씨발", "병신"];
+      let filteredText;
+      const filter = (text) => {
+        for(let i = 0; i < text.length; i++){
+          for(let j = 0; j < bad_words.length; j++){
+            if(text.indexOf(bad_words[j]) != -1) {
+              filteredText = text.replace(bad_words[j], "**");
+              text = filteredText;
+            }
+          }
+        }
+        return text;
+      };
+
+      let text = this.message;
+
+      filter(text);
+      if(filteredText != null){
+        text = filteredText;
+      }
+
       //  입력 내용 전송
       this.$socket.emit('chatMsg',{
-          message: this.message,
+          message: text,
           authName: this.authName,
           roomName: this.roomName
       });
 
       //  내가 전송한 메세지는 [나]로 표시
-      this.textarea += "[나] " + this.message + "\n"
+      this.textarea += "[나] " + text + "\n"
       this.message = ''
     },
     exitRoom () {
@@ -271,7 +308,6 @@ export default {
       this.$router.go();
     }
   }
-
 }
 </script>
 
@@ -280,7 +316,7 @@ export default {
   display: inline-block;
   position: relative;
   margin-right: 130px;
-  margin-top: 50px;
+  margin-top: 10px;
   height: 300px;
   width: 300px;
   /* right: -50%; */
@@ -307,6 +343,21 @@ export default {
 
 .ta {
   width: 100%;
+  color: whitesmoke;
+}
+
+.container{
+  background-color: #101010;
+}
+
+.chatroomdiv{
+  display: inline-block;
+  margin-bottom: 50px;
+}
+.chatroomdiv h1{
+  text-align: center;
+  width: 300px;
+  /* bottom: -10%; */
 }
 
 </style>

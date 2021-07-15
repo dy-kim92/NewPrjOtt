@@ -345,7 +345,7 @@
                 </v-btn>
             </v-col>
             <v-col cols="1" v-if="authEmail">
-                <a href="http://localhost:3000/auth/logout">{{$t('nav.logout')}}&emsp;</a>
+                <a href="/auth/logout">{{$t('nav.logout')}}&emsp;</a>
             </v-col>
         </v-row>
     </v-container>
@@ -366,7 +366,7 @@ export default {
   name: 'main-header',
     created(){
     var vm = this;
-    axios.get('http://localhost:3000/auth/info')
+    axios.get('/auth/info')
         .then(res => {
         // console.log("front :: " , res);
         vm = res.data;
@@ -423,7 +423,7 @@ export default {
             this.dialog4 = true,
             this.$refs.observer.validate().then(result => {
                 if (result) {
-                    axios.post('http://localhost:3000/api/findpwd/updatepwd',{
+                    axios.post('/api/findpwd/updatepwd',{
                         email:this.findemail,
                         password:this.newpassword
                     })
@@ -439,7 +439,7 @@ export default {
         },
         postFindPwdData () {
             console.log(this.findemail)
-            axios.post('http://localhost:3000/api/findpwd',{
+            axios.post('/api/findpwd',{
                 email: this.findemail
             })
             .then((r) => {
@@ -456,7 +456,7 @@ export default {
             // 모든 검증을 통과한 경우 result = true 
             this.$refs.observer.validate().then(result => {
                 if (result) {
-                    axios.post('http://localhost:3000/api/register',{
+                    axios.post('/api/register',{
                         name: this.name,
                         email: this.joinEmail,
                         password: this.joinPassword
@@ -474,7 +474,7 @@ export default {
         },
         postLoginData() {
             this.dialog = false // dialog 창닫기
-            axios.post('http://localhost:3000/api/login',{
+            axios.post('/api/login',{
                 email: this.email,
                 password: this.password,
                 remember: this.remember
