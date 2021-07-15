@@ -5,7 +5,10 @@
     "chat": "Chat",
     "news": "News",
     "logout": "LogOut",
-    "login": "Login"
+    "login": "Login",
+    "findPwd":"Forgot Password?",
+    "keepLogin":"Keep Login (default 7days)",
+    "signIn":"Sign-in"
   },
   "home": {
     "boxOffice": "BOXOFFICE TOP7",
@@ -13,5 +16,9 @@
     "unit":"10000 per unit",
     "usageFee":"usage fee(Basic rate standard)",
     "usageFeeUnit":"100 per unit"
+  },
+  "review": {
+    "boardTitle": "FreeBoard",
+    "movieInfo": "MOVIE INFO"
   }
 }

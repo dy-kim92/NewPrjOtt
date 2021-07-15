@@ -5,7 +5,10 @@
       "chat": "채팅",
       "news": "뉴스",
       "logout": "로그아웃",
-      "login": "로그인"
+      "login": "로그인",
+      "findPwd":"비밀번호찾기",
+      "keepLogin":"로그인 유지(7일)",
+      "signIn":"회원가입"
     },
     "home": {
       "boxOffice": "박스오피스 TOP7",
@@ -13,5 +16,9 @@
       "unit":"단위:만",
       "usageFee":"OTT 이용요금(기본요금기준)",
       "usageFeeUnit":"단위:백원"
+    },
+    "review": {
+      "boardTitle": "자유게시판",
+      "movieInfo": "영화 정보"
     }
 }

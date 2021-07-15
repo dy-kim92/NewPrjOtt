@@ -5,7 +5,10 @@
     "chat": "チャット",
     "news": "ニュース",
     "logout": "ログアウト",
-    "login": "ログイン"
+    "login": "ログイン",
+    "findPwd":"パスワード新規登録・お忘れの方",
+    "keepLogin":"自動ログイン(7日)",
+    "signIn":"加入"
   },
   "home": {
     "boxOffice": "週間ランキング TOP7",

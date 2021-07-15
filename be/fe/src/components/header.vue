@@ -57,7 +57,7 @@
                     <v-dialog v-model="dialog" persistent max-width="500px">
                         <v-card>
                             <v-card-title>
-                            <span class="headline">Login</span>
+                            <span class="headline">{{$t('nav.login')}}</span>
                             </v-card-title>
                             <v-card-text>
                             <validation-observer>
@@ -102,10 +102,10 @@
                                     </v-col>
                                 </v-row>
                                 </v-container>
-                                <small type="button" @click="mdUp3">Forgot password?</small>
+                                <small type="button" @click="mdUp3">{{$t('nav.findPwd')}}</small>
                                 <v-checkbox
                                     v-model="remember"
-                                    label="Keep logged in (default 7days)"
+                                    :label="$t('nav.keepLogin')"
                                 ></v-checkbox>
                             </v-form>
                             </validation-observer>
@@ -120,8 +120,8 @@
                             </v-card-text>
                             <v-card-actions>    
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="mdUp2">Register</v-btn>
-                            <v-btn color="primary" @click="postLoginData" router-link to="/">Login</v-btn>
+                            <v-btn color="primary" @click="mdUp2">{{$t('nav.signIn')}}</v-btn>
+                            <v-btn color="primary" @click="postLoginData" router-link to="/">{{$t('nav.login')}}</v-btn>
                             <v-btn color="primary" @click.native="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
                             </v-card-actions>
                         </v-card>
@@ -498,7 +498,7 @@ export default {
 }
 </script>
 
- 
+
 <style scoped>
 .hiddenfield{
     display:none
@@ -511,11 +511,13 @@ export default {
   margin: 0px;
   padding: 0px;
   width: 100%;
+  height: 11%;
   position: fixed;
   /* display:ab; */
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 103;
+  background-color: #000C1D;
 }
 a { 
     text-decoration:none;

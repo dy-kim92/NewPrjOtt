@@ -1,6 +1,6 @@
 <template>
-  <v-container grid-list-md>
-    <v-layout row wrap>
+  <v-container class="pa-8" fluid grid-list-md>
+    <v-layout row wrap >
       <v-flex xs12>
         <v-card>
           <v-img
@@ -22,6 +22,7 @@
         </v-card>
       </v-flex>
       <v-text-field
+        dark
         v-model="search"
         append-icon="mdi-magnify"
         label="Search"
@@ -58,13 +59,12 @@
     </v-layout>
 
     <v-btn
-      color="pink"
+      color="blue"
       dark
       small
       absolute
       bottom
       right
-      fab
       @click="addDialog"
     >
       <v-icon>add</v-icon>
@@ -473,3 +473,5 @@ export default {
   }
 }
 </script>
+<style scoped>
+</style>

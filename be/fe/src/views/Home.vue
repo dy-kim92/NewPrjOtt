@@ -1,5 +1,5 @@
 <template>
-  <v-container class="" fluid>
+  <v-container class="home" fluid>
     <video autoplay muted loop class="mainvideo" >
       <source src="../assets/blackwidow.mp4" type="video/mp4"/>
     </video>
