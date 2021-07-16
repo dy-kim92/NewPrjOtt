@@ -131,182 +131,63 @@
 
 
 <script>
+
 import axios from 'axios'
 
-export default {
-    created() {
-        var vm = this;
-        axios.get('http://localhost:3000/auth/info')
-            .then(res => {
-            // console.log("front :: " , res);
-            vm = res.data;
-            this.authName = vm.name;
-            this.authEmail = vm.email;
-            this.authId = vm._id;
+    export default {
+        name: 'HelloWorld',
+        created() {
+            var vm = this;
+            axios.get('http://localhost:3000/auth/info')
+                .then(res => {
+                // console.log("front :: " , res);
+                vm = res.data;
+                this.authName = vm.name;
+                this.authEmail = vm.email;
+                this.authId = vm._id;
+                })
+                .catch(err => {
+                // console.log(err);
             })
-            .catch(err => {
-            // console.log(err);
-        });
 
-        //  방 접속 알림
-        this.$socket.on('noti_join_room', (res) => {
-          this.textarea += "  SYSTEM : [" + res.authName + "] " + res.message + "\n"
-          if(this.flag == 'chat1'){
-            this.chat1cnt = res.cnt
-            console.log('chat1 : ' + this.chat1cnt)
-          }else if(this.flag == 'chat2'){
-            this.chat2cnt = res.cnt
-            console.log('chat2 : ' + this.chat2cnt)
-          }else if(this.flag == 'chat3'){
-            this.chat2cnt = res.cnt
-            console.log('chat3 : ' + this.chat3cnt)
-          }else if(this.flag == 'chat4'){
-            this.chat2cnt = res.cnt
-            console.log('chat4 : ' + this.chat4cnt)
-          }
-        });
+            //  클라이언트로부터 새로운 대화내용 받아와 표시
+            this.$socket.on('chat', (data)=> {
+                this.textarea += "[" + data.authName + "] " + data.message + "\n"
+            })
+        },
+        data() {
+            return {
+                authId: '',
+                authName:'',
+                authEmail:'',
+                textarea: "",
+                message: '',
+            }
 
-        //  방 퇴장 알림
-        this.$socket.on('noti_exit_room', (res) => {
-          this.textarea += "  SYSTEM : [" + res.authName + "] " + res.message + "\n"
-          if(this.flag == 'chat1'){
-            this.chat1cnt = res.cnt
-            console.log('chat1 : ' + this.chat1cnt)
-          }else if(this.flag == 'chat2'){
-            this.chat2cnt = res.cnt
-            console.log('chat2 : ' + this.chat2cnt)
-          }else if(this.flag == 'chat3'){
-            this.chat3cnt = res.cnt
-            console.log('chat3 : ' + this.chat3cnt)
-          }else if(this.flag == 'chat4'){
-            this.chat4cnt = res.cnt
-            console.log('chat4 : ' + this.chat4cnt)
-          }
-        });
+        },
+        methods: {
+            sendMessage () {
+                //  입력 내용 전송
+                this.$socket.emit('chat',{
+                    message: this.message,
+                    authName: this.authName,
+                    room: 'free'
+                });
 
-        //  방별 새로운 메세지 받아오기
-        this.$socket.on('getMsg', (res) => {
-          this.textarea += "[" + res.authName + "] " + res.message + "\n"
-        });
-
-        //  접속자 수 업데이트
-        this.$socket.on('update', (res) => {
-          this.chat1cnt = res.cnt1,
-          this.chat2cnt = res.cnt2,
-          this.chat3cnt = res.cnt3,
-          this.chat4cnt = res.cnt4
-        })
-    },
-  data () {
-    return {
-      dialog : false,
-      roomName : '',
-      authName : '',
-      textarea: "",
-      message: '',
-      chat1cnt: null,
-      chat2cnt: null,
-      chat3cnt: null,
-      chat4cnt: null,
-      flag: ''
+                this.textarea += "[" + this.authName + "] " + this.message + "\n"
+                this.message = ''
+            }
+        }
     }
-  },
-  methods: {
-    chat1 () {
-      this.dialog = true
-      this.flag = 'chat1'
-      this.roomName = 'chat1';
-      this.$socket.emit('req_join_room', {
-        roomName: this.roomName,
-        authName: this.authName 
-      });
-    },
-    chat2 () {
-      this.dialog = true
-      this.flag = 'chat2'
-      this.roomName = 'chat2';
-      this.$socket.emit('req_join_room', {
-        roomName: this.roomName,
-        authName: this.authName
-      });
-    },
-    chat3 () {
-      this.dialog = true
-      this.flag = 'chat3'
-      this.roomName = 'chat3';
-      this.$socket.emit('req_join_room', {
-        roomName: this.roomName,
-        authName: this.authName
-      });
-    },
-    chat4 () {
-      this.dialog = true
-      this.flag = 'chat4'
-      this.roomName = 'chat4';
-      this.$socket.emit('req_join_room', {
-        roomName: this.roomName,
-        authName: this.authName
-      });
-    },
-    sendMessage () {
-      //  입력 내용 전송
-      this.$socket.emit('chatMsg',{
-          message: this.message,
-          authName: this.authName,
-          roomName: this.roomName
-      });
-
-      //  내가 전송한 메세지는 [나]로 표시
-      this.textarea += "[나] " + this.message + "\n"
-      this.message = ''
-    },
-    exitRoom () {
-      this.$socket.emit('req_exit_room', {
-        roomName: this.roomName,
-        authName: this.authName
-      });
-      this.roomName = ''
-      this.dialog = false
-      //  리렌더링 문제로 강제 새로고침
-      this.$router.go();
-    }
-  }
-
-}
 </script>
 
-<style scoped>
-.chatroom{
-  display: inline-block;
-  position: relative;
-  margin-right: 130px;
-  margin-top: 50px;
-  height: 300px;
-  width: 300px;
-  /* right: -50%; */
-  padding: 0px;
-  border-radius: 30px;
-}
-.chatroom button{
-  background-color:red; 
-  color:white; 
-  padding:10px; 
-  margin:10px; 
-  position: relative;
-  right: -50px;
-  border-radius: 30px;
-}
-.chatroom h4{
-  top: 17px;
-  left: -30px;
-  position: relative;
-}
-.icon {
-  left: -35px;
-}
+<style>
+    .md-app {
+        height: 800px;
+        border: 1px solid rgba(#000, .12);
+    }
 
-.ta {
-  width: 100%;
-}
-
+    .md-textarea {
+        height: 300px;
+    }
 </style>

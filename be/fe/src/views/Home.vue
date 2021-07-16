@@ -1,5 +1,5 @@
 <template>
-  <v-container class="home" fluid>
+  <v-container class="" fluid>
     <video autoplay muted loop class="mainvideo" >
       <source src="../assets/blackwidow.mp4" type="video/mp4"/>
     </video>
@@ -7,12 +7,12 @@
       <v-row>
         <v-col cols="12">
           <v-sheet
-          class="netRec ma-7"
+          class="netRec ma-8"
           elevation="8"
-          max-width="100vw"
+          max-width="92vw"
           dark
           >
-          <h1 class="font-weight-black" style="font-family:none; margin-left:5px">{{$t('home.boxOffice')}}</h1>
+          <h1 class="font-weight-black" style="font-family:none; margin-left:5px">박스오피스 TOP7</h1>
           <v-slide-group
             class="pa-5"
             show-arrows
@@ -25,7 +25,7 @@
             >
               <v-card
               :color="active ? 'red' : 'black'"
-              class="ma-7 cards"
+              class="ma-5 cards"
               max-height="300px"
               width="280px"
               @click="toggle"
@@ -48,13 +48,11 @@
         </v-col>
       </v-row>
     </v-content>
-    <v-row justify="center" class="mb-0 pa-8">
-      <v-col cols="4">
-        <v-card dark style="background:#202936" height="70vh">
-          <v-list style="background:#202936">
+    <v-row justify="center" >
+      <v-col cols="3">
+        <v-card dark class="card1">
+          <v-list>
             <v-subheader>POPULAR STREAMING MOVIES</v-subheader>
-            <v-subheader><small>source of Rotten tomatoes</small></v-subheader>
-
             <v-list-item-group
               color="primary"
             >
@@ -73,17 +71,17 @@
           </v-list>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <v-card dark style="background:#202936">
-          <v-card-title>{{$t('home.marketShare')}}</v-card-title>
-          <v-card-subtitle>{{$t('home.unit')}}</v-card-subtitle>
+      <v-col cols="3" offset="1">
+        <v-card dark class="card2">
+          <v-card-title>국내 OTT 시장 점유율</v-card-title>
+          <v-card-subtitle>단위:만</v-card-subtitle>
           <doughnut-chart :chart-data="doughnutCollection" :options="optionss"></doughnut-chart>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <v-card dark style="background:#202936">
-          <v-card-title>{{$t('home.usageFee')}}</v-card-title>
-          <v-card-subtitle>{{$t('home.usageFeeUnit')}}</v-card-subtitle>
+      <v-col cols="3" offset="1">
+        <v-card dark class="card3">
+          <v-card-title>OTT 이용요금</v-card-title>
+          <v-card-subtitle>단위:백원(기본요금기준)</v-card-subtitle>
           <bar-chart :chart-data="barchartdata" :options="options"></bar-chart>
         </v-card>
       </v-col>
@@ -116,7 +114,7 @@ export default {
         { text: 'Conversions', icon: 'mdi-numeric-3-box' },
       ],
       doughnutCollection: {
-      labels: ["Netflix", "Wavve", "TVing", "Seezn", "WATCHA"],
+      labels: ["넷플릭스", "웨이브", "티빙", "시즌", "왓챠"],
       datasets: [
         {
           borderWidth: 5,
@@ -132,13 +130,13 @@ export default {
                 doughnutlabel: {
                   labels: [	
                     {
-                      text: 'Market',
+                      text: '국내 OTT 시장',
                       font: {
                         size: '30',
                         weight: 'bold',
                       }
                     },{
-                      text: 'Share',
+                      text: '점유율',
                       font: {
                         size: '20',
                         weight: 'bold',
@@ -149,7 +147,7 @@ export default {
               },
         },
       barchartdata:{
-        labels: ["Netflix", "Wavve", "TVing", "Seezn", "WATCHA"],
+        labels: ["넷플릭스", "웨이브", "티빙", "시즌", "왓챠"],
         datasets:[
           {
             borderWidth: 5,
@@ -208,7 +206,7 @@ export default {
   padding: 0;
 }
 .netRec{
-  background-color: #101A29;
+  background-color: black;
   /* border: solid 1px white; */
   margin-bottom: 10px;
   padding: 0px;
@@ -256,7 +254,7 @@ export default {
   overflow: hidden;
 }
 .container{
-  background: #000C1D;
+  background: #101010;
 }
 .card1{
   height: 550px;

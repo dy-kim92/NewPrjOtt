@@ -4,12 +4,12 @@
       <main-header/>
     </div>
 
-    <v-main class="main">
+    <v-main>
       <router-view class="pa-0 ma-0"/>
     </v-main>
+
     <div id="footer">
       <main-footer/>
-      <back-to-top class="btt" text="Back to top" visibleoffset="100"></back-to-top>
     </div>
    <v-snackbar
        v-model="$store.state.sb.act"
@@ -19,7 +19,7 @@
        <v-btn
          @click="$store.commit('pop', { act: false })"
        >
-         <v-icon>mdi-close</v-icon>
+         닫기
        </v-btn>
      </v-snackbar>
   </v-app>
@@ -28,14 +28,13 @@
 <script>
 import MainHeader from './components/header.vue'
 import MainFooter from './components/footer.vue'
-import BackToTop from 'vue-backtotop'
+ 
 export default {
   name: 'App',
 
   components  : {
     'main-header': MainHeader,
-    'main-footer': MainFooter,
-    BackToTop
+    'main-footer': MainFooter
   },
 
   data: () => ({

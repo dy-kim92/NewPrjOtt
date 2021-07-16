@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Review from '../views/Review.vue'
 import FreeBoard from '../views/FreeBoard.vue'
+import Token from '../views/token.vue'
 import E404 from '../views/e404.vue'
 import Chat from '../views/Chat.vue'
 import News from '../views/News.vue'
@@ -30,6 +31,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/token',
+    name: 'token',
+    component: Token
   },
   {
     path: '/news',
