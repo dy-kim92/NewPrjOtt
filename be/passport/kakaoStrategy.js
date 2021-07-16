@@ -5,7 +5,7 @@ module.exports = () => {
     passport.use(new KakaoStrategy({
         clientID: '5479403ac3d4fdfacf12f97f8cfbafe6',
         clientSecret: 'bFSgKkXYNajny5YYnk11QDSDdX4sjTde',
-        callbackURL: '/auth/kakao/callback'
+        callbackURL: 'http://localhost:3000/auth/kakao/callback'
     }, async (accessToken, refreshToken, profile, done) => {
         try {
             const exUser = await User.findOne({

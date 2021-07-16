@@ -5,24 +5,24 @@ import { email, required, numeric, max, confirmed, min } from 'vee-validate/dist
 
 extend('required', {
     ...required,
-    message: '{_field_} is required.'
+    message: '{_field_}는 필수값 입니다.'
 })
 extend('numeric', numeric)
 extend('email', {
     ...email,
-    message: 'Please enter the appropriate {_field_}.'
+    message: '{_field_}폼으로 입력해주세요.'
 })
 extend('max', {
     ...max,
-    message: '{_field_} is at least {length} digits.'
+    message: '{_field_}은 {length}자를 초과할 수 없습니다.'
 })
 extend('confirmed', {
     ...confirmed,
-    message: 'Passwords do not match.'
+    message: '비밀번호가 일치하지 않습니다.'
 })
 extend('min', {
     ...min,
-    message: 'Password is at least 8 digits.'
+    message: '비밀번호는 8자리 이상 사용하세요.'
 })
 Vue.component('ValidationObserver',ValidationObserver)
 Vue.component('ValidationProvider',ValidationProvider)

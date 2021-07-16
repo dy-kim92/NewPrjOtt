@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-8" fluid grid-list-md>
+  <v-container grid-list-md>
     <v-layout row wrap>
       <v-flex xs12>
         <v-card>
@@ -11,18 +11,17 @@
             <v-container fill-height fluid>
               <v-layout fill-height>
                 <v-flex xs6 align-end flexbox>
-                  <span class="headline">{{$t('review.boardTitle')}}</span>
+                  <span class="headline">{{board.name}}</span>
                 </v-flex>
-                <!-- <v-flex xs6 align-end flexbox>
+                <v-flex xs6 align-end flexbox>
                   <span>{{board.rmk}}</span>
-                </v-flex> -->
+                </v-flex>
               </v-layout>
             </v-container>
           </v-img>
         </v-card>
       </v-flex>
       <v-text-field
-        dark
         v-model="search"
         append-icon="mdi-magnify"
         label="Search"
@@ -81,7 +80,7 @@
         </v-img>
         <v-card-title>
           <span class="text-h5">
-            {{$t('review.movieInfo')}}
+            MOVIE INFO
           </span>
         </v-card-title>
         <v-card-text>
@@ -109,7 +108,7 @@
             text
             @click="dialog = false"
           >
-            <v-icon>mdi-close</v-icon>
+            닫기
           </v-btn>
         </v-card-actions>
 
@@ -147,7 +146,7 @@
         </v-list>
         <v-card-text>
           <v-text-field
-              label="Write Comments"
+              label="댓글 작성"
               v-model="formComment.content"
               append-icon="mdi-send"
               @keyup.enter="addComment"
@@ -162,10 +161,10 @@
       <v-card>
         <v-card-text>
           <v-card-title>
-            <span class="headline">Edit Comments</span>
+            <span class="headline">댓글 수정</span>
           </v-card-title>
           <v-text-field
-              label="Edit Comments"
+              label="댓글 수정"
               v-model="selComment.content"
               @keyup.enter="modComment()"
           >
@@ -173,9 +172,9 @@
         </v-card-text>
         <v-card-actions>
           <v-btn color="warning" @click="modComment()">
-            Edit
+            수정
           </v-btn>
-          <v-btn color="secondary" @click="commentDialog = false"><v-icon>mdi-close</v-icon></v-btn>
+          <v-btn color="secondary" @click="commentDialog = false">닫기</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -184,7 +183,7 @@
     <v-dialog width="600" v-model="dialogRate">
       <v-card>
         <v-card-title class= "text-h5">
-          How was this movie?
+          이 영화는 어떠셨나요?
         </v-card-title>
         <v-card-text>
           <div class= "text-center mt-12">
@@ -204,12 +203,12 @@
           <v-btn text
             @click="dialogRate = false"
           >
-            <v-icon>mdi-close</v-icon>
+            취소
           </v-btn>
           <v-btn text
             @click = "Rating"
           >
-            submit
+            등록
           </v-btn>
         </v-card-actions>
       </v-card>

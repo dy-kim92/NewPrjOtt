@@ -26,7 +26,7 @@ router.get('/kakao', passport.authenticate('kakao'));
 router.get('/kakao/callback', function (req, res, next) {
   passport.authenticate("kakao", (err, user) => {
     if (err || !user) 
-    return res.redirect('/auth/kakao');
+    return res.redirect('http://localhost:3000/auth/kakao');
     req.login(user, (error) => {
       if (error) next(error);
 
@@ -37,7 +37,7 @@ router.get('/kakao/callback', function (req, res, next) {
       // var decode = jwt.decode(cookieLoginObj, cfg.jwt.secretKey);
       // console.log(decode);
 
-      return res.redirect('/'); 
+      return res.redirect('http://localhost:3000/'); 
     });
   })(req, res);
 });
@@ -47,7 +47,7 @@ router.get('/naver', passport.authenticate('naver'));
 
 router.get('/naver/callback', function (req, res, next) {
   passport.authenticate("naver", (err, user) => {
-    if (err || !user) return res.redirect('/auth/naver');
+    if (err || !user) return res.redirect('http://localhost:3000/auth/naver');
     req.login(user, (error) => {
       if (error) next(error);
 
@@ -58,7 +58,7 @@ router.get('/naver/callback', function (req, res, next) {
       // var decode = jwt.decode(cookieLoginObj, cfg.jwt.secretKey);
       // console.log(decode);
 
-      return res.redirect('/'); 
+      return res.redirect('http://localhost:3000/'); 
     });
   })(req, res);
 });
