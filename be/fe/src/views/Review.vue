@@ -12,11 +12,11 @@
             <v-container fill-height fluid>
               <v-layout fill-height>
                 <v-flex xs6 align-end flexbox>
-                  <span class="headline">{{board.name}}</span>
+                  <span class="headline">{{$t('review.boardTitle')}}</span>
                 </v-flex>
-                <v-flex xs6 align-end flexbox>
+                <!-- <v-flex xs6 align-end flexbox>
                   <span>{{board.rmk}}</span>
-                </v-flex>
+                </v-flex> -->
               </v-layout>
             </v-container>
           </v-img>
@@ -83,7 +83,7 @@
         </v-img>
         <v-card-title>
           <span class="text-h5">
-            MOVIE INFO
+            {{$t('review.movieInfo')}}
           </span>
         </v-card-title>
         <v-card-text>
@@ -111,7 +111,7 @@
             text
             @click="dialog = false"
           >
-            닫기
+            <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-actions>
 
@@ -167,7 +167,7 @@
             <span class="headline">{{$t('review.editComment')}}</span>
           </v-card-title>
           <v-text-field
-              label="댓글 수정"
+              label="Edit Comments"
               v-model="selComment.content"
               @keyup.enter="modComment()"
           >
@@ -177,7 +177,7 @@
           <v-btn color="warning" @click="modComment()">
             {{$t('review.edit')}}
           </v-btn>
-          <v-btn color="secondary" @click="commentDialog = false">닫기</v-btn>
+          <v-btn color="secondary" @click="commentDialog = false"><v-icon>mdi-close</v-icon></v-btn>
         </v-card-actions>
       </v-card>
 
@@ -206,7 +206,7 @@
           <v-btn text
             @click="dialogRate = false"
           >
-            취소
+            <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-btn text
             @click = "Rating"
