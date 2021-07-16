@@ -11,7 +11,7 @@
         <v-row class="header">
             <div class="col-md-1">
                 <a href="/" id="gohome">
-                    AAC
+                    <img  class="logo" src="../assets/001.png">
                 </a>
             </div>
             <div class="col-md-2">
@@ -48,15 +48,16 @@
                 </option>
                 </v-select>
             </v-col>
+            <v-col cols="1" v-if="authEmail">
+                <a href="http://localhost:3000/auth/logout" class="menu white--text"><v-btn dark>{{$t('nav.logout')}}</v-btn></a>
+            </v-col>
             <!-- 로그인 다이얼로그 -->
-            <v-col class="col-md-1">
-                <v-btn dark @click="mdUp">
-                    <v-icon class="icon">mdi-account-circle</v-icon>
-                    
+            <v-col v-else class="col-md-1">
+                <v-btn dark @click="mdUp">{{$t('nav.login')}}</v-btn>                    
                     <v-dialog v-model="dialog" persistent max-width="500px">
                         <v-card>
                             <v-card-title>
-                            <span class="headline">로그인</span>
+                            <span class="headline">{{$t('nav.login')}}</span>
                             </v-card-title>
                             <v-card-text>
                             <validation-observer>
@@ -66,7 +67,7 @@
                                     <v-col cols="12" sm="6">
                                     <validation-provider
                                         v-slot="{errors}"
-                                        name="이메일"
+                                        name="Email"
                                         :rules="{
                                             required:true,
                                             email:true,
@@ -81,7 +82,7 @@
                                     <v-col cols="12" sm="6">
                                     <validation-provider
                                         v-slot="{errors}"
-                                        name="비밀번호"
+                                        name="Password"
                                         :rules="{
                                             required:true,
                                             min:8,
@@ -101,27 +102,27 @@
                                     </v-col>
                                 </v-row>
                                 </v-container>
-                                <small type="button" @click="mdUp3">비밀번호찾기</small>
+                                <small type="button" @click="mdUp3">{{$t('nav.findPwd')}}</small>
                                 <v-checkbox
                                     v-model="remember"
-                                    label="로그인 유지"
+                                    :label="$t('nav.keepLogin')"
                                 ></v-checkbox>
                             </v-form>
                             </validation-observer>
-                            <v-col>
+                            <v-col >
                                 <a href="/auth/kakao" alt="kakao login">
-                                    <img src="../assets/kakao_login_medium_wide.png" alt="kakao">
+                                    <img src="../assets/kakao_login_medium_wide.png" alt="kakao" width="100%">
                                 </a>
                                 <a href="/auth/naver" alt="naver login">
-                                    <img src="../assets/naver_login.png" alt="naver">
+                                    <img src="../assets/naver_login.png" alt="naver" width="100%">
                                 </a>
                             </v-col>
                             </v-card-text>
                             <v-card-actions>    
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="mdUp2">회원가입</v-btn>
-                            <v-btn color="primary" @click="postLoginData" router-link to="/">로그인</v-btn>
-                            <v-btn color="primary" @click.native="dialog = false">닫기</v-btn>
+                            <v-btn color="primary" @click="mdUp2">{{$t('nav.signIn')}}</v-btn>
+                            <v-btn color="primary" @click="postLoginData" router-link to="/">{{$t('nav.login')}}</v-btn>
+                            <v-btn color="primary" @click.native="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -142,7 +143,7 @@
                             <!-- 닉네임 -->
                             <validation-provider
                                 v-slot="{errors}"
-                                name="닉네임"
+                                name="Nickname"
                                 :rules="{
                                     required:true,
                                     max:8,
@@ -153,7 +154,7 @@
                             <!-- 이메일 -->
                             <validation-provider
                                 v-slot="{errors}"
-                                name="이메일"
+                                name="Email"
                                 :rules="{
                                     required:true,
                                     email:true,
@@ -164,7 +165,7 @@
                             <!-- 비밀번호 & 비밀번호 확인 -->
                             <validation-provider
                                 v-slot="{errors}"
-                                name="비밀번호"
+                                name="Password"
                                 :rules="{
                                     required:true,
                                     min:8,
@@ -174,7 +175,7 @@
                                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                                     :type="show1 ? 'text' : 'password'"
                                     name="input-10-1"
-                                    label="비밀번호"
+                                    label="Password"
                                     counter
                                     @click:append="show1 = !show1"
                                     :error-messages="errors"
@@ -183,17 +184,17 @@
                             <!--비밀번호 일치 Validation -->
                             <validation-provider
                                 v-slot="{errors}"
-                                name="비밀번호확인"
+                                name="Confirm Password"
                                 :rules="{
                                     required:true,
-                                    confirmed:'비밀번호'
+                                    confirmed:'Password'
                                     }"
                             >
                             <v-text-field v-model="checkPassword"
                                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                                     :type="show2 ? 'text' : 'password'"
                                     name="input-10-1"
-                                    label="비밀번호 확인"
+                                    label="Confirm Password"
                                     counter
                                     @click:append="show2 = !show2"
                                     :error-messages="errors"
@@ -233,14 +234,14 @@
                                 <v-col cols="8">
                                     <validation-provider
                                         v-slot="{errors}"
-                                        name="이메일"
+                                        name="Email"
                                         :rules="{
                                             required:true,
                                             email:true,
                                             }"
                                     >
                                     <v-text-field
-                                    label="이메일을 입력해주세요"
+                                    label="Write your Email"
 
                                     :error-messages="errors"
                                     v-model="findemail"
@@ -257,21 +258,21 @@
                                 <v-col cols="12">
                                     <validation-provider
                                         v-slot="{errors}"
-                                        name="인증코드"
+                                        name="Authentication code"
                                         :rules="{
                                             required:true,
-                                            confirmed:'인증코드확인체크'
+                                            confirmed:'Confirm Authentication code'
                                             }"
                                     >
                                     <v-text-field
-                                    label="인증코드를 입력해주세요"
+                                    label="Write your Authentication code"
                                     v-model="inputcfcode"
                                     :error-messages="errors"
                                     ></v-text-field>
                                     </validation-provider>
                                 </v-col>
                                 <validation-provider
-                                name="인증코드확인체크">
+                                name="Confirm Authentication code">
                                 <v-text-field 
                                 v-model="cfcode" :type="password"
                                     class="hiddenfield">
@@ -280,7 +281,7 @@
                                 <v-col cols="12">
                                 <validation-provider
                                     v-slot="{errors}"
-                                    name="새로운비밀번호"
+                                    name="New Password"
                                     :rules="{
                                         required:true,
                                         min:8,
@@ -290,7 +291,7 @@
                                         :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
                                         :type="show3 ? 'text' : 'password'"
                                         name="input-10-1"
-                                        label="새로운 비밀번호를 입력해주세요"
+                                        label="Write a New Password"
                                         counter
                                         @click:append="show3 = !show3"
                                         :error-messages="errors"
@@ -301,17 +302,17 @@
                             <v-col cols="12">
                                 <validation-provider
                                     v-slot="{errors}"
-                                    name="새로운비밀번호확인"
+                                    name="Confirm New Password "
                                     :rules="{
                                         required:true,
-                                        confirmed:'새로운비밀번호'
+                                        confirmed:'New Password'
                                         }"
                                 >
                                 <v-text-field v-model="newpasswordck"
                                         :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
                                         :type="show4 ? 'text' : 'password'"
                                         name="input-10-1"
-                                        label="비밀번호 확인"
+                                        label="Confirm New Password "
                                         counter
                                         @click:append="show4 = !show4"
                                         :error-messages="errors"
@@ -328,7 +329,7 @@
                             text
                             @click="dialog3 = false"
                         >
-                            취소
+                            <v-icon>mdi-close</v-icon>
                         </v-btn>
                         <v-btn
                             color="blue darken-1"
@@ -342,10 +343,7 @@
                         </validation-observer>
                     </v-card>
                     </v-dialog>
-                </v-btn>
-            </v-col>
-            <v-col cols="1" v-if="authEmail">
-                <a href="http://localhost:3000/auth/logout">{{$t('nav.logout')}}&emsp;</a>
+                
             </v-col>
         </v-row>
     </v-container>
@@ -500,7 +498,7 @@ export default {
 }
 </script>
 
- 
+
 <style scoped>
 .hiddenfield{
     display:none
@@ -513,11 +511,13 @@ export default {
   margin: 0px;
   padding: 0px;
   width: 100%;
+  height: 11%;
   position: fixed;
   /* display:ab; */
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 103;
+  background-color: #000C1D;
 }
 a { 
     text-decoration:none;
@@ -533,7 +533,7 @@ a {
   margin-left: 30px;
   font-size: 2em;
   font-weight:900;
-  color: red;
+  color: #48D7FF;
 }
 .header .col-md-2{
     text-align:center;
@@ -546,5 +546,10 @@ a {
 }
 .icon {
     width:70px;
+}
+.logo {
+    width:150px;
+    margin-left: -45px;
+    margin-top: -40px;
 }
 </style>

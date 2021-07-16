@@ -23,6 +23,7 @@
         </v-card>
       </v-flex>
       <v-text-field
+        dark
         v-model="search"
         append-icon="mdi-magnify"
         :label="$t('board.search')"
@@ -69,7 +70,6 @@
       absolute
       bottom
       right
-      fab
       @click="addDialog"
     >
       <v-icon>add</v-icon>
