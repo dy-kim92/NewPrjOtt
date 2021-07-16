@@ -4,6 +4,44 @@
     "board": "ボード",
     "chat": "チャット",
     "news": "ニュース",
-    "logout": "ログアウト"
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "findPwd":"パスワード新規登録・お忘れの方",
+    "keepLogin":"自動ログイン(7日)",
+    "signIn":"会員加入",
+    "submit":"提出",
+    "sendCode":"認証コード送信"
+  },
+  "home": {
+    "boxOffice": "週間ランキング TOP7",
+    "marketShare": "韓国のOTTマーケットシェア",
+    "unit":"単位:10000",
+    "usageFee":"利用料金(基本料金基準)",
+    "usageFeeUnit":"単位:100"
+  },
+  "review": {
+    "boardTitle": "レビュー",
+    "movieInfo": "映画情報",
+    "editComment": "コメント修正",
+    "writeComments":"コメント作成",
+    "edit":"修整",
+    "rateMovie":"この映画はいかがでしたか?"
+  },
+  "board": {
+    "name": "フリーボード",
+    "delete":"削除",
+    "q1":"進行しますか？",
+    "ok":"確認",
+    "title":"題目",
+    "search":"キーワードを入力してください。"
+  },
+  "boardJS":{
+    "writeTitle":"タイトルを入力してください。",
+    "writeContents":"内容を入力してください。",
+    "noChange":"変更された内容はありません。",
+    "wrongNumber":"間違った時間情報です。",
+    "successDelete":"削除完了",
+    "successEdit":"修正完了",
+    "successRate":"登録完了"
   }
 }

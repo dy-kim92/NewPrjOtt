@@ -129,7 +129,7 @@
                     <v-dialog v-model="dialog2" width="500">
                     <v-card>
                         <v-card-title class="text-h5 grey lighten-2">
-                        회원가입
+                        {{$t('nav.signIn')}}
                         </v-card-title>
 
                         <br>
@@ -204,8 +204,8 @@
 
                         <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" type="submit" :disabled="invalid">확인</v-btn>
-                        <v-btn color="primary" @click="dialog2 = false">취소</v-btn>
+                        <v-btn color="primary" type="submit" :disabled="invalid">{{$t('nav.submit')}}</v-btn>
+                        <v-btn color="primary" @click="dialog2 = false"><v-icon>mdi-close</v-icon></v-btn>
                         </v-card-actions>
                         </v-form>
                         </validation-observer>
@@ -220,7 +220,7 @@
                     <v-card>
                         <!-- 다이얼로그 타이틀 -->
                         <v-card-title>
-                        <span class="text-h5">비밀번호찾기</span>
+                        <span class="text-h5">{{$t('nav.findPwd')}}</span>
                         </v-card-title>
                         <validation-observer
                             ref="observer"
@@ -252,7 +252,7 @@
                                     elevation="2"
                                     plain
                                     @click="postFindPwdData"
-                                    >인증코드전송</v-btn>
+                                    >{{$t('nav.sendCode')}}</v-btn>
                                 </v-col>
                                 <v-col cols="12">
                                     <validation-provider
@@ -335,7 +335,7 @@
                             type="submit"
                             :disabled='invalid'
                         >
-                            전송
+                            {{$t('nav.submit')}}
                         </v-btn>
                         </v-card-actions>
                         </v-form>

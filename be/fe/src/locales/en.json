@@ -4,6 +4,45 @@
     "board": "Board",
     "chat": "Chat",
     "news": "News",
-    "logout": "LogOut"
+    "logout": "LogOut",
+    "login": "Login",
+    "findPwd":"Forgot Password?",
+    "keepLogin":"Keep Login (default 7days)",
+    "signIn":"Sign-in",
+    "submit":"submit",
+    "sendCode":"Send Code"
+
+  },
+  "home": {
+    "boxOffice": "BOXOFFICE TOP7",
+    "marketShare": "Korea OTT Market Share",
+    "unit":"10000 per unit",
+    "usageFee":"usage fee(Basic rate standard)",
+    "usageFeeUnit":"100 per unit"
+  },
+  "review": {
+    "boardTitle": "Review",
+    "movieInfo": "MOVIE INFO",
+    "editComment": "Edit Comments",
+    "writeComments":"Write Comments",
+    "edit":"Edit",
+    "rateMovie":"How was this movie?"
+  },
+  "board": {
+    "name": "Freeboard",
+    "delete":"Delete",
+    "q1":"Would you like to proceed?",
+    "ok":"Proceed",
+    "title":"Title",
+    "search":"Please enter a search keyword"
+  },
+  "boardJS":{
+    "writeTitle":"Please enter a title",
+    "writeContents":"Please enter the contents.",
+    "noChange":"There are No Changes",
+    "wrongNumber":"Invalid time information",
+    "successDelete":"Delete completed",
+    "successEdit":"Edit completed",
+    "successRate":"completed"
   }
 }
