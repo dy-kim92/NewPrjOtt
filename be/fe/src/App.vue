@@ -54,7 +54,7 @@ export default {
     letter-spacing: 1.5px;
 } 
 .main{
-  margin-top: 5%;
+  margin-top: 4%;
   background-color: #000C1D;
   z-index: 100;
 }

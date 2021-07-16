@@ -130,7 +130,7 @@
                     <v-dialog v-model="dialog2" width="500">
                     <v-card>
                         <v-card-title class="text-h5 grey lighten-2">
-                        Register
+                        {{$t('nav.signIn')}}
                         </v-card-title>
 
                         <br>
@@ -205,7 +205,7 @@
 
                         <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" type="submit" :disabled="invalid">Join</v-btn>
+                        <v-btn color="primary" type="submit" :disabled="invalid">{{$t('nav.submit')}}</v-btn>
                         <v-btn color="primary" @click="dialog2 = false"><v-icon>mdi-close</v-icon></v-btn>
                         </v-card-actions>
                         </v-form>
@@ -221,7 +221,7 @@
                     <v-card>
                         <!-- 다이얼로그 타이틀 -->
                         <v-card-title>
-                        <span class="text-h5">Find Password</span>
+                        <span class="text-h5">{{$t('nav.findPwd')}}</span>
                         </v-card-title>
                         <validation-observer
                             ref="observer"
@@ -253,7 +253,7 @@
                                     elevation="2"
                                     plain
                                     @click="postFindPwdData"
-                                    >Send Code</v-btn>
+                                    >{{$t('nav.sendCode')}}</v-btn>
                                 </v-col>
                                 <v-col cols="12">
                                     <validation-provider
@@ -336,7 +336,7 @@
                             type="submit"
                             :disabled='invalid'
                         >
-                            submit
+                            {{$t('nav.submit')}}
                         </v-btn>
                         </v-card-actions>
                         </v-form>

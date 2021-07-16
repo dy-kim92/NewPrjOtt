@@ -1,12 +1,12 @@
 <template>
-  <v-containers>
+  <v-containers class="pa-10" fluid>
     <v-row>
       <v-col cols="11" class="mx-auto">
         <v-card class="" style="padding:0; margin:0; border-radius:30px;">
           <v-img
             class="white--text"
             height="120px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="https://cdn.pixabay.com/photo/2017/11/06/08/42/personal-2923048__340.jpg"
             style="border-radius:10px;"
           >
             <v-card-title>채팅방</v-card-title>
@@ -21,10 +21,10 @@
           <v-img
             class="white--text"
             height="240px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="../assets/chatimg1.jpg"
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
-          비트컴퓨터1
+          영화
           </v-img>
             <div class="d-inline-flex">
               <v-icon class="icon">mdi-account-circle</v-icon>
@@ -38,10 +38,10 @@
           <v-img
             class="white--text"
             height="240px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="../assets/chatimg2.jpg"
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
-          비트컴퓨터2
+          드라마
           </v-img>
             <div class="d-inline-flex">
               <v-icon class="icon">mdi-account-circle</v-icon>
@@ -55,10 +55,10 @@
           <v-img
             class="white--text"
             height="240px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="../assets/chatimg3.jpg"
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
-          비트컴퓨터3
+          TV/예능
           </v-img>
             <div class="d-inline-flex">
               <v-icon class="icon">mdi-account-circle</v-icon>
@@ -72,10 +72,10 @@
           <v-img
             class="white--text"
             height="240px"
-            src="https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_960_720.jpg"
+            src="https://t1.daumcdn.net/cfile/tistory/9917503E5AB207E12E"
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
-          비트컴퓨터4
+          애니
           </v-img>
             <div class="d-inline-flex">
               <v-icon class="icon">mdi-account-circle</v-icon>
@@ -94,7 +94,7 @@
       </v-col>
     </v-row >
     <!-- 채팅방 다이얼로그 -->
-      <v-dialog v-model="dialog" persistent width="500">
+      <v-dialog v-model="dialog" persistent width="1000">
       <v-card>
         <v-card-title class="text-h5 grey lighten-2">
           {{flag}}
