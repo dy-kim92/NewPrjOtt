@@ -44,5 +44,19 @@
     "successDelete":"Delete completed",
     "successEdit":"Edit completed",
     "successRate":"completed"
+  },
+  "error":{
+    "msg1":"404 ERROR",
+    "msg2":"Invalid page request."
+  },
+  "chat":{
+    "chatRoom":"chatRoom",
+    "join":"Enter",
+    "movie":"Movie",
+    "drama":"Drama",
+    "tv":"TV Program",
+    "ani":"Animation",
+    "goOut":"Exit",
+    "sendMessage":"Write Message and Enter"
   }
 }

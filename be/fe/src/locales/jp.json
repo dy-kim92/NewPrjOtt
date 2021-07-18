@@ -1,15 +1,15 @@
 {
   "nav": {
     "review": "レビュー",
-    "board": "ボード",
+    "board": "掲示板", 
     "chat": "チャット",
     "news": "ニュース",
     "logout": "ログアウト",
     "login": "ログイン",
     "findPwd":"パスワード新規登録・お忘れの方",
     "keepLogin":"自動ログイン(7日)",
-    "signIn":"会員加入",
-    "submit":"提出",
+    "signIn":"新規会員",
+    "submit":"送信",
     "sendCode":"認証コード送信"
   },
   "home": {
@@ -24,15 +24,15 @@
     "movieInfo": "映画情報",
     "editComment": "コメント修正",
     "writeComments":"コメント作成",
-    "edit":"修整",
+    "edit":"修正",
     "rateMovie":"この映画はいかがでしたか?"
   },
   "board": {
-    "name": "フリーボード",
+    "name": "掲示板",
     "delete":"削除",
-    "q1":"進行しますか？",
-    "ok":"確認",
-    "title":"題目",
+    "q1":"実行しますか？",
+    "ok":"はい",
+    "title":"タイトル",
     "search":"キーワードを入力してください。"
   },
   "boardJS":{
@@ -43,5 +43,19 @@
     "successDelete":"削除完了",
     "successEdit":"修正完了",
     "successRate":"登録完了"
+  },
+  "error":{
+    "msg1":"404 ERROR",
+    "msg2":"正しくないリクエストです。"
+  },
+  "chat":{
+    "chatRoom":"チャットルーム",
+    "join":"参加する",
+    "movie":"映画",
+    "drama":"ドラマ",
+    "tv":"テレビ番組",
+    "ani":"アニメ",
+    "goOut":"退出する",
+    "sendMessage":"内容入力後Enter"
   }
 }

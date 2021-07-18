@@ -65,10 +65,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-// const User = require('./models/users')
-// const Board = require('./models/boards')
-// var Movie = require('./models/movies');
-// Movie.create({"title_kr":"2"})
+
 
 // 크롤링 최신 뉴스 파이썬파일 실행 & 스케줄 설정( 매일 자정 )
 
@@ -90,7 +87,7 @@ app.use(function(err, req, res, next) {
 //   console . log ( 'finished' ) ; 
 // } ) ;
 // movierank CGV 영화 순위 가져오기
-// let  { PythonShell }  =  require ( 'python-shell' )
+// let  { PythonShell2 }  =  require ( 'python-shell' )
 // PythonShell . run ( 'movierank.py' ,  null ,  function  ( err )  { 
 //   if  ( err )  throw  err ; 
 //   console . log ( 'finished' ) ; 
