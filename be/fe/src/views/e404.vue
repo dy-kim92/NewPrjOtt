@@ -1,3 +1,33 @@
 <template>
-  <div>없는 페이지 입니다!!!</div>
+  <v-card dark style="text-align:center; background-color:#000C1D">
+    <v-row>
+      <v-col cols="5" offset="2">
+      <v-img style="margin-top:30%;" src="../assets/bubble2.png" alt="errorCharacter">
+      <v-card-title style="text-align:center;margin-top:15%;margin-left:2%; font-size:2.5rem; color:black;">{{$t('error.msg1')}}</br></br>{{$t('error.msg2')}}</v-card-title></v-img>
+      </v-col>
+      <v-col cols="3">
+      <v-img text-align="center" class="mt-15" src="../assets/error.png" alt="errorCharacter"></v-img>
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
+<script>
+export default {
+mounted(){
+  let lang = localStorage.getItem('language')
+            if (lang == "한국어"){
+                this.$i18n.locale="한국어"
+            } else if (lang == "English"){
+                this.$i18n.locale="English"
+            } else {
+                this.$i18n.locale="日本語"
+            }
+}
+}
+</script>
+
+<style>
+
+</style>
+<style scoped>
+</style>

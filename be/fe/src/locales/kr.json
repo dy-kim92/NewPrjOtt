@@ -44,9 +44,17 @@
       "successEdit":"수정완료",
       "successRate":"등록완료"
     },
+    "error":{
+      "msg1":"404 ERROR",
+      "msg2":"잘못된 페이지 요청입니다."
+    },
     "chat":{
       "chatRoom":"채팅방",
-      "enter":"입장",
+      "join":"입장하기",
+      "movie":"영화",
+      "drama":"드라마",
+      "tv":"TV프로그램",
+      "ani":"애니",
       "goOut":"나가기",
       "sendMessage":"내용 입력 후 Enter"
     }

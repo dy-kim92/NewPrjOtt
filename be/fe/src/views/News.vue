@@ -18,14 +18,14 @@
               
               v-for="slide in cine"
               :key="slide"
-              v-slot="{ active, toggle }"
             >
             <v-card
-              :color="active ? 'red' : 'white'"
+              
               class="ma-4"
               height="260"
               width="310"
               @click="readCine(slide.link)"
+              style="background-color:#1E2734; border-radius:0.5vw"
             >
                 <v-img
                   width="310px"
@@ -33,7 +33,8 @@
                   :src="slide.img"
                 >
                 </v-img>
-                <h3 class="pa-2 black--text">{{slide.title}}</h3>  
+                
+                <h4 style="text-align:center;  color:#87CEEB;" class="pa-2 mt-3">{{slide.title}}</h4>  
             </v-card>
           </v-slide-item>
         </v-slide-group>
@@ -81,6 +82,16 @@ export default {
   mounted () {
     this.list()
     this.cinelist()
+
+    let lang = localStorage.getItem('language')
+              if (lang == "한국어"){
+                  this.$i18n.locale="한국어"
+              } else if (lang == "English"){
+                  this.$i18n.locale="English"
+              } else {
+                  this.$i18n.locale="日本語"
+              }
+
   },
   methods:{
     list () {

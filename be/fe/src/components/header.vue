@@ -37,10 +37,13 @@
             <!-- 언어변경 -->
             <v-col
             class="col-md-2">
-                <v-select v-model="$i18n.locale"
+                <!-- <v-select v-model="$i18n.locale" -->
+                <v-select v-model="locale"
                 dark
+                dense
                 label="Language"
-                class="language"
+                class="language pt-1"
+                @change="changeLocale"
                 outlined
                 :items="langs">
                 <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">
@@ -53,7 +56,7 @@
             </v-col>
             <!-- 로그인 다이얼로그 -->
             <v-col v-else class="col-md-1">
-                <v-btn dark @click="mdUp">{{$t('nav.login')}}</v-btn>                    
+                <v-btn class="mt-1" dark @click="mdUp">{{$t('nav.login')}}</v-btn>                    
                     <v-dialog v-model="dialog" persistent max-width="500px">
                         <v-card>
                             <v-card-title>
@@ -350,6 +353,7 @@
 </template>
  
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPJGZBZSSJ"></script>
+
 <script>
 
 import axios from 'axios'
@@ -378,6 +382,7 @@ export default {
     },
     data () {
         return {
+                locale:'',
                 langs: ['한국어', 'English', '日本語'],
                 dialog: false,
                 dialog2: false,
@@ -405,8 +410,22 @@ export default {
                 
         }
     },
+    watch:{
+        locale: function(){
+            let lang = localStorage.getItem('language')
+            if (lang == "한국어"){
+                this.$i18n.locale="한국어"
+            } else if (lang == "English"){
+                this.$i18n.locale="English"
+            } else {
+                this.$i18n.locale="日本語"
+            }
+        }
+    },
     methods: {  
-        
+        changeLocale() {
+            localStorage.setItem("language",this.locale)
+        },
         mdUp () {
             this.dialog = true
         },
@@ -496,6 +515,7 @@ export default {
   }
   
 }
+
 </script>
 
 
@@ -511,7 +531,7 @@ export default {
   margin: 0px;
   padding: 0px;
   width: 100%;
-  height: 11%;
+  height: 9%;
   position: fixed;
   /* display:ab; */
   top: 0;
@@ -521,7 +541,7 @@ export default {
 }
 a { 
     text-decoration:none;
- } 
+ }
 .menu{
   font-size: 2em;
   font-weight: 900;

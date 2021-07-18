@@ -105,6 +105,7 @@ export default {
   },
   mounted () {
     this.list()
+    
   },
   data () {
     return {
