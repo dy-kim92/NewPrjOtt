@@ -375,7 +375,6 @@ export default {
           if (!data.success) throw new Error(data.msg)
           this.formComment.content = ''
           this.detailPage(this.detailPageInfo)
-          this.scrollToEnd()
           // this.list()
         })
         .catch((e) => {

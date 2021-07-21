@@ -28,7 +28,7 @@
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
           </v-img>
-            <div class="d-inline-flex">
+            <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
               <h4>123{{chat1cnt}}</h4>
               <button type="button" @click="chat1">
@@ -48,7 +48,7 @@
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
           </v-img>
-            <div class="d-inline-flex">
+            <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
               <h4>123{{chat1cnt}}</h4>
               <button type="button" @click="chat2">
@@ -68,7 +68,7 @@
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
           </v-img>
-            <div class="d-inline-flex">
+            <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
               <h4>123{{chat1cnt}}</h4>
               <button type="button" @click="chat3">
@@ -88,7 +88,7 @@
             style="border-top-left-radius:20px; border-top-right-radius:20px;"
           >
           </v-img>
-            <div class="d-inline-flex">
+            <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
               <h4>123{{chat1cnt}}</h4>
               <button type="button" @click="chat4">
@@ -310,17 +310,17 @@ export default {
   /* right: -50%; */
   padding: 0px;
   border-radius: 2.2vh;
-  border: 1px solid white;
+  border: 1px solid black;
   background-color: rgba(255, 255, 255, 0.1);
   margin-bottom: 10%;
 }
 .chatroom button{
-  background-color:#008BFF; 
-  color:white; 
-  padding:0.5vw; 
-  margin:0.5vw; 
+  background-color:rgba(18, 193, 236, 0.993);
+  color:white;
+  padding:0.5vw;
+  margin:0.5vw;
   position: relative;
-  right: -50%;
+  /* right: -50%; */
   border-radius: 1vh;
 }
 .chatroom h4{
@@ -349,5 +349,10 @@ export default {
   text-align: start;
   /* width: 300px; */
   /* bottom: -10%; */
+}
+.chatroom div{
+  display: flex;
+  justify-content:flex-end;
+  margin-right: 1vw;
 }
 </style>
