@@ -531,13 +531,13 @@ export default {
   margin: 0px;
   padding: 0px;
   width: 100%;
-  height: 9%;
+  /* height: 9%; */
   position: fixed;
   /* display:ab; */
   top: 0;
   left: 0;
   z-index: 103;
-  background-color: #000C1D;
+  /* background-color: #000C1D; */
 }
 a { 
     text-decoration:none;

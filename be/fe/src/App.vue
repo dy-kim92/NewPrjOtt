@@ -5,7 +5,8 @@
     </div>
 
     <v-main class="main">
-      <router-view class="pa-0 ma-0"/>
+      <router-view class="pa-0 ma-0 mainView" v-if="$route.name==='Home'"/>
+      <router-view class="pa-0 mt-3.5% mainView2" v-if="$route.name!=='Home'"/>
     </v-main>
     <div id="footer">
       <main-footer/>
@@ -53,8 +54,17 @@ export default {
     font-family: 'f1';
     letter-spacing: 1.5px;
 } 
+.mainView{
+  /* margin-top: 3.8%; */
+  background-color: #000C1D;
+  z-index: 100;
+}
+.mainView2{
+  margin-top: 3.8%;
+  background-color: #000C1D;
+  z-index: 100;
+}
 .main{
-  margin-top:4%;
   background-color: #000C1D;
   z-index: 100;
 }
