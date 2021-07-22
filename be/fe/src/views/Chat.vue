@@ -30,7 +30,7 @@
           </v-img>
             <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
-              <h4>123{{chat1cnt}}</h4>
+              <h4>{{chat1cnt}}</h4>
               <button type="button" @click="chat1">
                 {{$t('chat.join')}}
               </button>
@@ -50,7 +50,7 @@
           </v-img>
             <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
-              <h4>123{{chat1cnt}}</h4>
+              <h4>{{chat2cnt}}</h4>
               <button type="button" @click="chat2">
                 {{$t('chat.join')}}
               </button>
@@ -70,7 +70,7 @@
           </v-img>
             <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
-              <h4>123{{chat1cnt}}</h4>
+              <h4>{{chat3cnt}}</h4>
               <button type="button" @click="chat3">
                 {{$t('chat.join')}}
               </button>
@@ -90,7 +90,7 @@
           </v-img>
             <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
-              <h4>123{{chat1cnt}}</h4>
+              <h4>{{chat4cnt}}</h4>
               <button type="button" @click="chat4">
                 {{$t('chat.join')}}
               </button>
