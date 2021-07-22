@@ -20,7 +20,7 @@ passportConfig();
 const mongoose = require('mongoose')
 
 
-mongoose.connect('mongodb://localhost:27017/nemv', { useUnifiedTopology:true, useNewUrlParser: true }, (err) => {
+mongoose.connect('mongodb://3.37.156.7:27017/nemv', { useUnifiedTopology:true, useNewUrlParser: true }, (err) => {
    if (err) return console.error(err)
    console.log('mongoose connected!')
 })
@@ -69,27 +69,26 @@ app.use(function(err, req, res, next) {
 
 // 크롤링 최신 뉴스 파이썬파일 실행 & 스케줄 설정( 매일 자정 )
 
-// const scheduler  = require('node-schedule');
-//                       min, hour, day of month, month , day of week
-// const schedule = scheduler.scheduleJob("0 0 * * *", function() {
-//   console.log("스케줄러가 실행됩니다!");
-//   let  { PythonShell }  =  require ( 'python-shell' )
-// PythonShell . run ( 'article.py' ,  null ,  function  ( err )  { 
-//   if  ( err )  throw  err ; 
-//   console . log ( 'finished' ) ; 
-// } ) ;
-// });
+const scheduler  = require('node-schedule');
+                      // min, hour, day of month, month , day of week
+const schedule = scheduler.scheduleJob("0 0 * * *", function() {
+  console.log("정각에 스케줄러가 실행됩니다!");
+  let  { PythonShell }  =  require ( 'python-shell' )
+PythonShell . run ( 'article.py' ,  null ,  function  ( err )  { 
+  if  ( err )  throw  err ; 
+  console . log ( 'article finished' ) ; 
+  // cine 영화정보 가져오기
+PythonShell . run ( 'cine.py' ,  null ,  function  ( err )  { 
+  if  ( err )  throw  err ; 
+  console . log ( 'cine finished' ) ; 
+} ) ;
+// // movierank CGV 영화 순위 가져오기
+PythonShell . run ( 'movierank.py' ,  null ,  function  ( err )  { 
+  if  ( err )  throw  err ; 
+  console . log ( 'movierank finished' ) ; 
+} ) ;
+} ) ;
+});
 
-// cine 영화정보 가져오기
-// let  { PythonShell }  =  require ( 'python-shell' )
-// PythonShell . run ( 'cine.py' ,  null ,  function  ( err )  { 
-//   if  ( err )  throw  err ; 
-//   console . log ( 'finished' ) ; 
-// } ) ;
-// movierank CGV 영화 순위 가져오기
-// let  { PythonShell2 }  =  require ( 'python-shell' )
-// PythonShell . run ( 'movierank.py' ,  null ,  function  ( err )  { 
-//   if  ( err )  throw  err ; 
-//   console . log ( 'finished' ) ; 
-// } ) ;
+
 module.exports = app;

@@ -6,7 +6,7 @@ module.exports = () => {
     passport.use(new NaverStrategy({
         clientID: 'MpjA6l5H_UDbKpA9Mhqg',
         clientSecret: 'J0_bjel1P0',
-        callbackURL: 'http://localhost:3000/auth/naver/callback'
+        callbackURL: 'http://3.37.156.7/auth/naver/callback'
     }, async (accessToken, refreshToken, profile, done) => {
         console.log('naver profile', profile);
         // console.log('이메일 찾기 : ', profile._json.email);

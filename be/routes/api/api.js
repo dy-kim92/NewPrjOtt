@@ -61,7 +61,6 @@ router.all('*', function(req, res, next) {
     })
     .catch(e => res.send({ success: false, msg: 'Logout, re-login, and use it.'})) 
 });
-router.use('/token', require('./tokencheck')) 
 router.use('/board', require('./board')) 
 router.use('/article', require('./article'))
 router.use('/movie', require('./movie'))
