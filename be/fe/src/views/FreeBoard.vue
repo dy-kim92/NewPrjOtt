@@ -323,7 +323,7 @@ export default {
       }
     },
     get () {
-      axios.get('http://localhost:3000/api/board/freeboard')
+      axios.get('/api/board/freeboard')
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           // console.log('데이터입니다',data)
@@ -339,7 +339,7 @@ export default {
       this.form.content = this.$refs.editor.invoke('getMarkdown')
       if (!this.form.title) return this.$store.commit('pop', { msg: '제목을 작성해주세요', color: 'warning' })
       if (!this.form.content) return this.$store.commit('pop', { msg: '내용을 작성해주세요', color: 'warning' })
-      axios.post(`http://localhost:3000/api/article/${this.board._id}`, this.form)
+      axios.post(`/api/article/${this.board._id}`, this.form)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.dialog = false
@@ -352,7 +352,7 @@ export default {
     list () {
       if (this.loading) return
       this.loading = true
-      axios.get(`http://localhost:3000/api/article/list/${this.board._id}`,
+      axios.get(`/api/article/list/${this.board._id}`,
         {params:{ skip:this.startOffset, limit: this.dataPerPage}})
         // params skip, limit 보내기 (url)
         .then(({ data }) => {
@@ -374,7 +374,7 @@ export default {
       this.toggle=!this.toggle
       this.selArticle = atc
       this.loading = true
-      axios.get(`http://localhost:3000/api/article/read/${atc._id}`)
+      axios.get(`/api/article/read/${atc._id}`)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.dlMode = 0
@@ -391,7 +391,7 @@ export default {
         })
     },
     heart() {
-      axios.put(`http://localhost:3000/api/article/${this.selArticle._id}/heart`, this.like)
+      axios.put(`/api/article/${this.selArticle._id}/heart`, this.like)
         .then((r) => {
         })
         .catch((e) => {
@@ -404,7 +404,7 @@ export default {
       this.form.content = this.$refs.editor.invoke('getMarkdown')
       if (this.selArticle.title === this.form.title && this.selArticle.content === this.form.content)
         return this.$store.commit('pop',{msg:'변경된 내용이 없습니다',color: 'warning'})
-      axios.put(`http://localhost:3000/api/article/${this.selArticle._id}`, this.form)
+      axios.put(`/api/article/${this.selArticle._id}`, this.form)
         .then(({ data }) => {
           this.dialog = false
           if (!data.success) throw new Error(data.msg)
@@ -418,7 +418,7 @@ export default {
         })
     },
     del () {
-      axios.delete(`http://localhost:3000/api/article/${this.selArticle._id}`)
+      axios.delete(`/api/article/${this.selArticle._id}`)
         .then(({ data }) => {
           this.dialog = false
           if (!data.success) throw new Error(data.msg)
@@ -434,7 +434,7 @@ export default {
       return new Date(parseInt(val.substring(0, 8), 16) * 1000).toLocaleString()
     },
     addComment () {
-      axios.post(`http://localhost:3000/api/comment/${this.selArticle._id}`, this.formComment)
+      axios.post(`/api/comment/${this.selArticle._id}`, this.formComment)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.formComment.content = ''
@@ -447,7 +447,7 @@ export default {
         })
     },
     delComment (cmt) {
-      axios.delete(`http://localhost:3000/api/comment/${cmt._id}`)
+      axios.delete(`/api/comment/${cmt._id}`)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.$store.commit('pop', { msg: '삭제완료', color: 'success' })
@@ -460,7 +460,7 @@ export default {
     modComment () {
       if (!this.selComment.content) return this.$store.commit('pop', { msg: '내용을 작성해주세요', color: 'warning' })
       this.commentDialog = false
-      axios.put(`http://localhost:3000/api/comment/${this.selComment._id}`, { content: this.selComment.content })
+      axios.put(`/api/comment/${this.selComment._id}`, { content: this.selComment.content })
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.$store.commit('pop', { msg: '수정완료', color: 'success' })

@@ -289,7 +289,7 @@ export default {
   methods:{
     // board get 
     get () {
-      axios.get('http://localhost:3000/api/board/review')
+      axios.get('/api/board/review')
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.board = data.d
@@ -302,7 +302,7 @@ export default {
     //movie list 받아오기
     list () {
       this.progressCircular = true
-      axios.get(`http://localhost:3000/api/movie/list/review`,
+      axios.get(`/api/movie/list/review`,
         {params:{search:this.search, skip:this.startOffset, limit: this.dataPerPage}})
         // params skip, limit 보내기 (url)
         .then(({ data }) => {
@@ -331,7 +331,7 @@ export default {
       // 
       this.toggle = !this.toggle
       this.loading = true
-      axios.get(`http://localhost:3000/api/movie/read/${atc._id}`)
+      axios.get(`/api/movie/read/${atc._id}`)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.dialog = true
@@ -359,7 +359,7 @@ export default {
       this.selComment = c
     },
     addComment () {
-      axios.post(`http://localhost:3000/api/mvcomment/${this.detailPageInfo._id}`, this.formComment)
+      axios.post(`/api/mvcomment/${this.detailPageInfo._id}`, this.formComment)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.formComment.content = ''
@@ -372,7 +372,7 @@ export default {
         })
     },
     delComment (cmt) {
-      axios.delete(`http://localhost:3000/api/mvcomment/${cmt._id}`)
+      axios.delete(`/api/mvcomment/${cmt._id}`)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.$store.commit('pop', { msg: '삭제완료', color: 'success' })
@@ -385,7 +385,7 @@ export default {
     modComment () {
       if (!this.selComment.content) return this.$store.commit('pop', { msg: '내용을 작성해주세요', color: 'warning' })
       this.commentDialog = false
-      axios.put(`http://localhost:3000/api/mvcomment/${this.detailPageInfo._id}`, { content: this.selComment.content })
+      axios.put(`/api/mvcomment/${this.detailPageInfo._id}`, { content: this.selComment.content })
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
           this.$store.commit('pop', { msg: '수정완료', color: 'success' })
@@ -396,7 +396,7 @@ export default {
         })
     },
     Rating() {
-      axios.put(`http://localhost:3000/api/movie/read/${this.detailPageInfo._id}/rating`, {rating:this.rating})
+      axios.put(`/api/movie/read/${this.detailPageInfo._id}/rating`, {rating:this.rating})
         .then((r) => {
           console.log(r)
           this.dialogRate = false

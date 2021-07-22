@@ -49,7 +49,7 @@
                 </v-select>
             </v-col>
             <v-col cols="1" v-if="authEmail">
-                <a href="http://localhost:3000/auth/logout" class="menu white--text"><v-btn dark>{{$t('nav.logout')}}</v-btn></a>
+                <a href="/auth/logout" class="menu white--text"><v-btn dark>{{$t('nav.logout')}}</v-btn></a>
             </v-col>
             <!-- 로그인 다이얼로그 -->
             <v-col v-else class="col-md-1">

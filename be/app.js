@@ -20,7 +20,7 @@ passportConfig();
 const mongoose = require('mongoose')
 
 
-mongoose.connect('mongodb://localhost:27017/nemv', { useUnifiedTopology:true, useNewUrlParser: true }, (err) => {
+mongoose.connect('mongodb://3.37.156.7:27017/nemv', { useUnifiedTopology:true, useNewUrlParser: true }, (err) => {
    if (err) return console.error(err)
    console.log('mongoose connected!')
 })
