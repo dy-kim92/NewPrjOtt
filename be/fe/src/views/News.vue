@@ -1,29 +1,31 @@
 <template>
-  <v-container class="pa-8" fluid grid-list-md>
+  <v-container class="pa-10" fluid grid-list-md>
     <v-layout row wrap>
       <v-flex xs12>
       <v-sheet
         class="mx-auto"
         elevation="10"
-        max-width="1500"
-        style="background-color:white;"
+        max-width="100%"
+        style="background-color:#101a29;"
         >
           <v-slide-group
+            dark
             v-model="model"
             class="pa-4"
             show-arrows
           >
             <v-slide-item
+              
               v-for="slide in cine"
               :key="slide"
-              v-slot="{ active, toggle }"
             >
             <v-card
-              :color="active ? 'red' : 'white'"
+              
               class="ma-4"
-              height="220"
+              height="260"
               width="310"
               @click="readCine(slide.link)"
+              style="background-color:#1E2734; border-radius:0.5vw"
             >
                 <v-img
                   width="310px"
@@ -31,7 +33,8 @@
                   :src="slide.img"
                 >
                 </v-img>
-                <h3 class="pa-2 black--text">{{slide.title}}</h3>  
+                
+                <h4 style="text-align:center;  color:#87CEEB;" class="pa-2 mt-3">{{slide.title}}</h4>  
             </v-card>
           </v-slide-item>
         </v-slide-group>
@@ -39,6 +42,9 @@
       </v-flex>
         <v-flex xs12>
           <v-data-table
+            style="background-color:#101a29; margin-top:2.5%;"
+            dark
+
             hide-default-footer
             :headers="headers"
             :items="articles"
@@ -47,7 +53,7 @@
               {{ (props.item.time) }}
             </template>
             <template v-slot:item.title="props">
-              <a @click="link(props.item.link)">{{ props.item.title }}</a>
+              <a style="color:skyblue;" @click="link(props.item.link)">{{ props.item.title }}</a>
             </template>
             <template v-slot:item.media="props">
               {{ props.item.media }}
@@ -76,6 +82,16 @@ export default {
   mounted () {
     this.list()
     this.cinelist()
+
+    let lang = localStorage.getItem('language')
+              if (lang == "한국어"){
+                  this.$i18n.locale="한국어"
+              } else if (lang == "English"){
+                  this.$i18n.locale="English"
+              } else {
+                  this.$i18n.locale="日本語"
+              }
+
   },
   methods:{
     list () {

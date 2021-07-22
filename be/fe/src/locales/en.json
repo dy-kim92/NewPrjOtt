@@ -8,7 +8,10 @@
     "login": "Login",
     "findPwd":"Forgot Password?",
     "keepLogin":"Keep Login (default 7days)",
-    "signIn":"Sign-in"
+    "signIn":"Sign-in",
+    "submit":"submit",
+    "sendCode":"Send Code"
+
   },
   "home": {
     "boxOffice": "BOXOFFICE TOP7",
@@ -18,7 +21,42 @@
     "usageFeeUnit":"100 per unit"
   },
   "review": {
-    "boardTitle": "FreeBoard",
-    "movieInfo": "MOVIE INFO"
+    "boardTitle": "Review",
+    "movieInfo": "MOVIE INFO",
+    "editComment": "Edit Comments",
+    "writeComments":"Write Comments",
+    "edit":"Edit",
+    "rateMovie":"How was this movie?"
+  },
+  "board": {
+    "name": "Freeboard",
+    "delete":"Delete",
+    "q1":"Would you like to proceed?",
+    "ok":"Proceed",
+    "title":"Title",
+    "search":"Please enter a search keyword"
+  },
+  "boardJS":{
+    "writeTitle":"Please enter a title",
+    "writeContents":"Please enter the contents.",
+    "noChange":"There are No Changes",
+    "wrongNumber":"Invalid time information",
+    "successDelete":"Delete completed",
+    "successEdit":"Edit completed",
+    "successRate":"completed"
+  },
+  "error":{
+    "msg1":"404 ERROR",
+    "msg2":"Invalid page request."
+  },
+  "chat":{
+    "chatRoom":"chatRoom",
+    "join":"Enter",
+    "movie":"Movie",
+    "drama":"Drama",
+    "tv":"TV Program",
+    "ani":"Animation",
+    "goOut":"Exit",
+    "sendMessage":"Write Message and Enter"
   }
 }

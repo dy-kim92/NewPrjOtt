@@ -8,7 +8,9 @@
       "login": "로그인",
       "findPwd":"비밀번호찾기",
       "keepLogin":"로그인 유지(7일)",
-      "signIn":"회원가입"
+      "signIn":"회원가입",
+      "submit":"제출",
+      "sendCode":"인증코드 전송"
     },
     "home": {
       "boxOffice": "박스오피스 TOP7",
@@ -18,7 +20,42 @@
       "usageFeeUnit":"단위:백원"
     },
     "review": {
-      "boardTitle": "자유게시판",
-      "movieInfo": "영화 정보"
+      "boardTitle": "리뷰",
+      "movieInfo": "영화 정보",
+      "editComment": "댓글 수정",
+      "writeComments":"댓글 작성",
+      "edit":"수정",
+      "rateMovie":"이 영화는 어떠셨나요?"
+    },
+    "board": {
+      "name": "자유게시판",
+      "delete":"삭제",
+      "q1":"진행 하시겠습니까?",
+      "ok":"확인",
+      "title":"제목",
+      "search":"검색어를 입력해주세요"
+    },
+    "boardJS":{
+      "writeTitle":"제목을 입력해주세요",
+      "writeContents":"내용을 입력해주세요",
+      "noChange":"변경된 내용이 없습니다",
+      "wrongNumber":"잘못된 시간 정보입니다",
+      "successDelete":"삭제완료",
+      "successEdit":"수정완료",
+      "successRate":"등록완료"
+    },
+    "error":{
+      "msg1":"404 ERROR",
+      "msg2":"잘못된 페이지 요청입니다."
+    },
+    "chat":{
+      "chatRoom":"채팅방",
+      "join":"입장하기",
+      "movie":"영화",
+      "drama":"드라마",
+      "tv":"TV프로그램",
+      "ani":"애니",
+      "goOut":"나가기",
+      "sendMessage":"내용 입력 후 Enter"
     }
 }

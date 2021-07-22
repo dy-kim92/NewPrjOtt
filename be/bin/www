@@ -31,7 +31,7 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-
+// 채팅방
 var io = require('socket.io')(server, {
   cors: {
       origin: "http://localhost:3000",
@@ -51,7 +51,6 @@ var cnt3 = 0;
 var cnt4 = 0;
 
 io.on('connection' , function(socket) {
-  console.log('Connect from Client: '+ socket)
 
   //  소켓 연결 시 방별 사용자 수 전송
   socket.emit('update', {
@@ -60,7 +59,6 @@ io.on('connection' , function(socket) {
     cnt3: cnt3,
     cnt4: cnt4
   });
-  console.log('접속시 : ' + cnt1 + cnt2 + cnt3 + cnt4)
 
   //  방 입장 ============================================
   socket.on('req_join_room', function(data){
@@ -72,7 +70,6 @@ io.on('connection' , function(socket) {
     }
     //  roomName 이름의 방으로 접속
     socket.join(roomName);
-    console.log(roomName + " 접속")
 
     //  roomName 별 접속자 수 카운트 +
     if(roomName == 'chat1'){
@@ -98,7 +95,6 @@ io.on('connection' , function(socket) {
       cnt3: cnt3,
       cnt4: cnt4
     });
-    console.log('입장시 : ' + cnt1 + cnt2 + cnt3 + cnt4)
     socket.to(roomName).emit('noti_join_room', rtnMessage);
   });
 
@@ -124,7 +120,6 @@ io.on('connection' , function(socket) {
       cnt3: cnt3,
       cnt4: cnt4
     });
-    console.log('퇴장시 : ' + cnt1 + cnt2 + cnt3 + cnt4)
 
     //  방에 접속한 사용자에게 퇴장메세지 전송
     var rtnMessage = {
@@ -136,9 +131,6 @@ io.on('connection' , function(socket) {
 
   //  메세지 전송 ============================================
   socket.on('chatMsg', function(data){
-    console.log('message from Client: ' + data.message)
-    console.log('name from : ' + data.authName)
-
     var rtnMessage = {
         message: data.message,
         authName: data.authName
@@ -148,6 +140,18 @@ io.on('connection' , function(socket) {
     socket.to(data.roomName).emit('getMsg', rtnMessage);
   });
 
+
+  socket.on('chat', function(data){
+      console.log('message from Client: ' + data.message)
+      console.log('name from : ' + data.authName)
+      var rtnMessage = {
+          message: data.message,
+          authName: data.authName
+      };
+
+      // 클라이언트에게 메시지를 전송한다
+      socket.broadcast.emit('chat', rtnMessage);
+  });
 })
 
 /**

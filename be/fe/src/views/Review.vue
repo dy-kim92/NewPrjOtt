@@ -1,12 +1,13 @@
 <template>
-  <v-container class="pa-8" fluid grid-list-md>
+  <v-container class="pa-10" fluid grid-list-md>
     <v-layout row wrap>
       <v-flex xs12>
-        <v-card>
+        <v-card style="border-radius:15px;">
           <v-img
             class="white--text"
             height="120px"
-            src="https://cdn.pixabay.com/photo/2019/02/10/09/51/photographer-3986846__340.jpg"
+            src="https://cdn.pixabay.com/photo/2018/01/11/04/27/darkness-3075379__340.jpg"
+            style="border-radius:10px;"
           >
             <v-container fill-height fluid>
               <v-layout fill-height>
@@ -21,17 +22,18 @@
           </v-img>
         </v-card>
       </v-flex>
-      <v-text-field
-        dark
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-
+      <v-col cols="12"> 
+        <v-text-field
+          dark
+          v-model="search"
+          append-icon="mdi-magnify"
+          :label="$t('board.search')"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-col>
       <v-row >
-        <v-col>
+        <v-col cols="8" offset="2">
           <v-row>
             <v-card
               v-for="movie in movies"
@@ -49,17 +51,17 @@
                 :src="movie.img"
               >
               </v-img>
-              <v-card-subtitle class="font-weight-black rateMovie">
+              <v-card-subtitle class="white--text rateMovie">
                 {{movie.title_kr}}&emsp;{{movie.tomato}}
               </v-card-subtitle>
             </v-card>
           </v-row>
         </v-col>
       </v-row>
-      <div class="text-xs-center pt-2">
-          <v-pagination v-model="curPageNum" :length="numOfPages"></v-pagination>
-      </div>
     </v-layout>
+    <div class="text-xs-center pt-2">
+          <v-pagination v-model="curPageNum" :length="numOfPages"></v-pagination>
+    </div>
     <!--progress circular -->
     <v-progress-circular
       v-if="progressCircular"
@@ -147,7 +149,7 @@
         </v-list>
         <v-card-text>
           <v-text-field
-              label="Write Comments"
+              :label="$t('review.writeComments')"
               v-model="formComment.content"
               append-icon="mdi-send"
               @keyup.enter="addComment"
@@ -162,7 +164,7 @@
       <v-card>
         <v-card-text>
           <v-card-title>
-            <span class="headline">Edit Comments</span>
+            <span class="headline">{{$t('review.editComment')}}</span>
           </v-card-title>
           <v-text-field
               label="Edit Comments"
@@ -173,7 +175,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn color="warning" @click="modComment()">
-            Edit
+            {{$t('review.edit')}}
           </v-btn>
           <v-btn color="secondary" @click="commentDialog = false"><v-icon>mdi-close</v-icon></v-btn>
         </v-card-actions>
@@ -184,7 +186,7 @@
     <v-dialog width="600" v-model="dialogRate">
       <v-card>
         <v-card-title class= "text-h5">
-          How was this movie?
+          {{$t('review.rateMovie')}}
         </v-card-title>
         <v-card-text>
           <div class= "text-center mt-12">
@@ -209,7 +211,7 @@
           <v-btn text
             @click = "Rating"
           >
-            submit
+            {{$t('nav.submit')}}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -230,7 +232,7 @@ export default {
       },
       movies: [],
       curPageNum:1,
-      dataPerPage:5,
+      dataPerPage:10,
       search:'',
       dataTotal: 0,
       pagination: {},
@@ -285,6 +287,15 @@ export default {
   },
   mounted () {
     this.get()
+    let lang = localStorage.getItem('language')
+              if (lang == "한국어"){
+                  this.$i18n.locale="한국어"
+              } else if (lang == "English"){
+                  this.$i18n.locale="English"
+              } else {
+                  this.$i18n.locale="日本語"
+              }
+
   },
   methods:{
     // board get 
@@ -296,7 +307,7 @@ export default {
           this.list()
         })
         .catch((e) => {
-          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+          this.$store.commit('pop', { msg: e.message, color: 'error' })
         })  
     },
     //movie list 받아오기
@@ -316,7 +327,7 @@ export default {
           // console.log('아티클확인',this.articles)
         })
         .catch((e) => {
-          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+          this.$store.commit('pop', { msg: e.message, color: 'error' })
         })
     },
     delay () {
@@ -350,7 +361,7 @@ export default {
           this.loading = false
         })
         .catch((e) => {
-          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+          this.$store.commit('pop', { msg: e.message, color: 'error' })
           this.loading = false
         })      
     },
@@ -364,35 +375,34 @@ export default {
           if (!data.success) throw new Error(data.msg)
           this.formComment.content = ''
           this.detailPage(this.detailPageInfo)
-          this.scrollToEnd()
           // this.list()
         })
         .catch((e) => {
-          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+          this.$store.commit('pop', { msg: e.message, color: 'error' })
         })
     },
     delComment (cmt) {
       axios.delete(`/api/mvcomment/${cmt._id}`)
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
-          this.$store.commit('pop', { msg: '삭제완료', color: 'success' })
+          this.$store.commit('pop', { msg: this.$t('boardJS.successDelete'), color: 'success' })
           this.detailPage(this.detailPageInfo)
         })
         .catch((e) => {
-          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+          this.$store.commit('pop', { msg: e.message, color: 'error' })
         })
     },
     modComment () {
-      if (!this.selComment.content) return this.$store.commit('pop', { msg: '내용을 작성해주세요', color: 'warning' })
+      if (!this.selComment.content) return this.$store.commit('pop', { msg: this.$t('boardJS.writeContents'), color: 'error' })
       this.commentDialog = false
       axios.put(`/api/mvcomment/${this.detailPageInfo._id}`, { content: this.selComment.content })
         .then(({ data }) => {
           if (!data.success) throw new Error(data.msg)
-          this.$store.commit('pop', { msg: '수정완료', color: 'success' })
+          this.$store.commit('pop', { msg: this.$t('boardJS.successEdit'), color: 'success' })
           this.detailPage(this.detailPageInfo)
         })
         .catch((e) => {
-          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+          this.$store.commit('pop', { msg: e.message, color: 'error' })
         })
     },
     Rating() {
@@ -400,11 +410,11 @@ export default {
         .then((r) => {
           console.log(r)
           this.dialogRate = false
-          this.$store.commit('pop', { msg: '등록완료', color: 'warning' })
+          this.$store.commit('pop', { msg: this.$t('boardJS.successRate'), color: 'success' })
         })
         .catch((e) => {
           this.dialogRate = false
-          this.$store.commit('pop', { msg: e.message, color: 'warning' })
+          this.$store.commit('pop', { msg: e.message, color: 'error' })
         })
     },
   },

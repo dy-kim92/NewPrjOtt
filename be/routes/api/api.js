@@ -59,9 +59,8 @@ router.all('*', function(req, res, next) {
       req.token = v.token
       next()
     })
-    .catch(e => res.send({ success: false, msg: '로그아웃, 재로그인후 이용해주세요.'})) 
+    .catch(e => res.send({ success: false, msg: 'Logout, re-login, and use it.'})) 
 });
-router.use('/token', require('./tokencheck')) 
 router.use('/board', require('./board')) 
 router.use('/article', require('./article'))
 router.use('/movie', require('./movie'))
@@ -71,7 +70,7 @@ router.use('/chat', require('./chat'))
 
 // 잘못들어온 url 처리 해주기 
 router.all('*', function(req, res, next) {
-  next(createError(404, '그런 api 없어'));
+  next(createError(404, '404 error'));
 });
 
 module.exports = router;

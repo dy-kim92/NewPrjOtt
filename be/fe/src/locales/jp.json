@@ -1,14 +1,16 @@
 {
   "nav": {
     "review": "レビュー",
-    "board": "ボード",
+    "board": "掲示板", 
     "chat": "チャット",
     "news": "ニュース",
     "logout": "ログアウト",
     "login": "ログイン",
     "findPwd":"パスワード新規登録・お忘れの方",
     "keepLogin":"自動ログイン(7日)",
-    "signIn":"加入"
+    "signIn":"新規会員",
+    "submit":"送信",
+    "sendCode":"認証コード送信"
   },
   "home": {
     "boxOffice": "週間ランキング TOP7",
@@ -16,5 +18,44 @@
     "unit":"単位:10000",
     "usageFee":"利用料金(基本料金基準)",
     "usageFeeUnit":"単位:100"
+  },
+  "review": {
+    "boardTitle": "レビュー",
+    "movieInfo": "映画情報",
+    "editComment": "コメント修正",
+    "writeComments":"コメント作成",
+    "edit":"修正",
+    "rateMovie":"この映画はいかがでしたか?"
+  },
+  "board": {
+    "name": "掲示板",
+    "delete":"削除",
+    "q1":"実行しますか？",
+    "ok":"はい",
+    "title":"タイトル",
+    "search":"キーワードを入力してください。"
+  },
+  "boardJS":{
+    "writeTitle":"タイトルを入力してください。",
+    "writeContents":"内容を入力してください。",
+    "noChange":"変更された内容はありません。",
+    "wrongNumber":"間違った時間情報です。",
+    "successDelete":"削除完了",
+    "successEdit":"修正完了",
+    "successRate":"登録完了"
+  },
+  "error":{
+    "msg1":"404 ERROR",
+    "msg2":"正しくないリクエストです。"
+  },
+  "chat":{
+    "chatRoom":"チャットルーム",
+    "join":"参加する",
+    "movie":"映画",
+    "drama":"ドラマ",
+    "tv":"テレビ番組",
+    "ani":"アニメ",
+    "goOut":"退出する",
+    "sendMessage":"内容入力後Enter"
   }
 }
