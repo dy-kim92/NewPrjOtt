@@ -191,7 +191,7 @@ export default {
   methods:{
     list () {
       console.log("start")
-        axios.get('http://localhost:3000/api/movierank/list/rank')
+        axios.get('/api/movierank/list/rank')
           .then(({ data }) => {
             console.log(data)
             this.movieRank = data.ds
