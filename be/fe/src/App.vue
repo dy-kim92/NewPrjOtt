@@ -68,4 +68,9 @@ export default {
   background-color: #000C1D;
   z-index: 100;
 }
+@media screen and (max-width:959px) {
+  .btt{
+    margin-right: 20%;
+  }
+}
 </style>
