@@ -19,6 +19,7 @@
     "vee-validate": "^3.4.9",
     "vue": "^2.6.11",
     "vue-backtotop": "^1.6.1",
+    "vue-burger-menu": "^2.0.5",
     "vue-chartjs": "^3.5.1",
     "vue-core-video-player": "^0.2.0",
     "vue-i18n": "^8.24.5",

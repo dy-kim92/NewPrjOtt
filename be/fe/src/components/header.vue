@@ -34,9 +34,24 @@
                     {{$t('nav.chat')}}
                 </a>
             </div>
-            <!-- 언어변경 -->
-            <v-col
-            class="col-md-2">
+            <Slide right id="bug">
+                <a href="/" id="gohome">
+                    <img  class="logo" src="../assets/001.png">
+                </a>
+                <a href="/review" class="menu white--text">
+                    {{$t('nav.review')}}
+                </a>
+                <a href="/freeboard" class="menu white--text">
+                    {{$t('nav.board')}}
+                </a>
+                <a href="/news" class="menu white--text">
+                    {{$t('nav.news')}}
+                </a>
+                <a href="/chat" class="menu white--text">
+                    {{$t('nav.chat')}}
+                </a>
+                <v-col
+             id="language">
                 <!-- <v-select v-model="$i18n.locale" -->
                 <v-select v-model="locale"
                 dark
@@ -54,8 +69,323 @@
             <v-col cols="1" v-if="authEmail">
                 <a href="/auth/logout" class="menu white--text"><v-btn dark>{{$t('nav.logout')}}</v-btn></a>
             </v-col>
+            <v-col v-else id="loginbtn">
+                <v-btn class="mt-1" dark @click="mdUp">{{$t('nav.login')}}</v-btn>                    
+                    <v-dialog v-model="dialog" persistent max-width="500px">
+                        <v-card>
+                            <v-card-title>
+                            <span class="headline">{{$t('nav.login')}}</span>
+                            </v-card-title>
+                            <v-card-text>
+                            <validation-observer>
+                            <v-form>
+                                <v-container fluid>
+                                <v-row>
+                                    <v-col cols="12" sm="6">
+                                    <validation-provider
+                                        v-slot="{errors}"
+                                        name="Email"
+                                        :rules="{
+                                            required:true,
+                                            email:true,
+                                            }">
+                                        <v-text-field
+                                            v-model="email"
+                                            label="E-mail"
+                                            :error-messages="errors"
+                                        ></v-text-field>
+                                    </validation-provider>
+                                    </v-col>
+                                    <v-col cols="12" sm="6">
+                                    <validation-provider
+                                        v-slot="{errors}"
+                                        name="Password"
+                                        :rules="{
+                                            required:true,
+                                            min:8,
+                                            }"
+                                    >
+                                    <v-text-field
+                                        v-model="password"
+                                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="show1 ? 'text' : 'password'"
+                                        name="input-10-1"
+                                        label="Password"
+                                        :counter=8
+                                        @click:append="show1 = !show1"
+                                        :error-messages="errors"
+                                    ></v-text-field>
+                                    </validation-provider>
+                                    </v-col>
+                                </v-row>
+                                </v-container>
+                                <small type="button" @click="mdUp3">{{$t('nav.findPwd')}}</small>
+                                <v-checkbox
+                                    v-model="remember"
+                                    :label="$t('nav.keepLogin')"
+                                ></v-checkbox>
+                            </v-form>
+                            </validation-observer>
+                            <v-col >
+                                <a href="/auth/kakao" alt="kakao login">
+                                    <img src="../assets/kakao_login_medium_wide.png" alt="kakao" width="100%">
+                                </a>
+                                <a href="/auth/naver" alt="naver login">
+                                    <img src="../assets/naver_login.png" alt="naver" width="100%">
+                                </a>
+                            </v-col>
+                            </v-card-text>
+                            <v-card-actions>    
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary" @click="mdUp2">{{$t('nav.signIn')}}</v-btn>
+                            <v-btn color="primary" @click="postLoginData" router-link to="/">{{$t('nav.login')}}</v-btn>
+                            <v-btn color="primary" @click.native="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                    <!-- 회원가입 다이얼로그 -->
+                    <v-dialog v-model="dialog2" width="500">
+                    <v-card>
+                        <v-card-title class="text-h5 grey lighten-2">
+                        {{$t('nav.signIn')}}
+                        </v-card-title>
+
+                        <br>
+                        <v-card-text>
+                        <validation-observer
+                            ref="observer"
+                            v-slot="{ invalid }"
+                        >
+                        <v-form @submit.prevent="postData">
+                            <!-- 닉네임 -->
+                            <validation-provider
+                                v-slot="{errors}"
+                                name="Nickname"
+                                :rules="{
+                                    required:true,
+                                    max:8,
+                                    }"
+                            >
+                            <v-text-field v-model="name" :counter="8" label="NickName" :error-messages="errors"></v-text-field>
+                            </validation-provider>
+                            <!-- 이메일 -->
+                            <validation-provider
+                                v-slot="{errors}"
+                                name="Email"
+                                :rules="{
+                                    required:true,
+                                    email:true,
+                                    }"
+                            >
+                            <v-text-field v-model="joinEmail" label="E-mail" :error-messages="errors"></v-text-field>
+                            </validation-provider>
+                            <!-- 비밀번호 & 비밀번호 확인 -->
+                            <validation-provider
+                                v-slot="{errors}"
+                                name="Password"
+                                :rules="{
+                                    required:true,
+                                    min:8,
+                                    }"
+                            >
+                            <v-text-field v-model="joinPassword"
+                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show1 ? 'text' : 'password'"
+                                    name="input-10-1"
+                                    label="Password"
+                                    counter
+                                    @click:append="show1 = !show1"
+                                    :error-messages="errors"
+                            ></v-text-field>
+                            </validation-provider>
+                            <!--비밀번호 일치 Validation -->
+                            <validation-provider
+                                v-slot="{errors}"
+                                name="Confirm Password"
+                                :rules="{
+                                    required:true,
+                                    confirmed:'Password'
+                                    }"
+                            >
+                            <v-text-field v-model="checkPassword"
+                                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="show2 ? 'text' : 'password'"
+                                    name="input-10-1"
+                                    label="Confirm Password"
+                                    counter
+                                    @click:append="show2 = !show2"
+                                    :error-messages="errors"
+                            ></v-text-field>
+                            </validation-provider>
+
+                        <v-divider></v-divider>
+
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" type="submit" :disabled="invalid">{{$t('nav.submit')}}</v-btn>
+                        <v-btn color="primary" @click="dialog2 = false"><v-icon>mdi-close</v-icon></v-btn>
+                        </v-card-actions>
+                        </v-form>
+                        </validation-observer>
+                        </v-card-text>
+                    </v-card>
+                    </v-dialog>
+                    <!-- 비밀번호찾기 다이얼로그 -->
+                    <v-dialog
+                    v-model="dialog3"
+                    max-width="600px"
+                    >
+                    <v-card>
+                        <!-- 다이얼로그 타이틀 -->
+                        <v-card-title>
+                        <span class="text-h5">{{$t('nav.findPwd')}}</span>
+                        </v-card-title>
+                        <validation-observer
+                            ref="observer"
+                            v-slot="{ invalid }"
+                        >
+                        <v-form @submit.prevent="postUpdateData">
+                            <v-card-text>
+                            <v-container>
+                                <v-row>
+                                <v-col cols="8">
+                                    <validation-provider
+                                        v-slot="{errors}"
+                                        name="Email"
+                                        :rules="{
+                                            required:true,
+                                            email:true,
+                                            }"
+                                    >
+                                    <v-text-field
+                                    label="Write your Email"
+
+                                    :error-messages="errors"
+                                    v-model="findemail"
+                                    ></v-text-field>
+                                    </validation-provider>
+                                </v-col>
+                                <v-col cols="4">
+                                    <v-btn
+                                    elevation="2"
+                                    plain
+                                    @click="postFindPwdData"
+                                    >{{$t('nav.sendCode')}}</v-btn>
+                                </v-col>
+                                <v-col cols="12">
+                                    <validation-provider
+                                        v-slot="{errors}"
+                                        name="Authentication code"
+                                        :rules="{
+                                            required:true,
+                                            confirmed:'Confirm Authentication code'
+                                            }"
+                                    >
+                                    <v-text-field
+                                    label="Write your Authentication code"
+                                    v-model="inputcfcode"
+                                    :error-messages="errors"
+                                    ></v-text-field>
+                                    </validation-provider>
+                                </v-col>
+                                <validation-provider
+                                name="Confirm Authentication code">
+                                <v-text-field 
+                                v-model="cfcode" :type="password"
+                                    class="hiddenfield">
+                                </v-text-field>
+                                </validation-provider>
+                                <v-col cols="12">
+                                <validation-provider
+                                    v-slot="{errors}"
+                                    name="New Password"
+                                    :rules="{
+                                        required:true,
+                                        min:8,
+                                        }"
+                                >
+                                <v-text-field v-model="newpassword"
+                                        :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="show3 ? 'text' : 'password'"
+                                        name="input-10-1"
+                                        label="Write a New Password"
+                                        counter
+                                        @click:append="show3 = !show3"
+                                        :error-messages="errors"
+                                    ></v-text-field>
+                                </validation-provider>
+                                </v-col>
+                            <!--비밀번호 일치 Validation -->
+                            <v-col cols="12">
+                                <validation-provider
+                                    v-slot="{errors}"
+                                    name="Confirm New Password "
+                                    :rules="{
+                                        required:true,
+                                        confirmed:'New Password'
+                                        }"
+                                >
+                                <v-text-field v-model="newpasswordck"
+                                        :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+                                        :type="show4 ? 'text' : 'password'"
+                                        name="input-10-1"
+                                        label="Confirm New Password "
+                                        counter
+                                        @click:append="show4 = !show4"
+                                        :error-messages="errors"
+                                ></v-text-field>
+                                </validation-provider>
+                                </v-col>
+                            </v-row>
+                            </v-container>
+                            </v-card-text>
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="blue darken-1"
+                            text
+                            @click="dialog3 = false"
+                        >
+                            <v-icon>mdi-close</v-icon>
+                        </v-btn>
+                        <v-btn
+                            color="blue darken-1"
+                            type="submit"
+                            :disabled='invalid'
+                        >
+                            {{$t('nav.submit')}}
+                        </v-btn>
+                        </v-card-actions>
+                        </v-form>
+                        </validation-observer>
+                    </v-card>
+                    </v-dialog>
+                
+            </v-col>
+            </Slide>
+            <!-- 언어변경 -->
+            <v-col
+            class="col-md-2" id="language">
+                <!-- <v-select v-model="$i18n.locale" -->
+                <v-select v-model="locale"
+                dark
+                dense
+                label="Language"
+                class="language pt-1"
+                @change="changeLocale"
+                outlined
+                :items="langs">
+                <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">
+                    {{ lang }}
+                </option>
+                </v-select>
+            </v-col>
+            <v-col cols="1" v-if="authEmail" id="logoutbtn">
+                <a href="/auth/logout" class="menu white--text"><v-btn dark>{{$t('nav.logout')}}</v-btn></a>
+            </v-col>
+            
             <!-- 로그인 다이얼로그 -->
-            <v-col v-else class="col-md-1">
+            <v-col v-else class="col-md-1" id="loginbtn">
                 <v-btn class="mt-1" dark @click="mdUp">{{$t('nav.login')}}</v-btn>                    
                     <v-dialog v-model="dialog" persistent max-width="500px">
                         <v-card>
@@ -355,7 +685,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QPJGZBZSSJ"></script>
 
 <script>
-
+import {Slide, Push, ScaleRotate} from 'vue-burger-menu'
 import axios from 'axios'
 
 window.dataLayer = window.dataLayer || [];
@@ -365,6 +695,9 @@ gtag('js', new Date());
 gtag('config', 'G-QPJGZBZSSJ');
 
 export default {
+    components: {
+        Slide // Register your component
+    },
   name: 'main-header',
     created(){
     var vm = this;
@@ -571,5 +904,34 @@ a {
     width:150px;
     margin-left: -45px;
     margin-top: -40px;
+}
+ #bug{
+    visibility: hidden;
+}
+
+@media screen and (max-width:768px) {
+    *{
+        font-size: 0.4rem;
+
+    }
+    .header .col-md-1{
+        /* text-align: start; */
+        display:none;
+    }
+    .header .col-md-2{
+        display: none;
+    }
+    .logo {
+        width: 30%;
+    }
+    #bug{
+        visibility: visible;
+    }
+    .menu{
+        font-size: 1.5rem;
+    }
+    #logoutbtn{
+        display:none;
+    }
 }
 </style>
