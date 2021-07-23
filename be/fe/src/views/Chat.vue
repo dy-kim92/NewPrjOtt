@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid>
+  <v-container fluid pa-5 grid-list-md>
     <v-row>
-      <v-col cols="11" class="mx-auto">
-        <v-card class="" style="padding:0; margin:0; border-radius:7%;">
+      <v-col cols="12">
+        <v-card style="border-radius:15px;">
           <v-img
             class="white--text"
             height="15vh"
@@ -15,13 +15,13 @@
       </v-col>
     </v-row>
     <v-row style="text-align:center; margin-top:5vh;">
-      <v-col col="10" offset="1" >
+      <v-col col="12" >
         <!-- 채팅방이름 ,참여인원수변수 , 클릭이벤트 -->
         <div class="chatroomdiv">
           <h1 class="white--text">{{$t('chat.movie')}}</h1>
         <v-card class="chatroom ">
           <v-img
-            class="white--text"
+            class="img1"
             height="38vh"
             width="40vw"
             src="../assets/chatimg1.jpg"
@@ -30,7 +30,7 @@
           </v-img>
             <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
-              <h4>123{{chat1cnt}}</h4>
+              <h4>{{chat1cnt}}</h4>
               <button type="button" @click="chat1">
                 {{$t('chat.join')}}
               </button>
@@ -41,7 +41,7 @@
           <h1 class="white--text">{{$t('chat.drama')}}</h1>
         <v-card class="chatroom" >
           <v-img
-            class="white--text"
+            class="img1"
             height="38vh"
             width="40vw"
             src="../assets/chatimg2.jpg"
@@ -50,7 +50,7 @@
           </v-img>
             <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
-              <h4>123{{chat1cnt}}</h4>
+              <h4>{{chat2cnt}}</h4>
               <button type="button" @click="chat2">
                 {{$t('chat.join')}}
               </button>
@@ -61,7 +61,7 @@
           <h1 class="white--text">{{$t('chat.tv')}}</h1>
         <v-card class="chatroom" >
           <v-img
-            class="white--text"
+            class="img1"
             height="38vh"
             width="40vw"
             src="../assets/chatimg3.jpg"
@@ -70,7 +70,7 @@
           </v-img>
             <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
-              <h4>123{{chat1cnt}}</h4>
+              <h4>{{chat3cnt}}</h4>
               <button type="button" @click="chat3">
                 {{$t('chat.join')}}
               </button>
@@ -81,7 +81,7 @@
           <h1 class="white--text">{{$t('chat.ani')}}</h1>
         <v-card class="chatroom" >
           <v-img
-            class="white--text"
+            class="img1"
             height="38vh"
             width="40vw"
             src="https://t1.daumcdn.net/cfile/tistory/9917503E5AB207E12E"
@@ -90,7 +90,7 @@
           </v-img>
             <div class="d-flex">
               <v-icon dark large class="icon">mdi-account-circle</v-icon>
-              <h4>123{{chat1cnt}}</h4>
+              <h4>{{chat4cnt}}</h4>
               <button type="button" @click="chat4">
                 {{$t('chat.join')}}
               </button>
@@ -354,5 +354,20 @@ export default {
   display: flex;
   justify-content:flex-end;
   margin-right: 1vw;
+}
+@media screen and (max-width:768px) {
+  .chatroom {
+    /* min-width: 75%; */
+    width:82vw !important;
+    margin:0;
+  }
+  .img1{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  .chatroom h4{
+    top:0.2vh;
+  }
 }
 </style>
