@@ -77,7 +77,7 @@ export default {
     list () {
         if (this.loading) return
         this.loading = true
-        axios.get('http://localhost:3000/api/news/list/latest')
+        axios.get('/api/news/list/latest')
           .then(({ data }) => {
             if (!data.success) throw new Error(data.msg)
             this.articles = data.ds
@@ -92,7 +92,7 @@ export default {
       var ret = window.open(url)
     },
     cinelist () {
-      axios.get('http://localhost:3000/api/news/list/cine')
+      axios.get('/api/news/list/cine')
           .then(({ data }) => {
             this.cine = data.dr
           })

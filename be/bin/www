@@ -34,7 +34,7 @@ server.on('listening', onListening);
 // 채팅방
 var io = require('socket.io')(server, {
   cors: {
-      origin: "http://localhost:3000",
+      origin: "http://3.37.156.7",
       methods: ["GET", "POST"],
       transports: ['websocket', 'polling'],
       credentials: true

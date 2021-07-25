@@ -25,7 +25,7 @@ router.post('/', (req, res, next) => {
   const u = req.body
   User.findOne({ email: u.email })
     .then((r) => {
-      if (r) throw new Error('이미 등록되어 있는 아이디입니다.')
+      if (r) throw new Error('This is a registered ID')
       return User.create(u)
     })
     .then((r) => {
@@ -55,7 +55,7 @@ router.post('/', (req, res, next) => {
 })
 
 router.all('*', function(req, res, next) {
-    next(createError(404, '그런 api 없어'));
+    next(createError(404, '404 error'));
   });
 
 module.exports = router;
