@@ -72,12 +72,20 @@ export default {
   mounted () {
     this.list()
     this.cinelist()
+    let lang = localStorage.getItem('language')
+              if (lang == "日本語"){
+                  this.$i18n.locale="日本語"
+              } else if (lang == "English"){
+                  this.$i18n.locale="English"
+              } else {
+                  this.$i18n.locale="한국어"
+              }
   },
   methods:{
     list () {
         if (this.loading) return
         this.loading = true
-        axios.get('http://localhost:3000/api/news/list/latest')
+        axios.get('/api/news/list/latest')
           .then(({ data }) => {
             if (!data.success) throw new Error(data.msg)
             this.articles = data.ds
@@ -92,7 +100,7 @@ export default {
       var ret = window.open(url)
     },
     cinelist () {
-      axios.get('http://localhost:3000/api/news/list/cine')
+      axios.get('/api/news/list/cine')
           .then(({ data }) => {
             this.cine = data.dr
           })

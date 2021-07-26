@@ -9,7 +9,7 @@
      -->
     <v-container class="pa-0 ma-0" fluid>
         <v-row class="header">
-            <div class="col-md-1">
+            <div class="col-md-1" id="logopng">
                 <a href="/" id="gohome">
                     <img  class="logo" src="../assets/001.png">
                 </a>
@@ -914,9 +914,12 @@ a {
         font-size: 0.4rem;
 
     }
-    .header .col-md-1{
+    .header .col-md-1:not(#logopng){
         /* text-align: start; */
         display:none;
+    }
+    #logopng{
+        text-align: start;
     }
     .header .col-md-2{
         display: none;

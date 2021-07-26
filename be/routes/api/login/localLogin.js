@@ -22,14 +22,14 @@ const signToken = (_id, email, name, rmb) => {
 // login ============================================================
 router.post('/', (req, res) => {
     const { email, password, remember } = req.body
-    if (!email) return res.send({ success: false, msg: '아이디가 없습니다.'})
-    if (!password) return res.send({ success: false, msg: '비밀번호가 없습니다.'})
-    if (remember === undefined) return res.send({ success: false, msg: '기억하기가 없습니다.'})
+    if (!email) return res.send({ success: false, msg: 'invalid email'})
+    if (!password) return res.send({ success: false, msg: 'invalid password'})
+    if (remember === undefined) return res.send({ success: false, msg: 'invalid checkbox'})
     User.findOne({ email })
       .then((r) => {
         // console.log(r)
-        if (!r) throw new Error('존재하지 않는 아이디입니다.')
-        if (r.password !== password) throw new Error('비밀번호가 틀립니다.')
+        if (!r) throw new Error('ID does not exist')
+        if (r.password !== password) throw new Error('password is wrong')
         return signToken(r._id, r.email, r.name, remember)
       })
       .then((r) => {
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
 
 
 router.all('*', function(req, res, next) {
-    next(createError(404, '그런 api 없어'));
+    next(createError(404, '404 error'));
   });
 
 module.exports = router;

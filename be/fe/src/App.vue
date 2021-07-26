@@ -58,11 +58,15 @@ export default {
   /* margin-top: 3.8%; */
   background-color: #000C1D;
   z-index: 100;
+  width:100%;
+  overflow-x: hidden;
 }
 .mainView2{
   margin-top: 3.8%;
   background-color: #000C1D;
   z-index: 100;
+  width:100%;
+  overflow-x: hidden;
 }
 .main{
   background-color: #000C1D;
