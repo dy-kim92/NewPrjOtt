@@ -72,6 +72,14 @@ export default {
   mounted () {
     this.list()
     this.cinelist()
+    let lang = localStorage.getItem('language')
+              if (lang == "日本語"){
+                  this.$i18n.locale="日本語"
+              } else if (lang == "English"){
+                  this.$i18n.locale="English"
+              } else {
+                  this.$i18n.locale="한국어"
+              }
   },
   methods:{
     list () {

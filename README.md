@@ -6,10 +6,11 @@
 <img src="https://img.shields.io/badge/Vuetify-1867C0?style=flat-square&logo=Vuetify&logoColor=skyblue"/>&nbsp&nbsp
 <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=MongoDB&logoColor=green"/>&nbsp&nbsp</p>
 
+
 ## 🎬ACC
 > Use OTT service?
 > Check out the review and score of various contents through ACC!
-
+<img src="https://user-images.githubusercontent.com/76729186/126924752-2ac46163-4352-4382-957e-f27cfdcf3628.png">
 ## ⛏Skill
 ☑ Social Login   
 ☑ mailtrap  
