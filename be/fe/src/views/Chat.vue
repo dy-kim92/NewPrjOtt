@@ -15,7 +15,7 @@
       </v-col>
     </v-row>
     <v-row style="text-align:center; margin-top:5vh;">
-      <v-col col="12" >
+      <v-col class="col-sm-12 col-md-11 offset-md-1">
         <!-- 채팅방이름 ,참여인원수변수 , 클릭이벤트 -->
         <div class="chatroomdiv">
           <h1 class="white--text">{{$t('chat.movie')}}</h1>
@@ -207,13 +207,13 @@ export default {
   },
   mounted(){
   let lang = localStorage.getItem('language')
-            if (lang == "한국어"){
-                this.$i18n.locale="한국어"
-            } else if (lang == "English"){
-                this.$i18n.locale="English"
-            } else {
-                this.$i18n.locale="日本語"
-            }
+              if (lang == "日本語"){
+                  this.$i18n.locale="日本語"
+              } else if (lang == "English"){
+                  this.$i18n.locale="English"
+              } else {
+                  this.$i18n.locale="한국어"
+              }
 },
   methods: {
     chat1 () {
