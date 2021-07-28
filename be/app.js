@@ -20,11 +20,14 @@ passportConfig();
 const mongoose = require('mongoose')
 
 
-mongoose.connect('mongodb://3.37.156.7:27017/nemv', { useUnifiedTopology:true, useNewUrlParser: true }, (err) => {
+// mongoose.connect('mongodb://127.0.0.1:27017/nemv', { useUnifiedTopology:true, useNewUrlParser: true }, (err) => {
+//    if (err) return console.error(err)
+//    console.log('mongoose connected!')
+// })
+mongoose.connect('mongodb://13.125.9.12:27017/nemv', { useUnifiedTopology:true, useNewUrlParser: true }, (err) => {
    if (err) return console.error(err)
    console.log('mongoose connected!')
 })
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
