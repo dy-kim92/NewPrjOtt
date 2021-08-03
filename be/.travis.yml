@@ -6,6 +6,22 @@ before_install: # 패키지를 다운로드 받기 전
 branches:
   only:
     - master
+before_deploy: 
+  - zip -r aac-prj * 
+  - mkdir -p deploy 
+  - mv aac-prj.zip deploy/aac-prj.zip
+
+deploy: 
+  - provider: s3 
+    access_key_id: $AWS_ACCESS_KEY 
+    secret_access_key: $AWS_SECRET_KEY 
+    bucket: freelec-springboot-build 
+    region: ap-northeast-2 
+    skip_cleanup: true 
+    acl: private 
+    local_dir: deploy 
+    wait-until-deployed: true
+
 notifications: # 성공 실패 여부 알림 
   email:
     recipients:
