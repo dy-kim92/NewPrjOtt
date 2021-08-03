@@ -1,28 +1,29 @@
-language: node_js # 언어는 node_js
+language: node_js
 node_js:
-  - "14.17.0" # node_js에 버전 10.14
-before_install: # 패키지를 다운로드 받기 전
-  - npm install -g yarn  # yarn을 글로벌로 설치
+  - "14.17.0"
+
 branches:
   only:
     - master
-before_deploy: 
-  - zip -r aac-prj * 
-  - mkdir -p deploy 
-  - mv aac-prj.zip deploy/aac-prj.zip
 
-deploy: 
-  - provider: s3 
-    access_key_id: $AWS_ACCESS_KEY 
-    secret_access_key: $AWS_SECRET_KEY 
-    bucket: aac-travis
-    region: ap-northeast-2 
-    skip_cleanup: true 
-    acl: private 
-    local_dir: deploy 
+# deploy전에 실행할 명령어
+before_deploy:
+  - mkdir -p deploy
+  - mv db.json deploy/db.json
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # Travis CI에서 설정한 AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY # Travis CI에서 설정한 AWS_SECRET_KEY
+    bucket: aac-travis # S3 bucket 명
+    region: ap-northeast-2
+    skip_cleanup: true
+    local_dir: deploy # S3로 올릴 디렉토리 대상 (before_deploy에서 생성함)
+    acl: public_read
     wait-until-deployed: true
+    on:
+      repo: dy-kim92/NewPrjOtt # 저장소 이름
+      branch: master
 
-notifications: # 성공 실패 여부 알림 
-  email:
-    recipients:
-      - hsg99091@gmail.com
+after_deploy:
+  - echo "S3 업로드 끝났습니다."
