@@ -13,6 +13,8 @@
 <img src="https://user-images.githubusercontent.com/76729186/126924752-2ac46163-4352-4382-957e-f27cfdcf3628.png">
 
 ## ⛏Skill
+☑ AWS EC2
+☑ Responsive Web
 ☑ Social Login   
 ☑ mailtrap  
 ☑ jwt  

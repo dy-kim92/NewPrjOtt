@@ -24,7 +24,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/nemv', { useUnifiedTopology:true, us
    if (err) return console.error(err)
    console.log('mongoose connected!')
 })
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

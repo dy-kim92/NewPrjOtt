@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from pymongo import MongoClient
 
 # mongodb connect
-mongodb_URI = "mongodb://3.37.156.7:27017/nemv"
+mongodb_URI = "mongodb://13.124.173.108:27017/nemv"
 client = MongoClient(mongodb_URI)
 
 # print(client.list_database_names())
